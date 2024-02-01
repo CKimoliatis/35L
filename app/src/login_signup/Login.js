@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Landing from '../landing/Landing.js'
-import { Link } from 'react-router-dom';
-import ButtonLink from '../Buttons/ButtonLink.js'
+import React, { useState } from "react";
+import Landing from "../landing/Landing";
+import { Link, Route } from "react-router-dom";
+import Signup from "./Signup";
 
 const Login = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogin = () => {
@@ -14,7 +14,7 @@ const Login = (props) => {
     if (username && password) {
       setLoggedIn(true);
     } else {
-      alert('Please enter both username and password');
+      alert("Please enter both username and password");
     }
   };
 
@@ -25,7 +25,7 @@ const Login = (props) => {
   return (
     <div>
       {loggedIn ? (
-        <Landing/>
+        <Landing />
       ) : (
         <div>
           <h1>Login Page</h1>
@@ -47,13 +47,14 @@ const Login = (props) => {
             />
           </label>
           <br />
+          <p>
+            New Here? <Link to="signup">Register!</Link>
+          </p>
+          
           <button onClick={handleLogin}>Login</button>
-         
         </div>
       )}
     </div>
-    
   );
-}
+};
 export default Login;
-

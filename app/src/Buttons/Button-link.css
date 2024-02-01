@@ -1,0 +1,10 @@
+.button-link {
+    background: none;
+    color: #007bff; /* Link color */
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  

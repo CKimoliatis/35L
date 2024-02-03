@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Landing from "../landing/Landing";
-import { Link, Route } from "react-router-dom";
-import Signup from "./Signup";
+import { Link } from "react-router-dom";
 
 const Login = (props) => {
   const [username, setUsername] = useState("");

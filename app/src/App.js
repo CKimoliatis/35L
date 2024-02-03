@@ -1,6 +1,5 @@
-import Layout from "./Layout";
 import Login from "./login_signup/Login";
-import {Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Signup from "./login_signup/Signup";
 import Landing from "./landing/Landing";
 

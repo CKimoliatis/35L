@@ -66,15 +66,16 @@ const Login = (props) => {
               style={{ width: "200px", margin: "auto" }}
             />
           </div>
+          <button className="btn btn-primary" onClick={handleLogin}>
+            Login
+          </button>
+          <br/><br/>
           <p className="mb-3">
             New Here?{" "}
             <Link to="signup" style={{ color: "white" }}>
               Register!
             </Link>
           </p>
-          <button className="btn btn-primary" onClick={handleLogin}>
-            Login
-          </button>
         </div>
       )}
     </div>

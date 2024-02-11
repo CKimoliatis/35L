@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 
 const Landing = () => {
     return (
@@ -10,4 +10,4 @@ const Landing = () => {
     )
 }
 
-export default Landing;
+export default Landing

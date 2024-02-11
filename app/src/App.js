@@ -1,7 +1,7 @@
-import Login from "./login_signup/Login.js";
+import Login from "./login_signup/Login";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-import Signup from "./login_signup/SignUp.js";
-import Landing from "./landing/Landing.js";
+import Signup from "./login_signup/SignUp";
+import Landing from "./landing/Landing";
 
 function App() {
   return (

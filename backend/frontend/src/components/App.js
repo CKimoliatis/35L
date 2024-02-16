@@ -1,15 +1,21 @@
-import React, { Component } from "react";
-import {render} from "react-dom";
+import Login from "./Login";
+import React from 'react';
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import Signup from "./SignUp";
+import Landing from "./Landing";
 
-export default class App extends Component{
-    constructor(props){
-        super(props);
-    }
-
-    render(){
-        return (<h1>Testing React Code</h1>);
-    }
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path='/'>
+          <Route index element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="landing" element={<Landing />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
-const appDiv = document.getElementById("app");
-render(<App/>, appDiv);
+export default App;

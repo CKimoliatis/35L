@@ -75,7 +75,7 @@ const Signup = () => {
       </label>
       <br />
       <label>
-        school:
+        School:
         <input
           type="school"
           value={school}

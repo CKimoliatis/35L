@@ -10,6 +10,15 @@ const Login = (props) => {
   const handleLogin = () => {
     // You can implement your authentication logic here
     // For simplicity, let's just check if both username and password are not empty
+    const requestOptions = {
+      method: 'GET',
+      headers: {'Content-Type' : 'application/json'},
+      body: JSON.stringify({
+        password: password,
+        username: username
+      })
+    };
+    
     if (username && password) {
       setLoggedIn(true);
     } else {

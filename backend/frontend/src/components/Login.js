@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Landing from "Landing";
+import Landing from "./Landing";
 import { Link } from "react-router-dom";
 
 const Login = (props) => {
@@ -56,4 +56,5 @@ const Login = (props) => {
     </div>
   );
 };
+
 export default Login;

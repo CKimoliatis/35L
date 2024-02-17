@@ -5,9 +5,12 @@ from .models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-class UserView(generics.ListAPIView):
-    queryset = User.objects.all()
+class UserView(APIView):
     serializer_class = UserSerializer
+    def get(self, request, format=None):
+        queryset= User.objects.all()
+        serializer=self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
 class CreateUserView(APIView):
     serializer_class = CreateUserSerializer
@@ -21,3 +24,6 @@ class CreateUserView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        
+        

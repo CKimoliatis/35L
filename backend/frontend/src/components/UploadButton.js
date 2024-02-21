@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 
 function UploadButton() {
   const [uploadedFileName, setUploadedFileName] = useState(null);
@@ -18,17 +18,22 @@ function UploadButton() {
 
   return (
     <div className="m-3">
-        <label className="mx-3">Choose file:</label>
-        <input
-            ref={inputRef}
-            onChange={handleDisplayFileDetails}
-            type="file"
-            className="d-none"
-        />
-        <button onClick={handleUpload} className={`btn btn-outline-${uploadedFileName ? 'success' : 'primary'}`}>
-            {uploadedFileName || 'Upload'}
-        </button>
-        {uploadedFileName && <span className="mx-2">{uploadedFileName}</span>}
+      <label className="mx-3">Choose file:</label>
+      <input
+        ref={inputRef}
+        onChange={handleDisplayFileDetails}
+        type="file"
+        className="d-none"
+      />
+      <button
+        onClick={handleUpload}
+        className={`btn btn-outline-${
+          uploadedFileName ? "success" : "primary"
+        }`}
+      >
+        {uploadedFileName || "Upload"}
+      </button>
+      {uploadedFileName && <span className="mx-2">{uploadedFileName}</span>}
     </div>
   );
 }

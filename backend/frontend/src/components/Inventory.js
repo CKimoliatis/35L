@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import NavigationBar from './NavigationBar'
 
-const Landing = () => {
+const Inventory = () => {
     return (
         <div>
           <NavigationBar />
@@ -9,10 +9,10 @@ const Landing = () => {
           <br></br>
           <br></br>
             <p>
-                This is the landing page
+                This is the inventory page
             </p>
         </div>
     )
 }
 
-export default Landing
+export default Inventory

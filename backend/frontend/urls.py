@@ -6,5 +6,7 @@ urlpatterns = [
     path('', index),
     path('login', index),
     path('signup', index),
-    path('landing', index)
+    path('landing', index),
+    path('postItem', index),
+    path('inventory', index)
 ]

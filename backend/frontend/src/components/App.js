@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Signup from "./SignUp";
 import Landing from "./Landing";
+import PostItem from "./PostItem";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<Login />}></Route>
           <Route path="signup" element={<Signup />} />
           <Route path="landing" element={<Landing />} />
+          <Route path="postItem" element={<PostItem />} />
         </Route>
       </Routes>
     </Router>

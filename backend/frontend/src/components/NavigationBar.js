@@ -1,11 +1,30 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import YooniLogo from "../objects/YooniLogoNavBar.png";
 import UserIcon from "../objects/user.png";
 import "../CSS/styles.css";
 
 const NavigationBar = () => {
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    // Retrieve userData from local storage
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      // Parse the storedUserData if it exists
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    console.log("Logged out" + userData);
+    navigate('/'); //need to change this later on
+  }
+  
   return (
     <Navbar
       data-bs-theme="dark"
@@ -54,7 +73,7 @@ const NavigationBar = () => {
                 My Account
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/logout">
+              <NavDropdown.Item onClick={handleLogout}>
                 Logout
               </NavDropdown.Item>
             </NavDropdown>

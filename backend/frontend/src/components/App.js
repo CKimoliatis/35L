@@ -14,7 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/'>
-          <Route index element={<Login />}></Route>
+          <Route index element={<Login />}></Route>  {/* has to be changed later */}
           <Route path="signup" element={<Signup />} />
           <Route path="landing" element={<Landing />} />
           <Route path="postItem" element={<PostItem />} />

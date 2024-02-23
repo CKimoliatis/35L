@@ -8,17 +8,21 @@
   }
   
   .search-box input[type="text"] {
+
     flex: 1;
     padding-left: 10px;
     border-radius: 20px 0 0 20px;
+    /* height: 40px; */
     border:none;
     outline: none;
     font-size: 14px;
+    color: black;
+    background-color: white;
   }
   
   .search-box button {
     border: none;
-    background-color: #007bff;
+    background-color: white;
     color: #fff;
     border-radius: 0 20px 20px 0;
     padding: 10px 20px;

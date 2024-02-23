@@ -25,6 +25,7 @@
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
 }
+*/
 .float-on-hover:hover, .float-on-hover:focus, .float-on-hover:active {
 transform: scale(1.02);
-} */
+} 

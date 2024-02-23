@@ -1,0 +1,11 @@
+#header-img {
+  width: 200px;
+  margin-left: -25px;
+}
+
+#header-img-container {
+  width: 25%;
+  background-color: #0098dc;
+  justify-content: center;
+  align-items: center;
+}

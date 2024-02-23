@@ -9,16 +9,38 @@ const Login = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (username && password) {
+  const getUser = async (username, password) => {
+    try {
+      if (!username || !password) {
+        throw new Error("Please enter both username and password");
+      }
+      const response = await axios.post("http://127.0.0.1:8000/api/get-user/", {
+        username,
+        password,
+      });
+      if (!response.data) {
+        throw new Error("Invalid credentials");
+      }
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to fetch user data");
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const userData = await getUser(username, password);
+      console.log(userData);
+      localStorage.setItem("userData", JSON.stringify(userData));
       setLoggedIn(true);
       navigate("/landing");
-    } else {
-      alert("Please enter both username and password");
+    } catch (e) {
+      console.log(e);
     }
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("userData");
     setLoggedIn(false);
   };
 

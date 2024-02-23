@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .serializers import UserSerializer, CreateUserSerializer
-from .models import User
+from .serializers import UserSerializer, CreateUserSerializer, ItemSerializer
+from .models import User, Item
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .auth import authenticate
@@ -62,4 +62,18 @@ class DeleteUserView(APIView):
             return Response({'error': 'Multiple users found with the same username'}, 
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-        
+class CreateItem(APIView):
+    serializer_class = ItemSerializer
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ItemView(APIView):
+    serializer_class = ItemSerializer
+    def get(self, request, format=None):
+        queryset= Item.objects.all()
+        serializer=self.serializer_class(queryset, many=True)
+        return Response(serializer.data)

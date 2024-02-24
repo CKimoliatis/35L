@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import YooniLogo from "../objects/YooniLogoNavBar.png";
 import UserIcon from "../objects/user.png";
 import "../CSS/styles.css";
+import SearchBar from "./SearchBar/SearchBar";
+
 
 const NavigationBar = () => {
   const [userData, setUserData] = useState(null);
@@ -37,6 +39,7 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/">
           <img src={YooniLogo} height={"100%"} alt="Yooni Logo" />
         </Navbar.Brand>
+        <SearchBar />
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

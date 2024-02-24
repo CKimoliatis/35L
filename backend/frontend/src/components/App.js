@@ -2,7 +2,7 @@ import Login from "./Login";
 import React from 'react';
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Signup from "./SignUp";
-import Landing from "./Landing";
+import Landing from "./Landing.js";
 import PostItem from "./PostItem";
 import Inventory from "./Inventory";
 import 'bootstrap';

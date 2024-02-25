@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -20,7 +22,7 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordConditionsVisible, setPasswordConditionsVisible] =
     useState(false);
-
+  const [accountMade, setAccountMade] = useState(false);
   const validateEmail = (inputEmail) => {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail);
     setEmailValid(isValid);

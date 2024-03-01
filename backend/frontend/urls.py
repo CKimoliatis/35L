@@ -8,5 +8,6 @@ urlpatterns = [
     path('signup', index),
     path('landing', index),
     path('postItem', index),
-    path('inventory', index)
+    path('inventory', index),
+    path('my-listings', index)
 ]

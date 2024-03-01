@@ -5,8 +5,10 @@ import Signup from "./SignUp";
 import Landing from "./Landing.js";
 import PostItem from "./PostItem";
 import Inventory from "./Inventory";
+import MyListing from "./MyListing";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
           <Route path="landing" element={<Landing />} />
           <Route path="postItem" element={<PostItem />} />
           <Route path="inventory" element={<Inventory />} />
+          <Route path="my-listings" element={<MyListing />} />
         </Route>
       </Routes>
     </Router>

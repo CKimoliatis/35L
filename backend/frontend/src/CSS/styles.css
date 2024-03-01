@@ -58,3 +58,8 @@
 .navbar-custom {
     padding: 10px 0; /* For vertical padding without changing brand-specific styles */
 }
+
+.listing-container{
+    margin: 4rem;
+    border: 1px solid #ccc;
+}

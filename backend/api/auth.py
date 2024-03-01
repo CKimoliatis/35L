@@ -8,3 +8,4 @@ def authenticate(username=None, password=None):
             return user
     except User.DoesNotExist:
         return None
+    

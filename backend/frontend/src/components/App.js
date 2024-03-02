@@ -9,6 +9,7 @@ import MyListing from "./MyListing";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemPage from "./ItemPage/ItemPage";
+import IntermediaryPage from "./Intermediary.js";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="landing" element={<Landing />} />
           <Route path="postItem" element={<PostItem />} />
           <Route path="inventory" element={<Inventory />} />
+          <Route path="intermediary" element = {<IntermediaryPage/>}/>
           <Route path="/post/:id" element={<ItemPage/>} />
           <Route path="my-listings" element={<MyListing />} />
         </Route>

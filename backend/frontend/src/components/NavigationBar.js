@@ -36,7 +36,7 @@ const NavigationBar = () => {
       className="navbar-custom"
     >
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/landing">
           <img src={YooniLogo} height={"100%"} alt="Yooni Logo" />
         </Navbar.Brand>
         <SearchBar />

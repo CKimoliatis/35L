@@ -43,8 +43,8 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/inventory" className="nav-link-custom">
-              Inventory
+            <Nav.Link as={Link} to="/landing" className="nav-link-custom">
+              Browse
             </Nav.Link>
             <Nav.Link as={Link} to="/my-listings" className="nav-link-custom">
               My Listings

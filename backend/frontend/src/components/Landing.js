@@ -11,9 +11,11 @@ import "./Posts/Post.css";
 import "./Landing/Landing.css";
 import "./Pagination/Pagination.css";
 import logo from "../../static/frontend/images/YooniLogo.png";
+import axios from 'axios'
 
 const Landing = () => {
   const [userData, setUserData] = useState(null);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     // Retrieve userData from local storage
@@ -25,11 +27,24 @@ const Landing = () => {
     console.log(userData);
   }, []);
 
-  function printPosts(numPosts) {
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/api/item')
+        .then(response => {
+            setItems(response.data);
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}, []);
+
+
+  function printPosts(items) {
     const posts = [];
-    for (let i = 0; i < numPosts; i++) {
-      posts.push(<Post image={logo} description="logo"></Post>);
-    }
+    items.forEach(item => {
+      // Assuming 'logo' is defined somewhere else
+      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description} />);
+    });
     return posts;
   }
   return (
@@ -48,7 +63,7 @@ const Landing = () => {
           </div>
         </div>
         <div id="right-side-container">
-          <div id="posts-container">{printPosts(20)};</div>
+          <div id="posts-container">{printPosts(items)}</div>
           <div id="pagination-container">
             <Pagination pageNumber={1}></Pagination>
             <Pagination pageNumber={2}></Pagination>

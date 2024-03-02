@@ -1,0 +1,11 @@
+#item-page-container {
+    background-color: rgb(233, 233, 233);
+}
+#item-page-image {
+    width: 200px;
+}
+
+#item-page-image-container {
+    border: 2px;
+
+}

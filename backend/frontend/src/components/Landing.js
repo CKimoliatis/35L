@@ -38,11 +38,12 @@ const Landing = () => {
         });
 }, []);
 
+
   function printPosts(items) {
     const posts = [];
     items.forEach(item => {
       // Assuming 'logo' is defined somewhere else
-      posts.push(<Post key={item.id} image={logo} price={item.price} title={item.title} description={item.description} />);
+      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description} />);
     });
     return posts;
   }

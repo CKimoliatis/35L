@@ -9,5 +9,5 @@ urlpatterns = [
     path('landing', index),
     path('postItem', index),
     path('inventory', index),
-    path('post/:id', index)
+    path('my-listings', index)
 ]

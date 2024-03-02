@@ -5,6 +5,7 @@ import Signup from "./SignUp";
 import Landing from "./Landing.js";
 import PostItem from "./PostItem";
 import Inventory from "./Inventory";
+import MyListing from "./MyListing";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemPage from "./ItemPage/ItemPage";

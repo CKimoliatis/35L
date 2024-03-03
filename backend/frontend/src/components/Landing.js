@@ -32,20 +32,34 @@ const Landing = () => {
     setSearchQuery(query);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(searchQuery);
-  }, [searchQuery])
+    const fetchData = async () => {
+      try {
+        // Make a GET request to your backend endpoint
+        const response = await axios.get("/api/parse-item", {
+          params: { searchQuery }, // Optional: Pass search query as a parameter
+        });
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [searchQuery]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/item")
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/parse-item");
         setItems(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   function printPosts(items) {

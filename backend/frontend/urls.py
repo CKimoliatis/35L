@@ -11,4 +11,5 @@ urlpatterns = [
     path('inventory', index),
     path('my-listings', index),
     path('path/:id', index)
+    
 ]

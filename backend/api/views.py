@@ -77,3 +77,17 @@ class ItemView(APIView):
         queryset= Item.objects.all()
         serializer=self.serializer_class(queryset, many=True)
         return Response(serializer.data)
+    
+class FetchItemsAPIView(APIView):
+    def get(self, request, format=None):
+        search_query = request.query_params.get('searchQuery', '') 
+
+        if search_query:
+            items = Item.objects.filter(title__icontains=search_query) 
+        else:
+            items = Item.objects.all()
+
+        # Serialize items
+        serializer = ItemSerializer(items, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

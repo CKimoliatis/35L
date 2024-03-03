@@ -87,10 +87,11 @@ class FetchItemsAPIView(APIView):
         else:
             items = Item.objects.all()
             print("Here2")
-        user_id = request.query_params.get('user_id')
-        queryset = Item.objects.filter(user_id=user_id)  # Filter items by user ID
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
+
+        # Serialize items
+        serializer = ItemSerializer(items, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 class FetchItemsListing(APIView):
     def get(self, request, format=None):

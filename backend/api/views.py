@@ -21,13 +21,10 @@ class CreateUserView(APIView):
         try:
             serializer = self.serializer_class(data=request.data)
             if serializer.is_valid():
-                email = serializer.validated_data.get('email')
-                if User.objects.filter(email=email).exists():
-                    return Response({'error': 'User with this email already exists.'},
-                                    status=status.HTTP_400_BAD_REQUEST)
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

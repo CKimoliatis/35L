@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [gender, setGender] = useState("");
-  const [school, setSchool] = useState("");
+  const [school, setSchool] = useState(null);
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState({
     minLength: false,
@@ -19,10 +18,10 @@ const Signup = () => {
     symbol: false,
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [passwordConditionsVisible, setPasswordConditionsVisible] =
     useState(false);
-  const [accountMade, setAccountMade] = useState(false);
+
   const validateEmail = (inputEmail) => {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail);
     setEmailValid(isValid);
@@ -44,51 +43,37 @@ const Signup = () => {
   };
 
   const handleSignup = () => {
-    // Validate email
+    let errorMsg = "";
+
+    if (!firstName) errorMsg += "First Name is blank. \n";
+    if (!lastName) errorMsg += "Last Name is blank. \n";
+    if (!username) errorMsg += "Username is blank. \n";
+    if (!email) errorMsg += "Email is blank. \n";
+    if (!password) errorMsg += "Password is blank. \n";
+    if (!school) errorMsg += "School is blank.";
+
+    if (errorMsg) {
+      setErrorMessage(errorMsg);
+      return;
+    }
+
     const isEmailValid = validateEmail(email);
     if (!isEmailValid) {
       setErrorMessage("Email is not valid");
       return;
     }
 
-    // Validate password
     const isPasswordValid = validatePassword(password);
     if (!isPasswordValid) {
       setErrorMessage("Password is not valid");
       return;
     }
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match");
       setPasswordMatch(false);
       return;
     }
-
-    // Check if email exists in the database (simulated check)
-    // const emailExistsInDatabase = null; // For future reference
-    // if (emailExistsInDatabase === null) {
-    //   setErrorMessage(
-    //     "An error occurred while checking email existence. Please try again."
-    //   );
-    //   return;
-    // }
-
-    // if (emailExistsInDatabase) {
-    //   setErrorMessage("Account already exists for this email. Log in?");
-    //   // Implement your logic to redirect to the login page or show a login modal
-    //   return;
-    // }
-
-    // If all conditions are met, proceed with signup logic
-    setErrorMessage(""); // Clear any previous error messages
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Gender:", gender);
-    // Add your actual signup logic (e.g., API request) here
 
     const requestOptions = {
       method: "POST",
@@ -102,9 +87,37 @@ const Signup = () => {
         username: username,
       }),
     };
+
     fetch("/api/create-user", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((response) => {
+        if (response.status === 201) {
+          navigate("/intermediary");
+        } else if (response.status == 400) {
+          return response.json().then((error) => {
+            if (
+              error.email.some((message) =>
+                message.includes("already exists")
+              ) ||
+              error.username.some((message) =>
+                message.includes("already exists")
+              )
+            ) {
+              const loginLink = <a href="/">Log in</a>;
+              setErrorMessage(
+                <>
+                  Account with this email or username already exists.{" "}
+                  {loginLink}?
+                </>
+              );
+            } else {
+              setErrorMessage("An error occurred during signup.");
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const renderConditionStatus = (condition) => {
@@ -168,16 +181,6 @@ const Signup = () => {
             onChange={(e) => setSchool(e.target.value)}
             style={{ width: "100%" }}
           />
-          {/* <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            style={{ width: "100%" }}
-          >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select> */}
         </label>
         <br />
         <br />

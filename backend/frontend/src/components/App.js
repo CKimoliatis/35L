@@ -5,10 +5,11 @@ import Signup from "./SignUp";
 import Landing from "./Landing.js";
 import PostItem from "./PostItem";
 import Inventory from "./Inventory";
-import MyListing from "./MyListing";
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import MyListing from "./MyListings/MyListing.js";
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemPage from "./ItemPage/ItemPage";
+import IntermediaryPage from "./Intermediary.js";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path="landing" element={<Landing />} />
           <Route path="postItem" element={<PostItem />} />
           <Route path="inventory" element={<Inventory />} />
-          <Route path="/post/:id" element={<ItemPage />} />
+          <Route path="intermediary" element = {<IntermediaryPage/>}/>
+          <Route path="/post/:id" element={<ItemPage/>} />
           <Route path="my-listings" element={<MyListing />} />
         </Route>
       </Routes>

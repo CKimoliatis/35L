@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import YooniLogo from "../objects/YooniLogoNavBar.png";
@@ -6,11 +6,13 @@ import UserIcon from "../objects/user.png";
 import "../CSS/styles.css";
 import SearchBar from "./SearchBar/SearchBar";
 
-
-const NavigationBar = () => {
+const NavigationBar = ({updateSearchQuery}) => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
+  const handleSearchQueryChange = (query) => {
+    updateSearchQuery(query); // Call updateSearchQuery function from props
+  };
 
   useEffect(() => {
     // Retrieve userData from local storage
@@ -22,11 +24,11 @@ const NavigationBar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('userData');
+    localStorage.removeItem("userData");
     console.log("Logged out" + userData);
-    navigate('/'); //need to change this later on
-  }
-  
+    navigate("/"); //need to change this later on
+  };
+
   return (
     <Navbar
       data-bs-theme="dark"
@@ -39,7 +41,7 @@ const NavigationBar = () => {
         <Navbar.Brand as={Link} to="/landing">
           <img src={YooniLogo} height={"100%"} alt="Yooni Logo" />
         </Navbar.Brand>
-        <SearchBar />
+        <SearchBar handleSearchQueryChange={handleSearchQueryChange}/>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -76,9 +78,7 @@ const NavigationBar = () => {
                 My Account
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleLogout}>
-                Logout
-              </NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

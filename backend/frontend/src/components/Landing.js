@@ -11,11 +11,12 @@ import "./Posts/Post.css";
 import "./Landing/Landing.css";
 import "./Pagination/Pagination.css";
 import logo from "../../static/frontend/images/YooniLogo.png";
-import axios from 'axios'
+import axios from "axios";
 
 const Landing = () => {
   const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Retrieve userData from local storage
@@ -27,29 +28,60 @@ const Landing = () => {
     console.log(userData);
   }, []);
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/item')
-        .then(response => {
-            setItems(response.data);
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}, []);
+  const updateSearchQuery = (query) => {
+    setSearchQuery(query);
+  };
 
+  useEffect(() => {
+    console.log(searchQuery);
+    const fetchData = async () => {
+      try {
+        // Make a GET request to your backend endpoint
+        const response = await axios.get("/api/parse-item", {
+          params: { searchQuery }, // Optional: Pass search query as a parameter
+        });
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/parse-item");
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   function printPosts(items) {
     const posts = [];
-    items.forEach(item => {
+    items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
-      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description} />);
+      posts.push(
+        <Post
+          key={item.id}
+          id={item.id}
+          image={logo}
+          price={item.price}
+          title={item.title}
+          description={item.description}
+        />
+      );
     });
     return posts;
   }
   return (
     <div>
-      <NavigationBar />
+      <NavigationBar updateSearchQuery={updateSearchQuery} />
       <br></br>
       <br></br>
       <br></br>

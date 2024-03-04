@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-function UploadButton() {
+function UploadButton({ onFileSelect }) {
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const inputRef = useRef(null);
 
@@ -13,11 +13,12 @@ function UploadButton() {
     if (files && files.length > 0) {
       const file = files[0];
       setUploadedFileName(file.name);
+      onFileSelect(file) //call the pass function with the selected file
     }
   };
 
   return (
-    <div className="m-3">
+    <div className="m-2">
       <label className="mx-3">Choose file:</label>
       <input
         ref={inputRef}

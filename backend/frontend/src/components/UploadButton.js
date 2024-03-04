@@ -26,14 +26,17 @@ function UploadButton() {
         className="d-none"
       />
       <button
-        onClick={handleUpload}
+        onClick={(e) => {
+          e.preventDefault(); // This will prevent the default form submit action
+          handleUpload();
+        }}
         className={`btn btn-outline-${
           uploadedFileName ? "success" : "primary"
         }`}
+        type="button" // Explicitly set the button type to 'button'
       >
         {uploadedFileName || "Upload"}
       </button>
-      {uploadedFileName && <span className="mx-2">{uploadedFileName}</span>}
     </div>
   );
 }

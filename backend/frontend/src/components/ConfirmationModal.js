@@ -21,7 +21,7 @@ function ConfirmationModal({ show, onHide, itemTitle }) {
       onHide={onHide}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Item successfully Posted!</Modal.Title>
+        <Modal.Title>Item Successfully Posted!</Modal.Title>
       </Modal.Header>
       <Modal.Body>{`The item "${itemTitle}" has been successfully posted!`}</Modal.Body>
       <Modal.Footer>

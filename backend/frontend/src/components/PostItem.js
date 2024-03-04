@@ -57,7 +57,6 @@ const PostItem = () => {
     fetch('/api/create-item', requestOptions)
       .then((response) => {
         if (response.ok) {
-          // Assuming you want to redirect or clear form here
           console.log('Item posted successfully');
           setShowConfirmation(true);
               // Clear the form by resetting state variables

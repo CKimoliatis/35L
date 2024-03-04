@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavigationBar from "./NavigationBar";
 import UploadButton from "./UploadButton";
+import ConfirmationModal from "./ConfirmationModal";
 import "../CSS/styles.css";
 
 const PostItem = () => {
@@ -10,6 +11,7 @@ const PostItem = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null); // For the uploaded image
   const [errorMessage, setErrorMessage] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   //get the user ID to link post to user
   const userDataString = localStorage.getItem("userData")
@@ -57,7 +59,13 @@ const PostItem = () => {
         if (response.ok) {
           // Assuming you want to redirect or clear form here
           console.log('Item posted successfully');
-          // Clear form or redirect
+          setShowConfirmation(true);
+              // Clear the form by resetting state variables
+          setTitle('');
+          setPrice('');
+          setCategory('');
+          setDescription('');
+          setImage(null);
         } else {
           // Handle different kinds of errors
           setErrorMessage('An error occurred while posting the item.');
@@ -117,6 +125,11 @@ const PostItem = () => {
           {errorMessage && <div className="error-message">Error: {errorMessage}</div>}
         </form>
       </div>
+      <ConfirmationModal
+        show={showConfirmation}
+        onHide={() => setShowConfirmation(false)}
+        itemTitle={title}
+        />
     </>
   );
 };

@@ -11,11 +11,12 @@ import "./Posts/Post.css";
 import "./Landing/Landing.css";
 import "./Pagination/Pagination.css";
 import logo from "../../static/frontend/images/YooniLogo.png";
-import axios from 'axios'
+import axios from "axios";
 
 const Landing = () => {
   const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Retrieve userData from local storage
@@ -27,38 +28,61 @@ const Landing = () => {
     console.log(userData);
   }, []);
 
+  const updateSearchQuery = (query) => {
+    setSearchQuery(query);
+  };
+
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/item')
-        .then(response => {
-            setItems(response.data);
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
+    console.log(searchQuery);
+    const fetchData = async () => {
+      try {
+        // Make a GET request to your backend endpoint
+        const response = await axios.get("/api/parse-item", {
+          params: { searchQuery }, // Optional: Pass search query as a parameter
         });
-}, []);
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  // const navigate = useNavigate();
+    fetchData();
+  }, [searchQuery]);
 
-  // const handleClickPost = (id, image, price, title, description) => {
-  //   const data = { itemId: id, itemImage: image, itemPrice: price, itemTitle: title, itemDescription: description };
-  //   const encodedData = encodeURIComponent(JSON.stringify(data));
-  //   navigate(`/post/${encodedData}`);
-  // }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/parse-item");
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
 
   function printPosts(items) {
     const posts = [];
-    items.forEach(item => {
+    items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
-      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description}/>);
+      posts.push(
+        <Post
+          key={item.id}
+          id={item.id}
+          image={logo}
+          price={item.price}
+          title={item.title}
+          description={item.description}
+        />
+      );
     });
     // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
     return posts;
   }
   return (
     <div>
-      <NavigationBar />
+      <NavigationBar updateSearchQuery={updateSearchQuery} />
       <br></br>
       <br></br>
       <br></br>

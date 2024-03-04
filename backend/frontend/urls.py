@@ -13,4 +13,6 @@ urlpatterns = [
     path('my-listings', index),
     path('post/:encodedData', index),
     path('post/<str:encoded_data>/', views.post_item, name='post_item')
+    path('path/:id', index)
+    
 ]

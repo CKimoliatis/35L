@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
 import PriceSelect from "./PriceSelect/PriceSelect.js";
 import CategorySelect from "./CategorySelect/CategorySelect.js";
 import Post from "./Posts/Post.js";
 import Pagination from "./Pagination/Pagination.js";
-import SearchBar from "./SearchBar/SearchBar.js";
 import "./CategorySelect/CategorySelect.css";
 import "./PriceSelect/PriceSelect.css";
 import "./Posts/Post.css";
@@ -38,13 +38,22 @@ const Landing = () => {
         });
 }, []);
 
+  // const navigate = useNavigate();
+
+  // const handleClickPost = (id, image, price, title, description) => {
+  //   const data = { itemId: id, itemImage: image, itemPrice: price, itemTitle: title, itemDescription: description };
+  //   const encodedData = encodeURIComponent(JSON.stringify(data));
+  //   navigate(`/post/${encodedData}`);
+  // }
+
 
   function printPosts(items) {
     const posts = [];
     items.forEach(item => {
       // Assuming 'logo' is defined somewhere else
-      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description} />);
+      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description}/>);
     });
+    // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
     return posts;
   }
   return (

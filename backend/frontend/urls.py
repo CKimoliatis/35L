@@ -1,6 +1,7 @@
 
 from django.urls import path
 from .views import index
+from . import views
 
 urlpatterns = [
     path('', index),
@@ -10,5 +11,6 @@ urlpatterns = [
     path('postItem', index),
     path('inventory', index),
     path('my-listings', index),
-    path('path/:id', index)
+    path('post/:encodedData', index),
+    path('post/<str:encoded_data>/', views.post_item, name='post_item')
 ]

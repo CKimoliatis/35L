@@ -21,7 +21,7 @@ function App() {
           <Route path="landing" element={<Landing />} />
           <Route path="postItem" element={<PostItem />} />
           <Route path="inventory" element={<Inventory />} />
-          <Route path="/post/:id" element={<ItemPage/>} />
+          <Route path="/post/:encodedData" element={<ItemPage/>} />
           <Route path="my-listings" element={<MyListing />} />
         </Route>
       </Routes>

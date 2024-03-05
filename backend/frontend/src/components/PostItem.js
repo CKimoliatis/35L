@@ -14,9 +14,8 @@ const PostItem = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   //get the user ID to link post to user
-  const userDataString = localStorage.getItem("userData")
-        const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
-        const userID = userData[Object.keys(userData)[0]]; // Access the user ID
+  const userDataString = localStorage.getItem("userData"); 
+    const userData = JSON.parse(userDataString); 
 
   // This function will be passed to UploadButton to update the image state
   const handleFileSelect = (file) => {
@@ -40,7 +39,7 @@ const PostItem = () => {
     }
 
     const formData = new FormData();
-    formData.append('user_id', userID);
+    formData.append('user_id', userData.id);
     formData.append('title', title);
     formData.append('price', price);
     formData.append('category', category);

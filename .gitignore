@@ -29,3 +29,6 @@ yarn-error.log*
 
 __pycache__/
 *.pyc
+
+#media directory for post images
+/backend/media/item_images/

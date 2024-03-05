@@ -43,6 +43,6 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     sold_flag = models.BooleanField(default=False)
     selling_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    image = models.BinaryField(default=b'')
+    image = models.ImageField(upload_to='item_images/', null=True, blank=True)
 
 

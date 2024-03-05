@@ -1,14 +1,15 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 function ConfirmationModal({ show, onHide, itemTitle }) {
-  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleBrowseItems = () => {
-    onHide(); // Close the modal
-    navigate("/landing"); // Navigate to the Landing page
-  };
+    const navigate = useNavigate(); // Initialize useNavigate hook
+
+    const handleAddWatchlist = () => {
+        onHide(); // Close the modal
+        //add logic to add to watchlist model
+    };
 
   return (
     <Modal
@@ -20,15 +21,14 @@ function ConfirmationModal({ show, onHide, itemTitle }) {
       onHide={onHide}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Item Successfully Posted!</Modal.Title>
+        <Modal.Title>Add Item to watchlist?</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{`The item "${itemTitle}" has been successfully posted!`}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
-          Close
+          No
         </Button>
-        <Button variant="primary" onClick={handleBrowseItems}>
-          Browse Items
+        <Button variant="primary" onClick={handleAddWatchlist}>
+          Yes
         </Button>
       </Modal.Footer>
     </Modal>

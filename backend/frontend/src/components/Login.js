@@ -79,6 +79,11 @@ const Login = (props) => {
             className="form-control"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handleLogin();
+              }
+            }}
             style={{ width: "200px", margin: "auto" }}
           />
         </div>

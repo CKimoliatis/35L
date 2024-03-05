@@ -6,5 +6,8 @@ def authenticate(username=None, password=None):
         user = User.objects.get(username=username)
         if user.check_password(password):
             return user
+        elif user:
+            #user exists, incorrect password
+            return -1
     except User.DoesNotExist:
         return None

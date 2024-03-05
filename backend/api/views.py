@@ -33,17 +33,16 @@ class UserDataView(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        print("Username: ", username)
-        print("Password: ", password)
         user = authenticate(username=username, password=password)
         if user is not None:
+            if user == -1:
+                return Response({'error': 'Incorrect password'} )
             # A backend authenticated the credentials
             serializer = UserSerializer(user)
-            print(serializer.data)
             return Response(serializer.data)
         else:
             # No backend authenticated the credentials
-            return Response({'error': 'Invalid login'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'User not found'})
         
 class DeleteUserView(APIView):
     def delete(self, request, format=None):

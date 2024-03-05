@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NavigationBar from "./NavigationBar";
 import PriceSelect from "./PriceSelect/PriceSelect.js";
 import CategorySelect from "./CategorySelect/CategorySelect.js";
@@ -17,6 +17,8 @@ const Landing = () => {
   const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
 
   useEffect(() => {
     // Retrieve userData from local storage
@@ -62,6 +64,25 @@ const Landing = () => {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchMinMaxPrices = async () => {
+  //     try {
+  //       const response = await axios.get("/api/get-item-price-range");
+  //       setMinPrice(response.data.minPrice);
+  //       setMaxPrice(response.data.maxPrice);
+  //     } catch (error) {
+  //       console.error("Error fetching min-max prices:", error);
+  //     }
+  //   };
+
+  //   fetchMinMaxPrices();
+  // }, []);
+
+  // const handlePriceChange = (newPriceRange) => {
+  //   console.log("New price range:", newPriceRange);
+  //   // Perform any actions you want with the updated price range
+  // };
+
   function printPosts(items) {
     const posts = [];
     items.forEach((item) => {
@@ -88,10 +109,15 @@ const Landing = () => {
       <div id="main-container">
         <div id="categories-container">
           <div id="price-select-container">
-            <PriceSelect></PriceSelect>
+            <PriceSelect/>
+            {/* <PriceSelect
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onPriceChange={handlePriceChange}
+            /> */}
           </div>
           <div id="category-select-container">
-            <CategorySelect></CategorySelect>
+            <CategorySelect/>
           </div>
         </div>
         <div id="right-side-container">

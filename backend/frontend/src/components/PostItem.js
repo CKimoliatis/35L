@@ -65,6 +65,7 @@ const PostItem = () => {
           setCategory('');
           setDescription('');
           setImage(null);
+          setErrorMessage('');
         } else {
           // Handle different kinds of errors
           setErrorMessage('An error occurred while posting the item.');
@@ -81,7 +82,7 @@ const PostItem = () => {
       <NavigationBar />
       <br /><br /><br />
       <div className="form-container">
-        <h2>Create a new listing</h2>
+        <h2>Post a New Item</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
@@ -120,7 +121,7 @@ const PostItem = () => {
             <label htmlFor="images">Upload pictures</label>
             <UploadButton onFileSelect={handleFileSelect} />
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn btn-outline-primary">Submit</button>
           {errorMessage && <div className="error-message">Error: {errorMessage}</div>}
         </form>
       </div>

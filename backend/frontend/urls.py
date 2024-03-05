@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, re_path
 from .views import index
 from . import views
 
@@ -12,7 +12,6 @@ urlpatterns = [
     path('inventory', index),
     path('my-listings', index),
     path('post/:encodedData', index),
-    path('post/<str:encoded_data>/', views.post_item, name='post_item')
+    re_path(r'^post/.*$', index),
     path('path/:id', index)
-    
 ]

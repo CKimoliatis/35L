@@ -62,6 +62,7 @@ const Landing = () => {
     fetchData();
   }, []);
 
+  
   function printPosts(items) {
     const posts = [];
     items.forEach((item) => {
@@ -78,7 +79,7 @@ const Landing = () => {
       );
     });
     // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
-    return posts;
+    return posts.reverse();
   }
   return (
     <div>

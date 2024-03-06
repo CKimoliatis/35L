@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-function UploadButton() {
+function UploadButton({ onFileSelect }) {
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const inputRef = useRef(null);
 
@@ -13,11 +13,12 @@ function UploadButton() {
     if (files && files.length > 0) {
       const file = files[0];
       setUploadedFileName(file.name);
+      onFileSelect(file) //call the pass function with the selected file
     }
   };
 
   return (
-    <div className="m-3">
+    <div className="m-2">
       <label className="mx-3">Choose file:</label>
       <input
         ref={inputRef}
@@ -26,14 +27,17 @@ function UploadButton() {
         className="d-none"
       />
       <button
-        onClick={handleUpload}
+        onClick={(e) => {
+          e.preventDefault(); // This will prevent the default form submit action
+          handleUpload();
+        }}
         className={`btn btn-outline-${
           uploadedFileName ? "success" : "primary"
         }`}
+        type="button" // Explicitly set the button type to 'button'
       >
         {uploadedFileName || "Upload"}
       </button>
-      {uploadedFileName && <span className="mx-2">{uploadedFileName}</span>}
     </div>
   );
 }

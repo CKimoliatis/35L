@@ -9,5 +9,6 @@ urlpatterns = [
     path('create-item', CreateItem.as_view()),
     path('item', ItemView.as_view()),
     path('parse-item', FetchItemsListing.as_view()),
-    path('myitems', FetchItemsAPIView.as_view())
+    path('myitems', FetchItemsAPIView.as_view()),
+    path('update-item/<int:pk>', UpdateItem.as_view(), name='update-item')
 ]

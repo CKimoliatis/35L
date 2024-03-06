@@ -82,11 +82,9 @@ class FetchItemsAPIView(APIView):
         search_query = request.query_params.get('searchQuery', '') 
 
         if search_query:
-            items = Item.objects.filter(user_id__icontains=search_query) 
-            print("Here")
+            items = Item.objects.filter(user_id=search_query) 
         else:
             items = Item.objects.all()
-            print("Here2")
 
         # Serialize items
         serializer = ItemSerializer(items, many=True)
@@ -106,3 +104,20 @@ class FetchItemsListing(APIView):
         serializer = ItemSerializer(items, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class UpdateItem(APIView):
+    serializer_class = ItemSerializer
+
+    def put(self, request, pk):
+        try:
+            item = Item.objects.get(pk=pk)  # Retrieve the item using the primary key from the URL
+        except Item.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+        serializer = self.serializer_class(item, data=request.data)
+        print('serializer', serializer)
+        # if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

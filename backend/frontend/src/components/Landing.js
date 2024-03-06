@@ -4,7 +4,6 @@ import PriceSelect from "./PriceSelect/PriceSelect.js";
 import CategorySelect from "./CategorySelect/CategorySelect.js";
 import Post from "./Posts/Post.js";
 import Pagination from "./Pagination/Pagination.js";
-import SearchBar from "./SearchBar/SearchBar.js";
 import "./CategorySelect/CategorySelect.css";
 import "./PriceSelect/PriceSelect.css";
 import "./Posts/Post.css";
@@ -62,6 +61,7 @@ const Landing = () => {
     fetchData();
   }, []);
 
+  
   function printPosts(items) {
     const posts = [];
     items.forEach((item) => {
@@ -77,7 +77,8 @@ const Landing = () => {
         />
       );
     });
-    return posts;
+    // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
+    return posts.reverse();
   }
   return (
     <div>

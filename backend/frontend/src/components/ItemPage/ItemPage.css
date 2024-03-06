@@ -2,10 +2,39 @@
     background-color: rgb(233, 233, 233);
 }
 #item-page-image {
-    width: 200px;
+    width: 80%;
+}
+
+#main-container {
+    display: flex;
+    min-width: 700px;
+    min-height: 600px;
 }
 
 #item-page-image-container {
-    border: 2px;
-
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-60px);
+    width: 40%;
+    display: flex;
+    
 }
+
+#item-info-container {
+    align-items: center;
+    justify-content: center;
+    width: 59%;
+    height: 100vh;
+}
+
+#item-description-container {
+    background-color: white;
+    min-height: 500px;
+    margin-right: 25px;
+    margin-top: 60px;
+    padding: 15px;
+}
+
+
+

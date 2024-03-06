@@ -109,7 +109,7 @@ class UpdateItem(APIView):
     serializer_class = ItemSerializer
 
     def put(self, request, pk):
-        # Your logic here to retrieve the item, update it, and save it
+
         item = Item.objects.get(pk=pk)
         serializer = self.serializer_class(item, data=request.data)
         if serializer.is_valid():

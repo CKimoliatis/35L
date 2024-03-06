@@ -15,7 +15,6 @@ const IsEditing=() => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const [editingItemId, setEditingItemId] = useState(null);
-    // const [editedItemData, setEditedItemData] = useState({});
 
     const userDataString = localStorage.getItem("userData"); 
     const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
@@ -25,9 +24,6 @@ const IsEditing=() => {
         setEditingItemId(itemId);
 
     };
-
-
-
 
 
     useEffect(() => {
@@ -89,72 +85,3 @@ const MyListing = () => {
 
 export default MyListing;
 
-
-// function printPosts(items) {
-        
-    //     {items.map(item => (
-    //         <MyListingPost
-    //             key={item.id}
-    //             image={YooniLogo}
-    //             price={item.price}
-    //             title={item.title}
-    //             description={item.description}
-    //             category={item.category}
-    //             is_editing={editingItemId === item.id}
-    //             onEditClick={() => handleEditClick(item.id)}
-    //             editedItemData={editedItemData} // Pass edited item data to MyListingPost
-    //             onTitleChange={handleTitleChange} // Pass handlers to MyListingPost
-    //             onDescriptionChange={handleDescriptionChange}
-    //         />
-    //     ))}
-    //     return posts;
-    // }
-
-    // function printEdit(){
-    //     <EditMyListing onSaveClick={handleSaveClick}/>
-    // }
-
-                {/* {editingItemId && (
-                <EditMyListing
-                    item_id={editingItemId}
-                    editedItemData={editedItemData} // Pass edited item data to EditMyListing
-                    onSaveClick={handleSaveClick}
-                    onTitleChange={handleTitleChange} // Pass handlers to EditMyListing
-                    onDescriptionChange={handleDescriptionChange}
-                />
-                )} */}
-
-        // <>
-        // {/* {editing ? (
-        //     <>
-        //     {printEdit()}
-        //     </>
-            
-        // ) :( */}
-        //     <>
-        //     {printPosts(items)}
-        //     </>
-        // {/* )
-        // } */}
-        // </>
-
-            // const handleSaveClick = () => {
-    //     setEditingItemId(null); // Reset the editing item ID
-    //     // Save the edited item data to backend or perform other actions
-    // };
-
-    // const handleTitleChange = (e) => {
-    //     // Update the title of the edited item
-    //     setEditedItemData(prevData => ({
-    //         ...prevData,
-    //         title: e.target.value
-    //     }));
-    // };
-
-    // const handleDescriptionChange = (e) => {
-    //     // Update the description of the edited item
-    //     setEditedItemData(prevData => ({
-    //         ...prevData,
-    //         description: e.target.value
-    //     }));
-    // };

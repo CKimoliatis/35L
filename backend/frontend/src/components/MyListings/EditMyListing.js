@@ -48,14 +48,11 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         try {
 
             console.log(postData)
-            // Make a POST request to your backend API endpoint to update the item
-            // console.log('price is: ',price_new)
+ 
             await axios.put(`/api/update-item/${item_id}`, postData);
     
         } catch (error) {
-            // Handle any errors that occur during the request
             console.error('Error updating item:', error);
-            // Optionally, display an error message to the user
         }
 
         

@@ -49,19 +49,6 @@ const Landing = () => {
     fetchData();
   }, [searchQuery]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/parse-item");
-        setItems(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   function printPosts(items) {
     const posts = [];
     items.forEach((item) => {
@@ -69,7 +56,7 @@ const Landing = () => {
       posts.push(
         <Post
           key={item.id}
-          id={item.id}
+          item_id={item.id}
           image={logo}
           price={item.price}
           title={item.title}

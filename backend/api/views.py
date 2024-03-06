@@ -144,3 +144,24 @@ class FetchWatchlistItems(APIView):
             return Response({'message': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class FetchInWatchlist(APIView):
+    def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')
+        item_id = request.query_params.get('item_id')
+
+        if not user_id or not item_id:
+            return Response({'error': 'user_id and item_id are required query parameters'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(id=user_id)
+            item = Item.objects.get(id=item_id)
+            watchlist, created = Watchlist.objects.get_or_create(user=user)
+            in_watchlist = watchlist.items.filter(id=item_id).exists()
+            return Response({'in_watchlist': in_watchlist})
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Item.DoesNotExist:
+            return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Watchlist.DoesNotExist:
+            return Response({'error': 'Watchlist not found for the user'}, status=status.HTTP_404_NOT_FOUND)

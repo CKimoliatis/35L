@@ -14,10 +14,14 @@ const Post = ({ id, image, price, title, description }) => {
       `/post/${id}?image=${image}&price=${price}&title=${title}&description=${description}`
     );
   };
+
+  const updateInWatchlist = (val) =>{
+    setInWatchlist(val);
+  };
+
   const handleStarClick = (e) => {
     e.stopPropagation(); // Prevents the click event from bubbling to the parent div
     setShowModal(true);
-    setInWatchlist(true);
     console.log("Star clicked for post:", id);
   };
 
@@ -50,6 +54,8 @@ const Post = ({ id, image, price, title, description }) => {
         show={showModal}
         onHide={() => setShowModal(false)}
         itemTitle={title}
+        updateInWatchlist = {updateInWatchlist}
+        inWatchlist = {inWatchlist}
       />
     </div>
   );

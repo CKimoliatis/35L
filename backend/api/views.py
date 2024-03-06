@@ -109,15 +109,10 @@ class UpdateItem(APIView):
     serializer_class = ItemSerializer
 
     def put(self, request, pk):
-        try:
-            item = Item.objects.get(pk=pk)  # Retrieve the item using the primary key from the URL
-        except Item.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-
+        # Your logic here to retrieve the item, update it, and save it
+        item = Item.objects.get(pk=pk)
         serializer = self.serializer_class(item, data=request.data)
-        print('serializer', serializer)
-        # if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

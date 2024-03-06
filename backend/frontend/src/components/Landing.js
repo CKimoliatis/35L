@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
 import PriceSelect from "./PriceSelect/PriceSelect.js";
 import CategorySelect from "./CategorySelect/CategorySelect.js";

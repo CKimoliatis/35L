@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Item
+from .models import User, Item, Category
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,4 +28,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
+        fields = '__all__'
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
         fields = '__all__'

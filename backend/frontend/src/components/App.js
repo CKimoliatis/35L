@@ -3,7 +3,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Signup from "./SignUp";
 import Landing from "./Landing.js";
-import PostItem from "./PostItem";
+import PostItem from "./PostItem/PostItem.js";
 import Inventory from "./Inventory";
 import MyListing from "./MyListings/MyListing.js";
 import 'bootstrap';

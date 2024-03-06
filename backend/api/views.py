@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .serializers import UserSerializer, CreateUserSerializer, ItemSerializer
+from .serializers import *
 from .models import User, Item
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -121,3 +121,19 @@ class MinMaxPriceView(APIView):
         min_price = Item.objects.all().aggregate(Min('price'))['price__min']
         max_price = Item.objects.all().aggregate(Max('price'))['price__max']
         return Response({'minPrice': min_price, 'maxPrice': max_price})
+
+class CategoryView(APIView):
+    serializer_class = CategorySerializer
+    def get(self, request, format=None):
+        queryset= Category.objects.all()
+        serializer=self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+class AddCategory(APIView):
+    serializer_class = CategorySerializer
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

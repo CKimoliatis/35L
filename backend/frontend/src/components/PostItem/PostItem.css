@@ -1,0 +1,33 @@
+/* Add custom styles for each row */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+/* Add custom styles for each category */
+.category {
+    width: 100%;
+    max-width: 100px;
+    /* Adjust as needed */
+    height: 40px !important;
+    /* Adjust as needed */ 
+    margin-bottom: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    /* Center the content vertically */
+    justify-content: center;
+    /* Center the content horizontally */
+}
+
+/* Add custom styles for each category text */
+.category .category-text {
+    font-size: 8px !important;
+    /* Adjust as needed */
+}
+
+.category.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+

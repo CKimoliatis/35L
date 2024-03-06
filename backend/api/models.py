@@ -46,3 +46,5 @@ class Item(models.Model):
     image = models.BinaryField(default=b'')
 
 
+class Category(models.Model): 
+    category_name = models.CharField(max_length=100,default='')

@@ -15,8 +15,8 @@ const Post = ({image, price, title, description, id}) => {
     return (
         <div onClick={handleClick} className='post float-on-hover'>
             <img src={image} alt={title} className="post-images"></img>
-            <h2>${price}</h2>
-            <p className='description-text'>{title}</p>
+            <h4 className="post-text">${price}</h4>
+            <p className='post-text'>{title}</p>
         </div>
     );
 }

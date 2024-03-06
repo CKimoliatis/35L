@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "./NavigationBar";
 import PriceSelect from "./PriceSelect/PriceSelect.js";
 import CategorySelect from "./CategorySelect/CategorySelect.js";
 import Post from "./Posts/Post.js";
+import Popup from "./Popup.js";
 import Pagination from "./Pagination/Pagination.js";
 import SearchBar from "./SearchBar/SearchBar.js";
 import "./CategorySelect/CategorySelect.css";
@@ -19,28 +20,43 @@ const Landing = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
+  const [selectedPriceRange, setSelectedPriceRange] = useState([null, null]);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   useEffect(() => {
-    // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
-      // Parse the storedUserData if it exists
       setUserData(JSON.parse(storedUserData));
+    } else {
+      setShowLoginPopup(true);
     }
-    console.log(userData);
   }, []);
 
-  const updateSearchQuery = (query) => {
-    setSearchQuery(query);
-  };
-
   useEffect(() => {
-    console.log(searchQuery);
     const fetchData = async () => {
       try {
-        // Make a GET request to your backend endpoint
+        const response = await axios.get("/api/get-item-price-range");
+        setMinPrice(response.data.minPrice);
+        setMaxPrice(response.data.maxPrice);
+        setSelectedPriceRange([response.data.minPrice, response.data.maxPrice]);
+      } catch (error) {
+        console.error("Error fetching min-max prices:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         const response = await axios.get("/api/parse-item", {
-          params: { searchQuery }, // Optional: Pass search query as a parameter
+          params: {
+            searchQuery,
+            minPrice: selectedPriceRange[0],
+            maxPrice: selectedPriceRange[1],
+            userId: userData.id,
+          },
         });
         setItems(response.data);
       } catch (error) {
@@ -49,88 +65,65 @@ const Landing = () => {
     };
 
     fetchData();
-  }, [searchQuery]);
+  }, [searchQuery, selectedPriceRange]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/parse-item");
-        setItems(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const updateSearchQuery = (query) => {
+    setSearchQuery(query);
+  };
 
-    fetchData();
-  }, []);
-
-  // useEffect(() => {
-  //   const fetchMinMaxPrices = async () => {
-  //     try {
-  //       const response = await axios.get("/api/get-item-price-range");
-  //       setMinPrice(response.data.minPrice);
-  //       setMaxPrice(response.data.maxPrice);
-  //     } catch (error) {
-  //       console.error("Error fetching min-max prices:", error);
-  //     }
-  //   };
-
-  //   fetchMinMaxPrices();
-  // }, []);
-
-  // const handlePriceChange = (newPriceRange) => {
-  //   console.log("New price range:", newPriceRange);
-  //   // Perform any actions you want with the updated price range
-  // };
+  const handlePriceChange = (newPriceRange) => {
+    console.log("New price range:", newPriceRange);
+    // Perform any actions you want with the updated price range
+    setSelectedPriceRange(newPriceRange);
+  };
 
   function printPosts(items) {
-    const posts = [];
-    items.forEach((item) => {
-      // Assuming 'logo' is defined somewhere else
-      posts.push(
-        <Post
-          key={item.id}
-          id={item.id}
-          image={logo}
-          price={item.price}
-          title={item.title}
-          description={item.description}
-        />
-      );
-    });
-    return posts;
+    return items.map((item) => (
+      <Post
+        key={item.id}
+        id={item.id}
+        image={logo}
+        price={item.price}
+        title={item.title}
+        description={item.description}
+      />
+    ));
   }
+
   return (
     <div>
       <NavigationBar updateSearchQuery={updateSearchQuery} />
-      <br></br>
-      <br></br>
-      <br></br>
+      <br />
+      <br />
+      <br />
       <div id="main-container">
         <div id="categories-container">
+          <h3>Filter by Price</h3>
+          <h6>
+            Current Price Range: ${selectedPriceRange[0]} - $
+            {selectedPriceRange[1]}
+          </h6>
           <div id="price-select-container">
-            <PriceSelect/>
-            {/* <PriceSelect
+            <PriceSelect
               minPrice={minPrice}
               maxPrice={maxPrice}
               onPriceChange={handlePriceChange}
-            /> */}
+            />
           </div>
           <div id="category-select-container">
-            <CategorySelect/>
+            <CategorySelect />
           </div>
         </div>
         <div id="right-side-container">
           <div id="posts-container">{printPosts(items)}</div>
           <div id="pagination-container">
-            <Pagination pageNumber={1}></Pagination>
-            <Pagination pageNumber={2}></Pagination>
-            <Pagination pageNumber={3}></Pagination>
-            <Pagination pageNumber={4}></Pagination>
-            <Pagination pageNumber={5}></Pagination>
+            {[1, 2, 3, 4, 5].map((pageNumber) => (
+              <Pagination key={pageNumber} pageNumber={pageNumber} />
+            ))}
           </div>
         </div>
       </div>
+      <Popup show={showLoginPopup} />
     </div>
   );
 };

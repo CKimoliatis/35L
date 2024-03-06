@@ -4,6 +4,7 @@ from .serializers import UserSerializer, CreateUserSerializer, ItemSerializer
 from .models import User, Item
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db.models import Min, Max
 from .auth import authenticate
 
 
@@ -82,10 +83,8 @@ class FetchItemsAPIView(APIView):
 
         if search_query:
             items = Item.objects.filter(user_id__icontains=search_query) 
-            print("Here")
         else:
             items = Item.objects.all()
-            print("Here2")
 
         # Serialize items
         serializer = ItemSerializer(items, many=True)
@@ -94,14 +93,31 @@ class FetchItemsAPIView(APIView):
     
 class FetchItemsListing(APIView):
     def get(self, request, format=None):
+        print('request', request)
         search_query = request.query_params.get('searchQuery', '') 
+        min_price = request.query_params.get('minPrice')
+        max_price = request.query_params.get('maxPrice')
+        user_id = request.query_params.get('userId')
 
         if search_query:
-            items = Item.objects.filter(title__icontains=search_query) 
+            items = Item.objects.filter(
+                title__icontains=search_query,
+                price__gte=min_price,
+                price__lte=max_price,
+            ).exclude(id=user_id)
         else:
-            items = Item.objects.all()
+            items = Item.objects.filter(
+                price__gte=min_price,
+                price__lte=max_price,
+            ).exclude(id=user_id)
 
         # Serialize items
         serializer = ItemSerializer(items, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class MinMaxPriceView(APIView):
+    def get(self, request, format=None):
+        min_price = Item.objects.all().aggregate(Min('price'))['price__min']
+        max_price = Item.objects.all().aggregate(Max('price'))['price__max']
+        return Response({'minPrice': min_price, 'maxPrice': max_price})

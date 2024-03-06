@@ -9,5 +9,6 @@ urlpatterns = [
     path('create-item', CreateItem.as_view()),
     path('item', ItemView.as_view()),
     path('parse-item', FetchItemsListing.as_view()),
-    path('myitems', FetchItemsAPIView.as_view())
+    path('myitems', FetchItemsAPIView.as_view()),
+    path('get-item-price-range',MinMaxPriceView.as_view())
 ]

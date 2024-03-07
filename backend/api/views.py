@@ -190,3 +190,15 @@ class RemoveItemFromWatchlist(APIView):
         watchlist.items.remove(item)
 
         return Response({"message": "Item removed from watchlist"}, status=status.HTTP_200_OK)
+    
+class UpdateItem(APIView):
+    serializer_class = ItemSerializer
+
+    def put(self, request, pk):
+
+        item = Item.objects.get(pk=pk)
+        serializer = self.serializer_class(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

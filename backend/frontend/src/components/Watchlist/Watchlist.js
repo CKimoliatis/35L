@@ -56,12 +56,19 @@ const Landing = () => {
   function printPosts(items) {
     const posts = [];
     items.forEach((item) => {
+
+      if(item.image != null) {
+        var itemImage = item.image;
+      }
+      else {
+        var itemImage = logo
+      }
       // Assuming 'logo' is defined somewhere else
       posts.push(
         <Post
           key={item.id}
           item_id={item.id}
-          image={logo}
+          image={itemImage}
           price={item.price}
           title={item.title}
           description={item.description}
@@ -87,13 +94,6 @@ const Landing = () => {
         </div>
         <div id="right-side-container">
           <div id="posts-container">{printPosts(items)}</div>
-          <div id="pagination-container">
-            <Pagination pageNumber={1}></Pagination>
-            <Pagination pageNumber={2}></Pagination>
-            <Pagination pageNumber={3}></Pagination>
-            <Pagination pageNumber={4}></Pagination>
-            <Pagination pageNumber={5}></Pagination>
-          </div>
         </div>
       </div>
     </div>

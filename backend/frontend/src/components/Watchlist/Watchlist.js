@@ -1,52 +1,57 @@
 import React, { useState, useEffect } from "react";
-import NavigationBar from "./NavigationBar";
-import PriceSelect from "./PriceSelect/PriceSelect.js";
-import CategorySelect from "./CategorySelect/CategorySelect.js";
-import Post from "./Posts/Post.js";
-import Pagination from "./Pagination/Pagination.js";
-import "./CategorySelect/CategorySelect.css";
-import "./PriceSelect/PriceSelect.css";
-import "./Posts/Post.css";
-import "./Landing/Landing.css";
-import "./Pagination/Pagination.css";
-import logo from "../../static/frontend/images/YooniLogo.png";
+import NavigationBar from "../NavigationBar";
+import PriceSelect from "../PriceSelect/PriceSelect.js";
+import CategorySelect from "../CategorySelect/CategorySelect.js";
+import Post from "../Posts/Post.js";
+import Pagination from "../Pagination/Pagination.js";
+import SearchBar from "../SearchBar/SearchBar.js";
+import "../CategorySelect/CategorySelect.css";
+import "../PriceSelect/PriceSelect.css";
+import "../Posts/Post.css";
+import "../Landing/Landing.css";
+import "../Pagination/Pagination.css";
+import logo from "../../objects/YooniLogo.png";
 import axios from "axios";
 
 const Landing = () => {
   const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    // Retrieve userData from local storage
+  useEffect(()=>{
     const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      // Parse the storedUserData if it exists
+    if (storedUserData && !userData) {
       setUserData(JSON.parse(storedUserData));
     }
-    console.log(userData);
   }, []);
 
-  const updateSearchQuery = (query) => {
-    setSearchQuery(query);
-  };
-
   useEffect(() => {
-    console.log(searchQuery);
     const fetchData = async () => {
       try {
-        // Make a GET request to your backend endpoint
-        const response = await axios.get("/api/parse-item", {
-          params: { searchQuery }, // Optional: Pass search query as a parameter
-        });
-        setItems(response.data);
+        if (userData) {
+          // Check if userData is not null
+          const result = await getWatchlist(userData);
+          console.log(result);
+          setItems(result);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
-  }, [searchQuery]);
+  }, [userData]); // Add userData as dependency
+
+  const getWatchlist = async (userData) => {
+    try {
+      const response = await axios.get("api/fetch-item-from-watchlist/", {
+        params: {
+          user_id: userData.id,
+        },
+      });
+      return response.data; // Returning the response data
+    } catch (error) {
+      throw new Error(error); // Rethrowing the caught error
+    }
+  };
 
   function printPosts(items) {
     const posts = [];
@@ -63,12 +68,11 @@ const Landing = () => {
         />
       );
     });
-    // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
-    return posts.reverse();
+    return posts;
   }
   return (
     <div>
-      <NavigationBar updateSearchQuery={updateSearchQuery} />
+      <NavigationBar/>
       <br></br>
       <br></br>
       <br></br>

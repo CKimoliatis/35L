@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .serializers import UserSerializer, CreateUserSerializer, ItemSerializer
-from .models import User, Item
+from .serializers import *
+from .models import User, Item, Watchlist
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .auth import authenticate
@@ -104,3 +104,89 @@ class FetchItemsListing(APIView):
         serializer = ItemSerializer(items, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class AddToWatchlist(APIView):
+        def post(self, request, format=None):
+            user_id = request.data.get('user_id')
+            item_id = request.data.get('item_id')
+
+            if not user_id or not item_id:
+                return Response({'success': False, 'message': 'User ID and item ID are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                user = User.objects.get(pk=user_id)
+                watchlist, created = Watchlist.objects.get_or_create(user=user)
+                watchlist.items.add(item_id)
+                return Response({'success': True}, status=status.HTTP_200_OK)
+            except User.DoesNotExist:
+                return Response({'success': False, 'message': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+            except Exception as e:
+                return Response({'success': False, 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+class FetchWatchlistItems(APIView):
+     def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')
+
+        if not user_id:
+            return Response({'message': 'user_id parameter is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(pk=user_id)
+            watchlist, created = Watchlist.objects.get_or_create(user=user)
+            watchlist_items = watchlist.items.all()
+
+            # Serialize the watchlist items using ItemSerializer
+            item_serializer = ItemSerializer(watchlist_items, many=True)
+            return Response(item_serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'message': 'User does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class FetchInWatchlist(APIView):
+    def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')
+        item_id = request.query_params.get('item_id')
+
+        if not user_id or not item_id:
+            return Response({'error': 'user_id and item_id are required query parameters'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(id=user_id)
+            item = Item.objects.get(id=item_id)
+            watchlist, created = Watchlist.objects.get_or_create(user=user)
+            in_watchlist = watchlist.items.filter(id=item_id).exists()
+            return Response({'in_watchlist': in_watchlist})
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Item.DoesNotExist:
+            return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Watchlist.DoesNotExist:
+            return Response({'error': 'Watchlist not found for the user'}, status=status.HTTP_404_NOT_FOUND)
+        
+class RemoveItemFromWatchlist(APIView):
+    def post(self, request):
+        # Get user_id and item_id from request data
+        user_id = request.data.get('user_id')
+        item_id = request.data.get('item_id')
+
+        # Check if user_id and item_id are provided
+        if not user_id or not item_id:
+            return Response({"error": "Both user_id and item_id are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Get the item
+            item = Item.objects.get(pk=item_id)
+        except Item.DoesNotExist:
+            return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Get the user's watchlist
+        try:
+            watchlist = Watchlist.objects.get(user_id=user_id)
+        except Watchlist.DoesNotExist:
+            return Response({"error": "Watchlist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Remove the item from the watchlist
+        watchlist.items.remove(item)
+
+        return Response({"message": "Item removed from watchlist"}, status=status.HTTP_200_OK)

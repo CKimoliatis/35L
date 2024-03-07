@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Item
+from .models import User, Item, Watchlist
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,3 +29,11 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = '__all__'
+        
+class WatchlistSerializer(serializers.ModelSerializer):
+    items = ItemSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Watchlist
+        fields = ('user', 'items')
+        

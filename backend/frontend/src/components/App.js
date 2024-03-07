@@ -10,6 +10,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemPage from "./ItemPage/ItemPage";
 import IntermediaryPage from "./Intermediary.js";
+import Watchlist from "./Watchlist/Watchlist.js";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="intermediary" element = {<IntermediaryPage/>}/>
           <Route path="/post/:id" element={<ItemPage/>} />
           <Route path="my-listings" element={<MyListing />} />
+          <Route path="my-watchlist" element={<Watchlist />} />
         </Route>
       </Routes>
     </Router>

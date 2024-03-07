@@ -165,3 +165,30 @@ class FetchInWatchlist(APIView):
             return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
         except Watchlist.DoesNotExist:
             return Response({'error': 'Watchlist not found for the user'}, status=status.HTTP_404_NOT_FOUND)
+        
+class RemoveItemFromWatchlist(APIView):
+    def post(self, request):
+        # Get user_id and item_id from request data
+        user_id = request.data.get('user_id')
+        item_id = request.data.get('item_id')
+
+        # Check if user_id and item_id are provided
+        if not user_id or not item_id:
+            return Response({"error": "Both user_id and item_id are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Get the item
+            item = Item.objects.get(pk=item_id)
+        except Item.DoesNotExist:
+            return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Get the user's watchlist
+        try:
+            watchlist = Watchlist.objects.get(user_id=user_id)
+        except Watchlist.DoesNotExist:
+            return Response({"error": "Watchlist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Remove the item from the watchlist
+        watchlist.items.remove(item)
+
+        return Response({"message": "Item removed from watchlist"}, status=status.HTTP_200_OK)

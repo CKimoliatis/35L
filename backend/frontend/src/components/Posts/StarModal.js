@@ -1,20 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import axios from "axios";
 
-function ConfirmationModal({
+function StarModal({
   show,
   onHide,
   itemTitle,
   updateInWatchlist,
   inWatchlist,
+  item_id,
 }) {
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate(); // Initialize useNavigate hook
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData && !userData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []); 
 
-  const handleAddWatchlist = () => {
-    onHide(); // Close the modal
-    updateInWatchlist(!inWatchlist);
-    //add logic to add to watchlist model
+  const handleWatchlist = async () => {
+    try {
+        if (!inWatchlist) {
+            await addToWatchlist(); // Call the addToWatchlist function if item is not in watchlist
+            console.log("Item added to watchlist successfully");
+        } else {
+            await removeFromWatchlist(); // Call the removeFromWatchlist function if item is in watchlist
+            console.log("Item removed from watchlist successfully");
+        }
+        onHide(); // Close the modal
+        updateInWatchlist(!inWatchlist);
+    } catch (error) {
+        console.error("Error performing watchlist action:", error);
+    }
+};
+
+  const addToWatchlist = async () => {
+    try {
+      const response = await axios.post("api/add-item-to-watchlist", {
+        user_id: userData.id,
+        item_id: item_id,
+      });
+      return response.data; // Returning the response data
+    } catch (error) {
+      throw new Error(error); // Rethrowing the caught error
+    }
+  };
+
+  const removeFromWatchlist = async () => {
+    try {
+      const response = await axios.post("api/remove-from-watchlist", {
+        user_id: userData.id,
+        item_id: item_id,
+      });
+      return response.data; // Returning the response data
+    } catch (error) {
+      throw new Error(error); // Rethrowing the caught error
+    }
   };
 
   return (
@@ -37,7 +80,7 @@ function ConfirmationModal({
         <Button variant="secondary" onClick={onHide}>
           No
         </Button>
-        <Button variant="primary" onClick={handleAddWatchlist}>
+        <Button variant="primary" onClick={handleWatchlist}>
           Yes
         </Button>
       </Modal.Footer>
@@ -45,4 +88,4 @@ function ConfirmationModal({
   );
 }
 
-export default ConfirmationModal;
+export default StarModal;

@@ -94,6 +94,7 @@ const Post = ({ item_id, image, price, title, description }) => {
         itemTitle={title}
         updateInWatchlist={updateInWatchlist}
         inWatchlist={inWatchlist}
+        item_id={item_id}
       />
     </div>
   );

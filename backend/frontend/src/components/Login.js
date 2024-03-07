@@ -7,7 +7,7 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [errorMessage,setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const getUser = async (username, password) => {
@@ -29,18 +29,13 @@ const Login = (props) => {
           const loginLink = <a href="/signup">Sign up</a>;
           setErrorMessage(<>Account not found. {loginLink}?</>);
         }
-      } else {
-        return response.data;
       }
+      return response.data;
     } catch (error) {
       console.error("Failed to fetch user data:", error);
       setErrorMessage("Failed to fetch user data");
     }
   };
-
-
-
-
 
   const handleLogin = async () => {
     try {
@@ -54,7 +49,6 @@ const Login = (props) => {
       console.log(error);
     }
   };
-
 
   const handleLogout = () => {
     localStorage.removeItem("userData");

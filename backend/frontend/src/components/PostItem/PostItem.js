@@ -65,7 +65,6 @@ const PostItem = () => {
         errorMsg += "Categories are not selected. \n";
    // if (!category) errorMsg += 'Category is not selected. \n';
     if (!description) errorMsg += 'Description is blank. \n';
-    if (!image) errorMsg += 'Image is not uploaded.';
 
     if (errorMsg) {
       setErrorMessage(errorMsg);

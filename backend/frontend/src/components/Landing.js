@@ -23,49 +23,60 @@ const Landing = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState([null, null]);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
+  // useEffect(() => {
+  //   const storedUserData = localStorage.getItem("userData");
+  //   if (storedUserData) {
+  //     setUserData(JSON.parse(storedUserData));
+  //   } 
+  //   // else {
+  //   //   setShowLoginPopup(true);
+  //   // }
+  //   console.log(userData);
+  // }, []);
   useEffect(() => {
+    // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
+      // Parse the storedUserData if it exists
       setUserData(JSON.parse(storedUserData));
-    } else {
-      setShowLoginPopup(true);
     }
+    console.log(userData);
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/get-item-price-range");
-        setMinPrice(response.data.minPrice);
-        setMaxPrice(response.data.maxPrice);
-        setSelectedPriceRange([response.data.minPrice, response.data.maxPrice]);
-      } catch (error) {
-        console.error("Error fetching min-max prices:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/api/get-item-price-range");
+  //       setMinPrice(response.data.minPrice);
+  //       setMaxPrice(response.data.maxPrice);
+  //       setSelectedPriceRange([response.data.minPrice, response.data.maxPrice]);
+  //     } catch (error) {
+  //       console.error("Error fetching min-max prices:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/parse-item", {
-          params: {
-            searchQuery,
-            minPrice: selectedPriceRange[0],
-            maxPrice: selectedPriceRange[1],
-            userId: userData.id,
-          },
-        });
-        setItems(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/api/parse-item", {
+  //         params: {
+  //           searchQuery,
+  //           minPrice: selectedPriceRange[0],
+  //           maxPrice: selectedPriceRange[1],
+  //           userId: userData.id,
+  //         },
+  //       });
+  //       setItems(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [searchQuery, selectedPriceRange]);
+  //   fetchData();
+  // }, [searchQuery, selectedPriceRange, userData]);
 
   const updateSearchQuery = (query) => {
     setSearchQuery(query);

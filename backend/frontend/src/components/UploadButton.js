@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import Zlib from "react-zlib-js";
 
 function UploadButton({ onFileSelect }) {
   const [uploadedFileName, setUploadedFileName] = useState(null);
@@ -9,14 +10,16 @@ function UploadButton({ onFileSelect }) {
     inputRef.current.click(); // trigger the file input click event
   };
 
-  const handleDisplayFileDetails = async (event) => {
+  const handleDisplayFileDetails = async (event)   => {
     const files = event.target.files;
     if (files && files.length > 0) {
       const file = files[0];
       setUploadedFileName(file.name);
       // Convert the file to a blob
       const blobData = await convertFileToBlob(file);
-      // Call the parent component's function with the blob data
+      // Compress the data
+     // const compressedData = Zlib.deflate(blobData);    
+      // Call the parent component's function with the compressed data
       onFileSelect(blobData);
     }
   };

@@ -66,20 +66,28 @@ const Landing = () => {
     const posts = [];
     items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
+      if(item.image) {
+        var itemImage = item.image
+      }
+      else {
+        var itemImage = logo;
+      }
       posts.push(
         <Post
           key={item.id}
           id={item.id}
-          image={logo}
+          image={itemImage}
           price={item.price}
           title={item.title}
           description={item.description}
+          
         />
       );
     });
     // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
     return posts.reverse();
   }
+
   return (
     <div>
       <NavigationBar updateSearchQuery={updateSearchQuery} />
@@ -87,6 +95,7 @@ const Landing = () => {
       <br></br>
       <br></br>
       <div id="main-container">
+        {/* {printFilters()} */}
         <div id="categories-container">
           <div id="price-select-container">
             <PriceSelect></PriceSelect>
@@ -97,13 +106,6 @@ const Landing = () => {
         </div>
         <div id="right-side-container">
           <div id="posts-container">{printPosts(items)}</div>
-          <div id="pagination-container">
-            <Pagination pageNumber={1}></Pagination>
-            <Pagination pageNumber={2}></Pagination>
-            <Pagination pageNumber={3}></Pagination>
-            <Pagination pageNumber={4}></Pagination>
-            <Pagination pageNumber={5}></Pagination>
-          </div>
         </div>
       </div>
     </div>

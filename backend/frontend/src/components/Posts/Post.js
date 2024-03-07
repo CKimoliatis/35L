@@ -16,7 +16,6 @@ const Post = ({ item_id, image, price, title, description }) => {
     if (storedUserData && !userData) {
       setUserData(JSON.parse(storedUserData));
     }
-
     const fetchData = async () => {
       try {
         if (userData) {
@@ -48,9 +47,15 @@ const Post = ({ item_id, image, price, title, description }) => {
   };
 
   const handleClick = () => {
-    navigate(
-      `/post/${item_id}?image=${image}&price=${price}&title=${title}&description=${description}`
-    );
+    const data = {
+      itemId: item_id,
+      itemImage: image,
+      itemPrice: price,
+      itemTitle: title,
+      itemDescription: description,
+    };
+    const encodedData = encodeURIComponent(JSON.stringify(data));
+    navigate(`/post/${encodedData}`);
   };
 
   const updateInWatchlist = (val) => {

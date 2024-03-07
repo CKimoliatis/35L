@@ -83,10 +83,8 @@ class FetchItemsAPIView(APIView):
 
         if search_query:
             items = Item.objects.filter(user_id__icontains=search_query) 
-            print("Here")
         else:
             items = Item.objects.all()
-            print("Here2")
 
         # Serialize items
         serializer = ItemSerializer(items, many=True)

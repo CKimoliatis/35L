@@ -58,17 +58,21 @@ const Landing = () => {
       else {
         var itemImage = logo;
       }
-      posts.push(
-        <Post
-          key={item.id}
-          item_id={item.id}
-          image={itemImage}
-          price={item.price}
-          title={item.title}
-          description={item.description}
-          
-        />
-      );
+
+      console.log(item)
+
+      // if(item.userId != userData.userId) {
+        posts.push(
+          <Post
+            key={item.id}
+            item_id={item.id}
+            image={itemImage}
+            price={item.price}
+            title={item.title}
+            description={item.description}
+          />
+        );
+      // }
     });
     // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
     return posts.reverse();

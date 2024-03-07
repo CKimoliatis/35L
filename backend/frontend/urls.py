@@ -13,5 +13,6 @@ urlpatterns = [
     path('my-listings', index),
     path('post/:encodedData', index),
     re_path(r'^post/.*$', index),
-    path('path/:id', index)
+    path('path/:id', index),
+    path('my-watchlist', index)
 ]

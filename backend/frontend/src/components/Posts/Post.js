@@ -12,16 +12,25 @@ const Post = ({ item_id, image, price, title, description }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
-    if (storedUserData && !userData) {
-      setUserData(JSON.parse(storedUserData));
+    if (storedUserData) {
+      // Parse the storedUserData if it exists
+      setUserData(prevUserData => {
+        if (prevUserData === null) {
+          return JSON.parse(storedUserData);
+        }
+        return prevUserData;
+      });
     }
+  }, []);
+  
+  useEffect(() => {
     const fetchData = async () => {
       try {
         if (userData) {
           // Check if userData is not null
           const result = await getInWatchlist(userData);
-          console.log(result.in_watchlist);
           setInWatchlist(result.in_watchlist);
         }
       } catch (error) {

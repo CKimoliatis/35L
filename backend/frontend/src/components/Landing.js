@@ -22,10 +22,18 @@ const Landing = () => {
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
       // Parse the storedUserData if it exists
-      setUserData(JSON.parse(storedUserData));
+      setUserData(prevUserData => {
+        if (prevUserData === null) {
+          return JSON.parse(storedUserData);
+        }
+        return prevUserData;
+      });
     }
-    console.log(userData);
   }, []);
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   const updateSearchQuery = (query) => {
     setSearchQuery(query);

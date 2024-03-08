@@ -93,7 +93,6 @@ class FetchItemsAPIView(APIView):
     
 class FetchItemsListing(APIView):
     def get(self, request, format=None):
-        print('request', request)
         search_query = request.query_params.get('searchQuery', '') 
         min_price = request.query_params.get('minPrice')
         max_price = request.query_params.get('maxPrice')
@@ -116,6 +115,7 @@ class FetchItemsListing(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class MinMaxPriceView(APIView):
     def get(self, request, format=None):
         min_price = Item.objects.all().aggregate(Min('price'))['price__min']
@@ -137,3 +137,35 @@ class AddCategory(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ChatMessages(APIView):
+    def get(self, request, chat_id):
+        messages = Message.objects.filter(chat_id=chat_id)
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
+    
+class UserChats(APIView):
+    def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')  # Assuming you have user authentication set up
+        
+        # Retrieve all unique chat IDs for the user
+        chat_ids = Message.objects.filter(user_id=user_id).values_list('chat_id', flat=True).distinct()
+        
+        # Fetch chat details for each unique chat ID
+        chats = []
+        for chat_id in chat_ids:
+            chat = Message.objects.filter(user_id=user_id, chat_id=chat_id).first()
+            if chat:
+                # Retrieve the user_id of the other person in the chat
+                other_person_id = Message.objects.exclude(user_id=user_id).filter(chat_id=chat_id).values_list('user_id', flat=True).first()
+                # Retrieve the username of the other person using the User model
+                other_person_username = User.objects.get(id=other_person_id).username
+                chat_data = {
+                    'chat_id': chat_id,
+                    'other_person_username': other_person_username
+                    # Add more fields if needed
+                }
+                chats.append(chat_data)
+        
+        return Response(chats, status=status.HTTP_200_OK)
+

@@ -6,7 +6,7 @@ import UserIcon from "../objects/user.png";
 import "../CSS/styles.css";
 import SearchBar from "./SearchBar/SearchBar";
 
-const NavigationBar = ({updateSearchQuery}) => {
+const NavigationBar = ({ updateSearchQuery }) => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const NavigationBar = ({updateSearchQuery}) => {
         <Navbar.Brand as={Link} to="/landing">
           <img src={YooniLogo} height={"100%"} alt="Yooni Logo" />
         </Navbar.Brand>
-        <SearchBar handleSearchQueryChange={handleSearchQueryChange}/>
+        <SearchBar handleSearchQueryChange={handleSearchQueryChange} />
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -57,6 +57,9 @@ const NavigationBar = ({updateSearchQuery}) => {
             </Nav.Link>
             <Nav.Link as={Link} to="/postItem" className="nav-link-custom">
               Post Item
+            </Nav.Link>
+            <Nav.Link as={Link} to="/chat" className="nav-link-custom">
+              Chat
             </Nav.Link>
             <NavDropdown
               title={

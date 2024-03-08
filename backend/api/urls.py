@@ -12,5 +12,7 @@ urlpatterns = [
     path('myitems', FetchItemsAPIView.as_view()),
     path('get-item-price-range',MinMaxPriceView.as_view()),
     path('categories',CategoryView.as_view()),
-    path('add-category',AddCategory.as_view())
+    path('add-category',AddCategory.as_view()),
+    path('chats/<int:chat_id>/messages/', ChatMessages.as_view(), name='chat-messages'),
+    path('get-chats',UserChats.as_view())
 ]

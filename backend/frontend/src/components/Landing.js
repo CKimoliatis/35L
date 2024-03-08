@@ -15,24 +15,15 @@ import logo from "../../static/frontend/images/YooniLogo.png";
 import axios from "axios";
 
 const Landing = () => {
-  const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
+  const [userData,setUserData] = useState(null);
+  let minPrice = null;
+  let maxPrice = null;
   const [selectedPriceRange, setSelectedPriceRange] = useState([null, null]);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-  // useEffect(() => {
-  //   const storedUserData = localStorage.getItem("userData");
-  //   if (storedUserData) {
-  //     setUserData(JSON.parse(storedUserData));
-  //   } 
-  //   // else {
-  //   //   setShowLoginPopup(true);
-  //   // }
-  //   console.log(userData);
-  // }, []);
+  
   useEffect(() => {
     // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
@@ -40,52 +31,56 @@ const Landing = () => {
       // Parse the storedUserData if it exists
       setUserData(JSON.parse(storedUserData));
     }
-    console.log(userData);
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/api/get-item-price-range");
-  //       setMinPrice(response.data.minPrice);
-  //       setMaxPrice(response.data.maxPrice);
-  //       setSelectedPriceRange([response.data.minPrice, response.data.maxPrice]);
-  //     } catch (error) {
-  //       console.error("Error fetching min-max prices:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/get-item-price-range");
+        minPrice = response.data.minPrice;
+        maxPrice = response.data.maxPrice;
+        console.log(minPrice,maxPrice);
+        setSelectedPriceRange([response.data.minPrice, response.data.maxPrice]);
+      } catch (error) {
+        console.error("Error fetching min-max prices:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/api/parse-item", {
-  //         params: {
-  //           searchQuery,
-  //           minPrice: selectedPriceRange[0],
-  //           maxPrice: selectedPriceRange[1],
-  //           userId: userData.id,
-  //         },
-  //       });
-  //       setItems(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      if (userData) {
+        const response = await axios.get("/api/parse-item", {
+          params: {
+           searchQuery,
+           minPrice: selectedPriceRange[0],
+           maxPrice: selectedPriceRange[1],
+           userId: userData.id,
+          },
+        });
 
-  //   fetchData();
-  // }, [searchQuery, selectedPriceRange, userData]);
+
+        setItems(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, [searchQuery, selectedPriceRange]);
+
 
   const updateSearchQuery = (query) => {
     setSearchQuery(query);
   };
 
   const handlePriceChange = (newPriceRange) => {
-    console.log("New price range:", newPriceRange);
-    // Perform any actions you want with the updated price range
-    setSelectedPriceRange(newPriceRange);
+      // Perform any actions you want with the updated price range
+      setSelectedPriceRange(newPriceRange);
   };
 
   function printPosts(items) {

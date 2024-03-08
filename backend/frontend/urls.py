@@ -10,6 +10,8 @@ urlpatterns = [
     path('postItem', index),
     path('inventory', index),
     path('my-listings', index),
-    path('path/:id', index)
+    path('path/:id', index),
+    path('chat',index),
+    path('chat/:chatid',index)
     
 ]

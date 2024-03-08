@@ -48,3 +48,10 @@ class Item(models.Model):
 
 class Category(models.Model): 
     category_name = models.CharField(max_length=100,default='')
+
+
+class Message(models.Model):
+    user_id = models.IntegerField()
+    message_content = models.CharField(max_length=1000,default='')
+    recipient_id = models.IntegerField()
+    chat_id = models.IntegerField()

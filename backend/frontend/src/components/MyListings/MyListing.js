@@ -18,6 +18,7 @@ const IsEditing=() => {
 
     const userDataString = localStorage.getItem("userData"); 
     const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
+    console.log(userData);
 
 
     const handleEditClick = (itemId) => {
@@ -45,6 +46,9 @@ const IsEditing=() => {
         console.log(searchQuery)
       }, [searchQuery]);
     
+    // function checkImage() {
+
+    // }
 
     return(
 
@@ -52,7 +56,7 @@ const IsEditing=() => {
             {items.map(item => (
                 <MyListingPost
                     key={item.id}
-                    image={YooniLogo}
+                    image={item.image}
                     price={item.price}
                     title={item.title}
                     description={item.description}

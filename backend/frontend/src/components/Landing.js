@@ -15,30 +15,31 @@ import axios from "axios";
 const Landing = () => {
   // const [userData, setUserData] = useState("");
   const [items, setItems] = useState([]);
+  const [cat, setCat] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   // useEffect(() => {
-    // // Retrieve userData from local storage
-    // const storedUserData = localStorage.getItem("userData");
-    // if (storedUserData) {
-    //   // Parse the storedUserData if it exists
-    //   setUserData(JSON.parse(storedUserData));
-    //   console.log(userData);
-    // }
-    // console.log(userData);
-    const userDataString = localStorage.getItem("userData"); 
-    const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
-    console.log(userData);
-    var userData_id = userData.id.toString();
-    console.log(userData_id);
+  // // Retrieve userData from local storage
+  // const storedUserData = localStorage.getItem("userData");
+  // if (storedUserData) {
+  //   // Parse the storedUserData if it exists
+  //   setUserData(JSON.parse(storedUserData));
+  //   console.log(userData);
+  // }
+  // console.log(userData);
+  const userDataString = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
+  var userData_id = userData.id.toString();
   // }, []);
+
+  const updateCat = (val) => {
+    setCat(val);
+  };
 
   const updateSearchQuery = (query) => {
     setSearchQuery(query);
   };
-
   useEffect(() => {
-    console.log(searchQuery);
     const fetchData = async () => {
       try {
         // Make a GET request to your backend endpoint
@@ -58,17 +59,13 @@ const Landing = () => {
     const posts = [];
     items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
-      if(item.image) {
-        var itemImage = item.image
-      }
-      else {
+      if (item.image) {
+        var itemImage = item.image;
+      } else {
         var itemImage = logo;
       }
-
-
-
-      if(item.user_id != userData_id) {
-        console.log(item)
+      //item.user_id != userData_id &&
+      if (cat.length === 0 || cat.includes(item.category)) {
         posts.push(
           <Post
             key={item.id}
@@ -95,10 +92,10 @@ const Landing = () => {
         {/* {printFilters()} */}
         <div id="categories-container">
           <div id="price-select-container">
-            <PriceSelect></PriceSelect>
+            <PriceSelect />
           </div>
           <div id="category-select-container">
-            <CategorySelect></CategorySelect>
+            <CategorySelect updateCat={updateCat} />
           </div>
         </div>
         <div id="right-side-container">

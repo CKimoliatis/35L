@@ -5,7 +5,6 @@ import CategorySelect from "./CategorySelect/CategorySelect.js";
 import Post from "./Posts/Post.js";
 import Popup from "./Popup.js";
 import Pagination from "./Pagination/Pagination.js";
-import SearchBar from "./SearchBar/SearchBar.js";
 import "./CategorySelect/CategorySelect.css";
 import "./PriceSelect/PriceSelect.css";
 import "./Posts/Post.css";
@@ -84,16 +83,22 @@ useEffect(() => {
   };
 
   function printPosts(items) {
-    return items.map((item) => (
-      <Post
-        key={item.id}
-        id={item.id}
-        image={logo}
-        price={item.price}
-        title={item.title}
-        description={item.description}
-      />
-    ));
+    const posts = [];
+    items.forEach((item) => {
+      // Assuming 'logo' is defined somewhere else
+      posts.push(
+        <Post
+          key={item.id}
+          item_id={item.id}
+          image={logo}
+          price={item.price}
+          title={item.title}
+          description={item.description}
+        />
+      );
+    });
+    // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
+    return posts.reverse();
   }
 
   return (

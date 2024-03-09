@@ -29,6 +29,14 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = '__all__'
+        
+class WatchlistSerializer(serializers.ModelSerializer):
+    items = ItemSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Watchlist
+        fields = ('user', 'items')
+        
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

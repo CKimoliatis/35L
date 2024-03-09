@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import Zlib from "react-zlib-js";
 
 function UploadButton({ onFileSelect }) {
+function UploadButton({ onFileSelect }) {
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const [fileUploaded, setFileUploaded] = useState(false); // New state variable
   const inputRef = useRef(null);
@@ -15,12 +16,7 @@ function UploadButton({ onFileSelect }) {
     if (files && files.length > 0) {
       const file = files[0];
       setUploadedFileName(file.name);
-      // Convert the file to a blob
-      const blobData = await convertFileToBlob(file);
-      // Compress the data
-     // const compressedData = Zlib.deflate(blobData);    
-      // Call the parent component's function with the compressed data
-      onFileSelect(blobData);
+      onFileSelect(file) //call the pass function with the selected file
     }
   };
 
@@ -38,7 +34,7 @@ function UploadButton({ onFileSelect }) {
   };
 
   return (
-    <div className="m-3">
+    <div className="m-2">
       <label className="mx-3">Choose file:</label>
       <input
         ref={inputRef}
@@ -47,12 +43,17 @@ function UploadButton({ onFileSelect }) {
         className="d-none"
       />
       <button
-        onClick={handleUpload}
-        className={`btn btn-outline-${fileUploaded ? "success" : "primary"}`}
+        onClick={(e) => {
+          e.preventDefault(); // This will prevent the default form submit action
+          handleUpload();
+        }}
+        className={`btn btn-outline-${
+          uploadedFileName ? "success" : "primary"
+        }`}
+        type="button" // Explicitly set the button type to 'button'
       >
         {fileUploaded ? "File Successfully Uploaded" : "Upload"}
       </button>
-      {uploadedFileName && <span className="mx-2">{uploadedFileName}</span>}
     </div>
   );
 }

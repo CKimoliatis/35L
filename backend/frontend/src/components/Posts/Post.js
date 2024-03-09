@@ -71,26 +71,28 @@ const Post = ({ item_id, image, price, title, description }) => {
   return (
     <div>
       <div onClick={handleClick} className="post float-on-hover">
-        <img src={image} alt={title} className="post-images" />
-        <h2>${price}</h2>
-        <p className="description-text">{title}</p>
-        <div
-          style={{ position: "absolute", top: 0, right: 0 }}
-          onClick={handleStarClick}
-        >
-          {inWatchlist ? (
-            <img
-              src={starFilled}
-              alt="Star"
-              style={{ width: 30, height: 30 }}
-            />
-          ) : (
-            <img
-              src={starUnfilled}
-              alt="Star"
-              style={{ width: 30, height: 30 }}
-            />
-          )}
+        <div className="post-container">
+            <div className="post-images-container"><img src={image} alt={title} className="post-images" /></div>
+            <h5 className="post-text">${price}</h5>
+            <p className="post-text">{title}</p>
+            <div
+            style={{ position: "absolute", top: 0, right: 0 }}
+            onClick={handleStarClick}
+            >
+            {inWatchlist ? (
+                <img
+                src={starFilled}
+                alt="Star"
+                style={{ width: 30, height: 30 }}
+                />
+            ) : (
+                <img
+                src={starUnfilled}
+                alt="Star"
+                style={{ width: 30, height: 30 }}
+                />
+            )}
+            </div>
         </div>
       </div>
       <StarModal

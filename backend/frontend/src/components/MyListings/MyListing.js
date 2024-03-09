@@ -11,39 +11,30 @@ import axios from 'axios'
 
 
 const IsEditing=() => {
-    const [editing, setEditing] = useState(false);
     const [items, setItems] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
+    const [editingItemId, setEditingItemId] = useState(null);
 
-    const handleEditClick = () => {
-        setEditing(true);
-    };
-    const handleSaveClick = () => {
-        setEditing(false);
-    };
+    const userDataString = localStorage.getItem("userData"); 
+    const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
+    console.log(userData);
 
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);    //set the title to the target value when typed in
-    };
 
-    const handleDescriptionChange = (e) => {
-        setDescription(e.target.value);   //set the description to the target value when typed in
+    const handleEditClick = (itemId) => {
+        setEditingItemId(itemId);
+
     };
 
 
     useEffect(() => {
         console.log(searchQuery);
-        const userDataString = localStorage.getItem("userData")
-        const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
-        const firstItem = userData[Object.keys(userData)[0]]; // Access the first item of the object
 
-        console.log('First item', firstItem)
         const fetchData = async () => {
           try {
             // Make a GET request to your backend endpoint
             const response = await axios.get("/api/myitems", {
-              params: { searchQuery: firstItem } // Pass searchQuery value directly
+              params: { searchQuery: userData.id } // Pass searchQuery value directly
             });
             setItems(response.data);
           } catch (error) {
@@ -55,47 +46,29 @@ const IsEditing=() => {
         console.log(searchQuery)
       }, [searchQuery]);
     
-    
+    // function checkImage() {
 
-    // useEffect(() => {
-    //     axios.get('http://127.0.0.1:8000/api/myitems')
-    //         .then(response => {
-    //             setItems(response.data);
-    //             console.log(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
-
-    function printPosts(items) {
-        const posts = [];
-        items.forEach(item => {
-          // Assuming 'logo' is defined somewhere else
-          posts.push(<MyListingPost key={item.id} image = {YooniLogo} price={item.price} title={item.title} description={item.description} category={item.category} onEditClick={handleEditClick}/>);
-        });
-        return posts;
-    }
-
-    function printEdit(){
-        <EditMyListing onSaveClick={handleSaveClick}/>
-    }
-    
+    // }
 
     return(
+
         <>
-        {editing ? (
-            <>
-            {printEdit()}
-            </>
-            
-        ) :(
-            <>
-            {printPosts(items)}
-            </>
-        )
-        }
+            {items.map(item => (
+                <MyListingPost
+                    key={item.id}
+                    image={item.image}
+                    price={item.price}
+                    title={item.title}
+                    description={item.description}
+                    category={item.category}
+                    item_id={item.id}
+                    is_editing={editingItemId === item.id}
+                    onEditClick={() => handleEditClick(item.id)}
+                />
+            ))}
+
         </>
+
     );
 };
 

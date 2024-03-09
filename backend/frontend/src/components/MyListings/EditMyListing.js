@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";import "../../CSS/styles.css";
 import { Card, Button, Container, Col, Row} from "react-bootstrap";
-import MyListing from "./MyListing";
+// import MyListing from "./MyListing";
 import MyListingPost from "./MyListingPost";
+import UploadButton from "../UploadButton";
+import YooniLogo from "../../objects/YooniLogo.png";
 import axios from 'axios';
 
 
@@ -39,10 +41,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
             description: new_description,
             category: new_category,
             price: new_price,
-            sold_flag: false,
-            selling_price: 0,
             image: null
-            
         };
 
         try {
@@ -66,37 +65,45 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         {isEditing ? (
             <Container className="listing-container" style={{maxWidth: '66rem', marginInlineEnd: '25rem', marginLeft:'2 0%'}}>
             <Row>
-                <Row>
-                    <div className="form-group" style={{width:'24rem'}}>
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" 
-                        defaultValue={title_old} 
-                        onChange={handleTitleChange} />   {/*this is to change the title*/}
+                <Col style={{maxWidth:'16rem'}}>   
+                    <Card style={{ width: '15rem', padding: '10px'}}>
+                        <Card.Img className="listing-img" src={YooniLogo} defaultValue={YooniLogo} />
+                    </Card>
+                    <UploadButton />
+                </Col>
+                <Col>
+                    <Row>
+                        <div className="form-group" style={{width:'24rem'}}>
+                            <label htmlFor="title">Title</label>
+                            <input type="text" id="title" 
+                            defaultValue={title_old} 
+                            onChange={handleTitleChange} />   {/*this is to change the title*/}
+                        </div>
+                        <div className="form-group" style={{width:'24rem'}}>
+                            <label htmlFor="price">Price</label>
+                            <input type="text" id="price" defaultValue={price_old} onChange={handlePriceChange} />
+                        </div>                  
+                    </Row>
+                    <div className="form-group" onChange={handleCategoryChange}>
+                        <select id="category">
+                        <option disabled selected>
+                            Select a category
+                        </option>
+                        <option>Clothing</option>
+                        <option>Sports</option>
+                        <option>Furniture</option>
+                        <option>Other</option>
+                        </select>
                     </div>
-                    <div className="form-group" style={{width:'24rem'}}>
-                        <label htmlFor="price">Price</label>
-                        <input type="text" id="price" defaultValue={price_old} onChange={handlePriceChange} />
+                    <div className="form-group">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                        id="description"
+                        defaultValue={description_old}
+                        onChange={handleDescriptionChange}
+                        ></textarea>
                     </div>
-                </Row>
-                <div className="form-group" onChange={handleCategoryChange}>
-                    <select id="category">
-                    <option disabled selected>
-                        Select a category
-                    </option>
-                    <option>Clothing</option>
-                    <option>Sports</option>
-                    <option>Furniture</option>
-                    <option>Other</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <textarea
-                    id="description"
-                    defaultValue={description_old}
-                    onChange={handleDescriptionChange}
-                    ></textarea>
-                </div>
+                </Col>
                 <div className="d-flex justify-content-end">
                     <Button variant="outline-primary" 
                     style={{ marginRight: '20px', marginBottom:'5px' }}

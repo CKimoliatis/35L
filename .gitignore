@@ -32,3 +32,5 @@ __pycache__/
 
 #media directory for post images
 /backend/media/item_images/
+
+backend/db.sqlite3

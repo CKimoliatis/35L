@@ -57,14 +57,14 @@ const PostItem = () => {
       .then((response) => {
         if (response.ok) {
           console.log('Item posted successfully');
-          setShowConfirmation(true);
-              // Clear the form by resetting state variables
+        // Clear the form by resetting state variables
           setTitle('');
           setPrice('');
           setCategory('');
           setDescription('');
           setImage(null);
           setErrorMessage('');
+          setShowConfirmation(true);
         } else {
           // Handle different kinds of errors
           setErrorMessage('An error occurred while posting the item.');
@@ -104,6 +104,11 @@ const PostItem = () => {
               <option value="Clothing">Clothing</option>
               <option value="Sports">Sports</option>
               <option value="Furniture">Furniture</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Home Goods">Home Goods</option>
+              <option value="Office Supplies">Office Supplies</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Music">Music</option>
               <option value="Other">Other</option>
             </select>
           </div>

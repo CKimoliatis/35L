@@ -11,6 +11,11 @@ function ConfirmationModal({ show, onHide, itemTitle }) {
     navigate("/landing"); // Navigate to the Landing page
   };
 
+    const handleMyListings = () => {
+    onHide(); // Close the modal
+    navigate("/my-listings"); // Navigate to the My Listings page
+  };
+
   return (
     <Modal
       centered
@@ -25,8 +30,8 @@ function ConfirmationModal({ show, onHide, itemTitle }) {
       </Modal.Header>
       <Modal.Body>{`The item ${itemTitle} has been successfully posted!`}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Close
+        <Button variant="secondary" onClick={handleMyListings}>
+          View My Listings
         </Button>
         <Button variant="primary" onClick={handleBrowseItems}>
           Browse Items

@@ -21,7 +21,6 @@ const Post = ({ item_id, image, price, title, description }) => {
         if (userData) {
           // Check if userData is not null
           const result = await getInWatchlist(userData);
-          console.log(result.in_watchlist);
           setInWatchlist(result.in_watchlist);
         }
       } catch (error) {
@@ -65,7 +64,6 @@ const Post = ({ item_id, image, price, title, description }) => {
   const handleStarClick = (e) => {
     e.stopPropagation(); // Prevents the click event from bubbling to the parent div
     setShowModal(true);
-    console.log("Star clicked for post:", item_id);
   };
 
   return (

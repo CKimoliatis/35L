@@ -32,7 +32,7 @@ const CategorySelect = ({ updateCat }) => {
 
   return (
     <div>
-      <h2 id="price-select-header">Shop by Category</h2>
+      <h3 id="price-select-header">Shop by Category</h3>
       {items.map((item) => (
         <div className="price-select-item" key={item.id}>
           <label>
@@ -41,7 +41,7 @@ const CategorySelect = ({ updateCat }) => {
               checked={item.checked}
               onChange={() => handleCheckboxChange(item.id)}
             />
-            {item.name}
+            {' '}{item.name}
           </label>
         </div>
       ))}

@@ -17,6 +17,7 @@ const Landing = () => {
   const [items, setItems] = useState([]);
   const [cat, setCat] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState(null);
 
   // useEffect(() => {
   // // Retrieve userData from local storage
@@ -39,6 +40,19 @@ const Landing = () => {
   const updateSearchQuery = (query) => {
     setSearchQuery(query);
   };
+
+  const handleFilter = (fil) => {
+    setFilter(fil);
+  };
+
+  const handleReset = () => {
+    setFilter(null);
+  };
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,7 +79,12 @@ const Landing = () => {
         var itemImage = logo;
       }
       //item.user_id != userData_id &&
-      if (cat.length === 0 || cat.includes(item.category)) {
+      if (
+        (cat.length === 0 || cat.includes(item.category)) &&
+        (!filter ||
+          ((!filter.minPrice || item.price >= filter.minPrice) &&
+            (!filter.maxPrice || item.price <= filter.maxPrice)))
+      ) {
         posts.push(
           <Post
             key={item.id}
@@ -92,7 +111,10 @@ const Landing = () => {
         {/* {printFilters()} */}
         <div id="categories-container">
           <div id="price-select-container">
-            <PriceSelect />
+            <PriceSelect
+              handleFilter={handleFilter}
+              handleReset={handleReset}
+            />
           </div>
           <div id="category-select-container">
             <CategorySelect updateCat={updateCat} />

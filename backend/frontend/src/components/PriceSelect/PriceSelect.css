@@ -1,0 +1,39 @@
+.price-select-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .price-select-container label {
+    margin-bottom: 5px;
+  }
+  
+  .price-select-container input {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .price-select-container button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .price-select-container button:hover {
+    background-color: #0056b3;
+  }
+
+  .button-container {
+    display: inline-flex;
+  }
+  
+  .button-container button {
+    margin-left: 25px; /* Add some spacing between buttons */
+  }
+  
+  

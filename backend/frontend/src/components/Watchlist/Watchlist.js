@@ -30,7 +30,6 @@ const Landing = () => {
         if (userData) {
           // Check if userData is not null
           const result = await getWatchlist(userData);
-          console.log(result);
           setItems(result);
         }
       } catch (error) {

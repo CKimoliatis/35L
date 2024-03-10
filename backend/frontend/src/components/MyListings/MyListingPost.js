@@ -1,15 +1,13 @@
-import React from "react"
+import React, { useState, useEffect } from "react";
 import "../../CSS/styles.css";
 import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import YooniLogo from "../../objects/YooniLogo.png";
-import UploadButton from "../UploadButton";
 import EditMyListing from "./EditMyListing";
 
 
 
 function MyListingPost({image, price, title, description, category, item_id, is_editing, onEditClick}) {
     
-
     return (
         <>
         {!is_editing ? (
@@ -17,9 +15,8 @@ function MyListingPost({image, price, title, description, category, item_id, is_
             <Row>
                 <Col style={{maxWidth:'16rem'}}>   
                     <Card style={{ width: '15rem', padding: '10px'}}>
-                        <Card.Img className="listing-img" src={image} alt="Yooni Logo" />
+                        <Card.Img className="listing-img" src={image} />
                     </Card>
-                    <UploadButton/>
                 </Col>
                 <Col>
                     <Row>
@@ -50,7 +47,7 @@ function MyListingPost({image, price, title, description, category, item_id, is_
         </Container>
         ) : (
             <EditMyListing 
-                    image_old={YooniLogo}
+                    image_old={image}
                     price_old={price}
                     title_old={title}
                     description_old={description}

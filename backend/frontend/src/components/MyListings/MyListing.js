@@ -6,6 +6,7 @@ import NavigationBar from "../NavigationBar";
 import MyListingPost from "./MyListingPost";
 import EditMyListing from "./EditMyListing";
 import Login from "../Login";
+import "./MyListings.css"
 //import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import axios from 'axios'
 
@@ -52,7 +53,7 @@ const IsEditing=() => {
 
     return(
 
-        <>
+        <div id="my-listing-container">
             {items.map(item => (
                 <MyListingPost
                     key={item.id}
@@ -66,8 +67,7 @@ const IsEditing=() => {
                     onEditClick={() => handleEditClick(item.id)}
                 />
             ))}
-
-        </>
+        </div>
 
     );
 };

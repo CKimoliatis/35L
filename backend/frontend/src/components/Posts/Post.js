@@ -73,9 +73,10 @@ const Post = ({ item_id, image, price, title, description }) => {
       <div onClick={handleClick} className="post float-on-hover">
         <div className="post-container">
             <div className="post-images-container"><img src={image} alt={title} className="post-images" /></div>
-            <h5 className="post-text">${price}</h5>
+            <h4 className="post-text">${price}</h4>
             <p className="post-text">{title}</p>
             <div
+            className="star-modal"
             style={{ position: "absolute", top: 0, right: 0 }}
             onClick={handleStarClick}
             >

@@ -8,12 +8,12 @@ import SearchBar from "../SearchBar/SearchBar.js";
 import "../CategorySelect/CategorySelect.css";
 import "../PriceSelect/PriceSelect.css";
 import "../Posts/Post.css";
-import "../Landing/Landing.css";
+import "./Watchlist.css";
 import "../Pagination/Pagination.css";
 import logo from "../../objects/YooniLogo.png";
 import axios from "axios";
 
-const Landing = () => {
+const Watchlist = () => {
   const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
 
@@ -83,21 +83,22 @@ const Landing = () => {
       <br></br>
       <br></br>
       <br></br>
-      <div id="main-container">
-        <div id="categories-container">
-          <div id="price-select-container">
+      <div id="watchlist-main-container">
+        {/* <div id="categories-container">
+           <div id="price-select-container">
             <PriceSelect></PriceSelect>
           </div>
           <div id="category-select-container">
             <CategorySelect></CategorySelect>
           </div>
+        </div> */}
+        <div id="watchlist-header-container">
+          <h2 id="watchlist-header">My Watchlist</h2>
         </div>
-        <div id="right-side-container">
-          <div id="posts-container">{printPosts(items)}</div>
-        </div>
+        <div id="watchlist-posts-container">{printPosts(items)}</div>
       </div>
     </div>
   );
 };
 
-export default Landing;
+export default Watchlist;

@@ -21,15 +21,20 @@ function CategorySelect() {
 
   return (
     <div>
-      <h2 id="price-select-header">Shop by Category</h2>
+      <h2 id="category-select-header">Shop by Category</h2>
       {items.map(item => (
-        <div className="price-select-item" key={item.id}>
+        <div className="category-select-item" key={item.id}>
           <label>
             <input
+              className='checkbox'
               type="checkbox"
               checked={item.checked}
               onChange={() => handleCheckboxChange(item.id)}
             />
+            <label 
+            className="custom-checkbox-label"
+            onClick={() => handleCheckboxChange(item.id)}>
+            </label>
             {item.name}
           </label>
         </div>

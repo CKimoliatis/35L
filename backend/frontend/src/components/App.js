@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemPage from "./ItemPage/ItemPage";
 import IntermediaryPage from "./Intermediary.js";
 import Watchlist from "./Watchlist/Watchlist.js";
+import "./App.css"
 
 function App() {
   return (

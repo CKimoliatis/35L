@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './PriceSelect.css'
 
 function PriceSelect() {
   // Define state to manage the list of items and their checked state
@@ -24,10 +25,15 @@ function PriceSelect() {
         <div className="price-select-item" key={item.id}>
           <label>
             <input
+              className='checkbox'
               type="checkbox"
               checked={item.checked}
               onChange={() => handleCheckboxChange(item.id)}
             />
+            <label 
+            className="custom-checkbox-label"
+            onClick={() => handleCheckboxChange(item.id)}>
+            </label>
             {item.name}
           </label>
         </div>

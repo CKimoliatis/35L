@@ -3,6 +3,7 @@ import "../../CSS/styles.css";
 import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import MyListingPost from "./MyListingPost";
 import UploadButton from "../UploadButton";
+import ConfirmationModalListings from "./ConfirmationModalListings";
 import axios from 'axios';
 
 
@@ -50,6 +51,27 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         setDescription(e.target.value);    //set the description to the target value when typed in
     };
 
+    const handleSold = async () => {
+        const postData = {
+            'user_id':userID,
+            'title':new_title,
+            'price':new_price,
+            'category':new_category,
+            'description':new_description,
+            'sold_flag':true,
+        }
+
+        try {
+            await axios.put(`/api/update-item/${item_id}`, postData);
+        } catch (error) {
+            throw('Error updating item:', error);
+        }
+
+        window.location.reload();
+
+    }
+
+    //handle the delete stuff
     const handleDelete = async () => {
         try {
             await axios.delete(`/api/delete-item/${item_id}`);
@@ -61,6 +83,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
 
     }
 
+    //handle the submit stuff
     const handleSubmit = async () => {
 
         setIsEditing(false);
@@ -135,6 +158,11 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                     </div>
                 </Col>
                 <div className="d-flex justify-content-end">
+                    <Button variant="outline-warning" 
+                    style={{ marginRight: '20px', marginBottom:'5px' }}
+                    onClick={handleSold}>
+                        Sold
+                    </Button>
                     <Button variant="outline-danger" 
                     style={{ marginRight: '20px', marginBottom:'5px' }}
                     onClick={handleDelete}>

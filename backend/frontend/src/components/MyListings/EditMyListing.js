@@ -50,6 +50,17 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         setDescription(e.target.value);    //set the description to the target value when typed in
     };
 
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`/api/delete-item/${item_id}`);
+        } catch (error) {
+            throw('Error deleting item:', error);
+        }
+
+        window.location.reload();        
+
+    }
+
     const handleSubmit = async () => {
 
         setIsEditing(false);
@@ -69,7 +80,6 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         }
 
         window.location.reload();
-
         
     }; 
 
@@ -120,6 +130,11 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                     </div>
                 </Col>
                 <div className="d-flex justify-content-end">
+                    <Button variant="outline-danger" 
+                    style={{ marginRight: '20px', marginBottom:'5px' }}
+                    onClick={handleDelete}>
+                        Delete
+                    </Button>
                     <Button variant="outline-primary" 
                     style={{ marginRight: '20px', marginBottom:'5px' }}
                     onClick={handleSubmit}>

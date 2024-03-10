@@ -1,14 +1,18 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
 function ConfirmationModal({ show, onHide, itemTitle }) {
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-    const navigate = useNavigate(); // Initialize useNavigate hook
-
-    const handleBrowseItems = () => {
+  const handleBrowseItems = () => {
     onHide(); // Close the modal
     navigate("/landing"); // Navigate to the Landing page
+  };
+
+    const handleMyListings = () => {
+    onHide(); // Close the modal
+    navigate("/my-listings"); // Navigate to the My Listings page
   };
 
   return (
@@ -23,10 +27,10 @@ function ConfirmationModal({ show, onHide, itemTitle }) {
       <Modal.Header closeButton>
         <Modal.Title>Item Successfully Posted!</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{`The item "${itemTitle}" has been successfully posted!`}</Modal.Body>
+      <Modal.Body>{`The item has been successfully posted!`}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Close
+        <Button variant="secondary" onClick={handleMyListings}>
+          View My Listings
         </Button>
         <Button variant="primary" onClick={handleBrowseItems}>
           Browse Items

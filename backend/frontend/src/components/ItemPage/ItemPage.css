@@ -2,10 +2,66 @@
     background-color: rgb(233, 233, 233);
 }
 #item-page-image {
-    width: 200px;
+    width: 80%;
+}
+
+#main-container {
+    display: flex;
+    min-width: 700px;
+    min-height: 600px;
 }
 
 #item-page-image-container {
-    border: 2px;
-
+    /* margin-top: 60px; */
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+    /* transform: translateY(-60px); */
+    width: 40%;
+    display: flex;
+    margin-left:10%;
 }
+
+#item-info-container {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 90vh;
+    margin-right: 10%;
+}
+
+#item-description-container {
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    height: 70%;
+    width: 90%;
+    /* margin-right: 25px; */
+    /* margin-top: 60px; */
+    padding: 15px;
+}
+
+
+
+.message-seller-container {
+    height:60px;
+    width:90%;
+    background-color: white;
+}
+
+.message-seller {
+    position:absolute;
+    bottom: 20;
+    left: 20;
+    background-color: #0098dc;
+    line-height: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: white;
+    margin-left: 15px;
+}
+
+
+

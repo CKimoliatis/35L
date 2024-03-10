@@ -114,10 +114,15 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                         <option disabled selected>
                             Select a category
                         </option>
-                        <option>Clothing</option>
-                        <option>Sports</option>
-                        <option>Furniture</option>
-                        <option>Other</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Home Goods">Home Goods</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Music">Music</option>
+                        <option value="Other">Other</option>
                         </select>
                     </div>
                     <div className="form-group">

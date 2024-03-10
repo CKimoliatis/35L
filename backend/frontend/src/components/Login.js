@@ -80,7 +80,7 @@ const Login = (props) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyPress={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleLogin();
               }
             }}

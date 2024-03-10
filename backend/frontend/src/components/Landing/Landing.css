@@ -1,6 +1,6 @@
-body {
+/* body {
   min-width: 700px;
-}
+} */
 #landing-page {
   width: 100%;
 }
@@ -20,7 +20,7 @@ body {
 
 #categories-container {
   /* width: 20%; */
-  min-width: 200px;
+  min-width: 265px;
   box-sizing: border-box;
   justify-content: left;
   /* display: flex; */
@@ -33,11 +33,12 @@ body {
   /* margin-top: 66.2px; */
   height: 100%;
   padding-left: 10px;
+  z-index: 1;
 }
 #price-select-container {
   border-bottom: 1px solid darkgray;
   width: 90%;
-  height: 130px;
+  height: 200px;
 }
 #category-select-container {
   width: 90%;
@@ -51,16 +52,25 @@ body {
 #right-side-container {
   background-color: rgb(233, 233, 233);
   margin-left: 265.4px;
+  flex: 1;
+  min-height: 90vh;
 }
+
 #posts-container {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  min-width: 400px;
+  /* align-items: center; */
+  /* min-width: 400px; */
   overflow-y: auto;
   width:100%;
   flex:1;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  max-width: 1100px;
+  display: grid;
+  /* gap: px;  */
+  justify-content: center; 
+  margin: 0 auto; 
+  margin-top: 10px;
 }
+
 #pagination-container {
   /* padding-left: 1%; */
   width: 100%;
@@ -70,25 +80,36 @@ body {
   height: 80px;
 }
 
-  /* Styles for small screens (up to 600px wide) */
-  @media only screen and (max-width: 700px) {
-    #posts-container {
-      grid-template-columns: repeat(2, auto);
+
+
+
+   @media only screen and (max-width: 1000px) {
+    #right-side-container {
+      margin-left: 0px;
+    }
+    #categories-container {
+      display: none;
+    }
+    #price-select-container {
+      display: none;
+    }
+    #category-select-container {
+      display: none;
     }
   }
-
-  @media only screen and (min-width: 701px) and (max-width: 800px) {
+/*
+  @media only screen and (min-width: 1001px) and (max-width: 1150px) {
     #posts-container {
       grid-template-columns: repeat(3, auto);
     }
   }
 
-  /* Styles for medium screens (601px to 900px wide) */
-  @media only screen and (min-width: 801px)  {
+
+  @media only screen and (min-width: 1151px)  {
     #posts-container {
       grid-template-columns: repeat(4, auto);
-    }
-  }
+    } 
+  } */
 
 
 

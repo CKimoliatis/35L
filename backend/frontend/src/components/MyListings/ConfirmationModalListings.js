@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import axios from 'axios';
 
-function ConfirmationModalListings({ show, onHide, itemTitle }) {
-  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleBrowseItems = () => {
-    onHide(); // Close the modal
-    navigate("/landing"); // Navigate to the Landing page
+function ConfirmationModalListings({ show, onHide, item_id, new_title, new_category, new_price, new_description, userID }) {
+  const [selling_price, setSellingPrice] = useState(0);
+
+  const handleListItems = async () => {
+
+    const postData = {
+      'user_id':userID,
+      'title':new_title,
+      'price':new_price,
+      'category':new_category,
+      'description':new_description,
+      'selling_price':selling_price
+  }
+
+    try {
+        await axios.put(`/api/update-item/${item_id}`, postData);
+        onHide(); // Close the modal
+        window.location.reload();        
+
+    } catch (error) {
+        throw('Error updating item:', error);
+    }
+      
   };
 
-    const handleMyListings = () => {
-    onHide(); // Close the modal
-    navigate("/my-listings"); // Navigate to the My Listings page
+  const handleSellingPriceChange = (e) => {
+
+    setSellingPrice(e.target.value);
+
+    
   };
+
+
 
   return (
     <Modal
@@ -25,15 +47,12 @@ function ConfirmationModalListings({ show, onHide, itemTitle }) {
       onHide={onHide}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Item Successfully Posted!</Modal.Title>
+        <Modal.Title>How much did you sell it for?</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{`The item has been successfully posted!`}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleMyListings}>
-          View My Listings
-        </Button>
-        <Button variant="primary" onClick={handleBrowseItems}>
-          Browse Items
+      <input type="text" id="selling_price" onChange={handleSellingPriceChange} />
+        <Button variant="primary" onClick={handleListItems}>
+          Sold!
         </Button>
       </Modal.Footer>
     </Modal>

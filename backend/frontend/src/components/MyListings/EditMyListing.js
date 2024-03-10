@@ -14,6 +14,8 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
     const [new_price, setPrice] = useState(price_old);
     const [new_category, setCategory]=useState(category_old);
     const [isEditing, setIsEditing] = useState(true);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
 
 
     const userDataString = localStorage.getItem("userData"); 
@@ -51,23 +53,8 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         setDescription(e.target.value);    //set the description to the target value when typed in
     };
 
-    const handleSold = async () => {
-        const postData = {
-            'user_id':userID,
-            'title':new_title,
-            'price':new_price,
-            'category':new_category,
-            'description':new_description,
-            'sold_flag':true,
-        }
-
-        try {
-            await axios.put(`/api/update-item/${item_id}`, postData);
-        } catch (error) {
-            throw('Error updating item:', error);
-        }
-
-        window.location.reload();
+    const handleSold = () => {
+        setShowConfirmation(true);
 
     }
 
@@ -163,6 +150,16 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                     onClick={handleSold}>
                         Sold
                     </Button>
+                    <ConfirmationModalListings
+                        show={showConfirmation}
+                        onHide={() => setShowConfirmation(false)}
+                        item_id={item_id}
+                        new_title={new_title}
+                        new_category={new_category}
+                        new_price={new_price}
+                        new_description={new_description}
+                        userID={userID}
+                    />
                     <Button variant="outline-danger" 
                     style={{ marginRight: '20px', marginBottom:'5px' }}
                     onClick={handleDelete}>
@@ -177,6 +174,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
             </Row>
             </Container>
          ) : (
+            <>
             <MyListingPost image={newImage}
                 price={new_price}
                 title={new_title}
@@ -184,6 +182,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                 category={new_category}
                 is_editing={isEditing}
                 onEditClick={() => setIsEditing(true)}/>
+            </>
         )} 
     </>
 

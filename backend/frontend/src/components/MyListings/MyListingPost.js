@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../../CSS/styles.css";
 import { Card, Button, Container, Col, Row} from "react-bootstrap";
-import YooniLogo from "../../objects/YooniLogo.png";
 import EditMyListing from "./EditMyListing";
 
 
 
-function MyListingPost({image, price, title, description, category, item_id, is_editing, onEditClick}) {
+function MyListingPost({image, price, title, description, category, item_id, sold_flag, show_sold, is_editing, onEditClick}) {
+
     
     return (
         <>
-        {!is_editing ? (
+        {!is_editing && ((!show_sold && !sold_flag) || (show_sold && sold_flag)) && (
         <Container className="listing-container" style={{maxWidth: '66rem', marginInlineEnd: '25rem', marginLeft:'2 0%'}}>
             <Row>
                 <Col style={{maxWidth:'16rem'}}>   
@@ -27,11 +27,10 @@ function MyListingPost({image, price, title, description, category, item_id, is_
                             <div id="price" >${price}</div>
                         </div>
                     </Row>
-                
                     <div className="form-group select">
                         <div id="selectedCategory">{category}</div>
                     </div>
-                        <div className="form-group textarea">
+                    <div className="form-group textarea">
                         <div className="description">{description}</div>
                     </div>
                 </Col>
@@ -43,18 +42,19 @@ function MyListingPost({image, price, title, description, category, item_id, is_
                     Edit
                 </Button>
             </div>
-
-        </Container>
-        ) : (
-            <EditMyListing 
+            </Container>
+            )}
+            {is_editing && (
+                <EditMyListing
                     image_old={image}
                     price_old={price}
                     title_old={title}
                     description_old={description}
                     category_old={category}
                     item_id={item_id}
-            />
-        )}
+                />
+            )}
+
         </>
     );
 }

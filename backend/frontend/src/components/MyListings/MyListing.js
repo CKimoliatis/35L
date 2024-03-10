@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../../CSS/styles.css";
+import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import NavigationBar from "../NavigationBar";
 import MyListingPost from "./MyListingPost";
 import EditMyListing from "./EditMyListing";
 import axios from "axios";
 
-const IsEditing = () => {
+const IsEditing = ({showSold}) => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -18,7 +19,7 @@ const IsEditing = () => {
     setEditingItemId(itemId);
   };
 
-  console.log(userData);
+
 
   useEffect(() => {
     console.log(searchQuery);
@@ -51,6 +52,8 @@ const IsEditing = () => {
           description={item.description}
           category={item.category}
           item_id={item.id}
+          sold_flag={item.sold_flag}
+          show_sold = {showSold}
           is_editing={editingItemId === item.id}
           onEditClick={() => handleEditClick(item.id)}
         />
@@ -60,13 +63,37 @@ const IsEditing = () => {
 };
 
 const MyListing = () => {
+
+  const [showSold, setShowSold] = useState(false);
+
+  const handleSoldButtonClick = () => {
+    setShowSold(true); // Set showSold to true for sold items
+  };
+
+  const handleListingsButtonClick = () => {
+    setShowSold(false); // Set showSold to false for current listings
+  };
+
   return (
     <>
       <NavigationBar />
       <br />
       <br />
       <br />
-      <IsEditing />
+      <Row>
+      <Button variant="outline-warning" 
+        style={{marginLeft:'5rem', marginTop: '5rem', display:'flex', width: '10rem' }} 
+        onClick={() => handleSoldButtonClick()}>
+            Sold Items
+      </Button>
+      <Button variant="outline-primary" 
+        style={{marginLeft:'5rem', marginTop: '5rem', display:'flex', width: '10rem' }} 
+        onClick={() => handleListingsButtonClick()}>
+            Current Listings
+      </Button>
+      </Row>
+      <br />
+      <IsEditing showSold={showSold}/>
     </>
   );
 };

@@ -14,7 +14,8 @@ function ConfirmationModalListings({ show, onHide, item_id, new_title, new_categ
       'price':new_price,
       'category':new_category,
       'description':new_description,
-      'selling_price':selling_price
+      'selling_price':selling_price,
+      'sold_flag':true
   }
 
     try {
@@ -34,8 +35,6 @@ function ConfirmationModalListings({ show, onHide, item_id, new_title, new_categ
 
     
   };
-
-
 
   return (
     <Modal

@@ -97,7 +97,7 @@ const Landing = () => {
 
   return (
     <div>
-      <NavigationBar updateSearchQuery={updateSearchQuery} />
+      <NavigationBar updateSearchQuery={updateSearchQuery} showSearch={true}/>
       <br></br>
       <br></br>
       <br></br>

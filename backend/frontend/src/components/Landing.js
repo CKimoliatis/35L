@@ -13,7 +13,6 @@ import logo from "../../static/frontend/images/YooniLogo.png";
 import axios from "axios";
 
 const Landing = () => {
-  // const [userData, setUserData] = useState("");
   const [items, setItems] = useState([]);
   const [cat, setCat] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -93,7 +92,6 @@ const Landing = () => {
         );
       }
     });
-    // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
     return posts.reverse();
   }
 

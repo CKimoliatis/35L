@@ -34,7 +34,7 @@ const NavigationBar = ({updateSearchQuery, showSearch}) => {
       data-bs-theme="dark"
       fixed="top"
       expand="lg"
-      style={{ backgroundColor: "#0098dc", color: "white" }}
+      style={{ backgroundColor: "#0098dc", color: "white", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)"}}
       className="navbar-custom"
     >
       <Container>

@@ -32,16 +32,21 @@ const CategorySelect = ({ updateCat }) => {
 
   return (
     <div>
-      <h3 id="price-select-header">Shop by Category</h3>
-      {items.map((item) => (
-        <div className="price-select-item" key={item.id}>
+      <h4 id="category-select-header">Shop by Category</h4>
+      {items.map(item => (
+        <div className="category-select-item" key={item.id}>
           <label>
             <input
+              className='checkbox'
               type="checkbox"
               checked={item.checked}
               onChange={() => handleCheckboxChange(item.id)}
             />
-            {' '}{item.name}
+            <label 
+            className="custom-checkbox-label"
+            onClick={() => handleCheckboxChange(item.id)}>
+            </label>
+            {item.name}
           </label>
         </div>
       ))}

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../../CSS/styles.css";
-import YooniLogo from "../../objects/YooniLogo.png";
 import NavigationBar from "../NavigationBar";
-//import UploadButton from "./UploadButton";
 import MyListingPost from "./MyListingPost";
 import EditMyListing from "./EditMyListing";
-//import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import axios from "axios";
 
 const IsEditing = () => {
@@ -48,7 +45,6 @@ const IsEditing = () => {
       {items.map((item) => (
         <MyListingPost
           key={item.id}
-          YooniLogo={YooniLogo}
           image={item.image}
           price={item.price}
           title={item.title}

@@ -116,3 +116,14 @@ class UpdateItem(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self,pk):
+
+        item = Item.objects.get(pk=pk)
+        image = item.image
+        if image:
+            return Response(image, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+
+

@@ -14,9 +14,8 @@ const PostItem = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   //get the user ID to link post to user
-  const userDataString = localStorage.getItem("userData")
-        const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
-        const userID = userData[Object.keys(userData)[0]]; // Access the user ID
+  const userDataString = localStorage.getItem("userData"); 
+    const userData = JSON.parse(userDataString); 
 
   // This function will be passed to UploadButton to update the image state
   const handleFileSelect = (file) => {
@@ -40,7 +39,7 @@ const PostItem = () => {
     }
 
     const formData = new FormData();
-    formData.append('user_id', userID);
+    formData.append('user_id', userData.id);
     formData.append('title', title);
     formData.append('price', price);
     formData.append('category', category);
@@ -58,13 +57,14 @@ const PostItem = () => {
       .then((response) => {
         if (response.ok) {
           console.log('Item posted successfully');
-          setShowConfirmation(true);
-              // Clear the form by resetting state variables
+        // Clear the form by resetting state variables
           setTitle('');
           setPrice('');
           setCategory('');
           setDescription('');
           setImage(null);
+          setErrorMessage('');
+          setShowConfirmation(true);
         } else {
           // Handle different kinds of errors
           setErrorMessage('An error occurred while posting the item.');
@@ -81,7 +81,7 @@ const PostItem = () => {
       <NavigationBar />
       <br /><br /><br />
       <div className="form-container">
-        <h2>Create a new listing</h2>
+        <h2>Post a New Item</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
@@ -104,6 +104,11 @@ const PostItem = () => {
               <option value="Clothing">Clothing</option>
               <option value="Sports">Sports</option>
               <option value="Furniture">Furniture</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Home Goods">Home Goods</option>
+              <option value="Office Supplies">Office Supplies</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Music">Music</option>
               <option value="Other">Other</option>
             </select>
           </div>
@@ -120,7 +125,7 @@ const PostItem = () => {
             <label htmlFor="images">Upload pictures</label>
             <UploadButton onFileSelect={handleFileSelect} />
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn btn-outline-primary">Submit</button>
           {errorMessage && <div className="error-message">Error: {errorMessage}</div>}
         </form>
       </div>

@@ -50,10 +50,6 @@ const Landing = () => {
   };
 
   useEffect(() => {
-    console.log(filter);
-  }, [filter]);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
         // Make a GET request to your backend endpoint

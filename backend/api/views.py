@@ -68,6 +68,18 @@ class CreateItem(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class DeleteItem(APIView):
+    def delete(self, request, pk):
+        print('pk is:',pk)
+        try:
+            item = Item.objects.get(pk=pk)
+            item.delete()
+
+            return Response({'message': 'Item deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except Item.DoesNotExist:
+            return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    
 class ItemView(APIView):
     serializer_class = ItemSerializer
     def get(self, request, format=None):
@@ -116,14 +128,6 @@ class UpdateItem(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def get(self,pk):
 
-        item = Item.objects.get(pk=pk)
-        image = item.image
-        if image:
-            return Response(image, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
 
 

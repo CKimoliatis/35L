@@ -29,7 +29,7 @@ const PriceSelect = ({ handleFilter, handleReset }) => {
 
   return (
     <div className="price-select-container">
-      <h3>Price Range</h3>
+      <h4>Price Range</h4>
       <label>Min Price:</label>
       <input type="number" value={minPrice} onChange={handleMinPriceChange} />
       <label>Max Price:</label>

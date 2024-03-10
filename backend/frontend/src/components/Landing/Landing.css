@@ -24,7 +24,7 @@
   box-sizing: border-box;
   justify-content: left;
   /* display: flex; */
-  background-color: lightgray;
+  background-color: rgb(220,220,220);
   border-right: 2px solid white;
   overflow: hidden;
   padding-left: 10px;

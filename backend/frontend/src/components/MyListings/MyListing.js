@@ -60,45 +60,6 @@ const IsEditing = () => {
       ))}
     </>
   );
-        const fetchData = async () => {
-          try {
-            // Make a GET request to your backend endpoint
-            const response = await axios.get("/api/myitems", {
-              params: { searchQuery: userData.id } // Pass searchQuery value directly
-            });
-            setItems(response.data);
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        };
-    
-        fetchData();
-        console.log(searchQuery)
-      }, [searchQuery]);
-    
-    // function checkImage() {
-
-    // }
-
-    return(
-
-        <div id="my-listing-container">
-            {items.map(item => (
-                <MyListingPost
-                    key={item.id}
-                    image={item.image}
-                    price={item.price}
-                    title={item.title}
-                    description={item.description}
-                    category={item.category}
-                    item_id={item.id}
-                    is_editing={editingItemId === item.id}
-                    onEditClick={() => handleEditClick(item.id)}
-                />
-            ))}
-        </div>
-
-    );
 };
 
 const MyListing = () => {

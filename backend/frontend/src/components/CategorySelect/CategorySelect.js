@@ -32,7 +32,7 @@ const CategorySelect = ({ updateCat }) => {
 
   return (
     <div>
-      <h2 id="category-select-header">Shop by Category</h2>
+      <h4 id="category-select-header">Shop by Category</h4>
       {items.map(item => (
         <div className="category-select-item" key={item.id}>
           <label>

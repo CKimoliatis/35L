@@ -1,45 +1,45 @@
 import React, { useState } from 'react';
-import './PriceSelect.css'
+import "./PriceSelect.css";
 
-function PriceSelect() {
-  // Define state to manage the list of items and their checked state
-  const [items, setItems] = useState([
-    { id: 1, name: '$0 - $25', checked: false },
-    { id: 2, name: '$25 - $50', checked: false },
-    { id: 3, name: '$50 - $100', checked: false },
-    { id: 4, name: '$100 - $250', checked: false },
-    { id: 5, name: '$250+', checked: false },
-  ]);
+const PriceSelect = ({ handleFilter, handleReset }) => {
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
-  // Function to handle checkbox change
-  const handleCheckboxChange = (id) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, checked: !item.checked } : item
-    ));
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value);
+  };
+
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value);
+  };
+
+  const handleFilterClick = () => {
+    const filter = {
+      minPrice: parseFloat(minPrice),
+      maxPrice: parseFloat(maxPrice),
+    };
+    handleFilter(filter);
+  };
+
+  const handleResetClick = () => {
+    setMinPrice('');
+    setMaxPrice('');
+    handleReset();
   };
 
   return (
-    <div>
-      <h2 id="price-select-header">Shop by Price</h2>
-      {items.map(item => (
-        <div className="price-select-item" key={item.id}>
-          <label>
-            <input
-              className='checkbox'
-              type="checkbox"
-              checked={item.checked}
-              onChange={() => handleCheckboxChange(item.id)}
-            />
-            <label 
-            className="custom-checkbox-label"
-            onClick={() => handleCheckboxChange(item.id)}>
-            </label>
-            {item.name}
-          </label>
-        </div>
-      ))}
+    <div className="price-select-container">
+      <h3>Price Range</h3>
+      <label>Min Price:</label>
+      <input type="number" value={minPrice} onChange={handleMinPriceChange} />
+      <label>Max Price:</label>
+      <input type="number" value={maxPrice} onChange={handleMaxPriceChange} />
+      <div className="button-container">
+        <button onClick={handleFilterClick}>Apply Filter</button>
+        <button onClick={handleResetClick}>Reset</button>
+      </div>
     </div>
   );
-}
+};
 
 export default PriceSelect;

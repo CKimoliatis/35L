@@ -14,20 +14,41 @@ import axios from "axios";
 
 const Landing = () => {
   const [items, setItems] = useState([]);
+  const [cat, setCat] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState(null);
 
-    const userDataString = localStorage.getItem("userData"); 
-    const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
-    console.log(userData);
-    var userData_id = userData.id;
+  // useEffect(() => {
+  // // Retrieve userData from local storage
+  // const storedUserData = localStorage.getItem("userData");
+  // if (storedUserData) {
+  //   // Parse the storedUserData if it exists
+  //   setUserData(JSON.parse(storedUserData));
+  //   console.log(userData);
+  // }
+  // console.log(userData);
+  const userDataString = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
+  var userData_id = userData.id.toString();
+  // }, []);
 
+  const updateCat = (val) => {
+    setCat(val);
+  };
 
   const updateSearchQuery = (query) => {
     setSearchQuery(query);
   };
 
+  const handleFilter = (fil) => {
+    setFilter(fil);
+  };
+
+  const handleReset = () => {
+    setFilter(null);
+  };
+
   useEffect(() => {
-    console.log(searchQuery);
     const fetchData = async () => {
       try {
         // Make a GET request to your backend endpoint
@@ -47,17 +68,18 @@ const Landing = () => {
     const posts = [];
     items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
-      if(item.image) {
-        var itemImage = item.image
-      }
-      else {
+      if (item.image) {
+        var itemImage = item.image;
+      } else {
         var itemImage = logo;
       }
-
-
-
-      if(item.user_id != userData_id) {
-        console.log(item)
+      //item.user_id != userData_id &&
+      if (
+        (cat.length === 0 || cat.includes(item.category)) &&
+        (!filter ||
+          ((!filter.minPrice || item.price >= filter.minPrice) &&
+            (!filter.maxPrice || item.price <= filter.maxPrice)))
+      ) {
         posts.push(
           <Post
             key={item.id}
@@ -83,10 +105,13 @@ const Landing = () => {
         {/* {printFilters()} */}
         <div id="categories-container">
           <div id="price-select-container">
-            <PriceSelect></PriceSelect>
+            <PriceSelect
+              handleFilter={handleFilter}
+              handleReset={handleReset}
+            />
           </div>
           <div id="category-select-container">
-            <CategorySelect></CategorySelect>
+            <CategorySelect updateCat={updateCat} />
           </div>
         </div>
         <div id="right-side-container">

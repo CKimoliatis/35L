@@ -4,7 +4,16 @@ import "../CSS/MyAccount.css";
 
 const MyAccount = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(true);
-
+  const [passwordConditionsVisible, setPasswordConditionsVisible] =
+    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordValid, setPasswordValid] = useState({
+    minLength: false,
+    uppercase: false,
+    symbol: false,
+  });
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  
   // Initialize state with structure for user data
   const [userData, setUserData] = useState({
     name: "",
@@ -18,15 +27,6 @@ const MyAccount = () => {
     newPassword: "",
     confirmPassword: "",
   });
-
-  const handlePasswordChangeClick = () => {
-    setPasswordFields({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
-    setIsEditingProfile(false);
-  };
 
   useEffect(() => {
     // Fetch and parse user data from localStorage
@@ -85,12 +85,35 @@ const MyAccount = () => {
     const hasUppercase = /[A-Z]/.test(inputPassword);
     const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(inputPassword);
 
+    setPasswordValid({
+      minLength: hasMinLength,
+      uppercase: hasUppercase,
+      symbol: hasSymbol,
+    });
+
     return hasMinLength && hasUppercase && hasSymbol;
+  };
+
+  const renderConditionStatus = (condition) => {
+    return condition ? (
+      <span style={{ color: "green" }}>✔</span>
+    ) : (
+      <span style={{ color: "red" }}>✘</span>
+    );
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handlePasswordChangeSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
   
+    // Check if any of the password fields are empty
+    if (!passwordFields.currentPassword || !passwordFields.newPassword || !passwordFields.confirmPassword) {
+      alert('Please fill in all password fields.');
+      return; // Return early to avoid making the API call
+    }
     // Validate the new password before submitting
     if (!validatePassword(passwordFields.newPassword)) {
       alert('New password does not meet the requirements.');
@@ -227,30 +250,41 @@ const MyAccount = () => {
             <div className="form-group">
               <label>New Password</label>
               <input
-                type="text"
+                type={showPassword ? "text" : "password"}
                 placeholder="New Password"
                 value={passwordFields.newPassword}
-                onChange={(e) =>
-                  setPasswordFields({
-                    ...passwordFields,
-                    newPassword: e.target.value,
-                  })
-                }
+                onChange={(e) => {
+                  setPasswordFields({...passwordFields, newPassword: e.target.value});
+                  validatePassword(e.target.value);
+                }}
+                onFocus={() => setPasswordConditionsVisible(true)}
+                onBlur={() => setPasswordConditionsVisible(false)}
+                style={{ width: "100%" }}
               />
+              <button type="button" onClick={toggleShowPassword}>
+                {showPassword ? "Hide" : "Show"} Password
+              </button>
+              {passwordConditionsVisible && ( // Assuming you add logic to toggle this state
+              <>
+              <div>{renderConditionStatus(passwordValid.minLength)} At least 8 characters</div>
+              <div>{renderConditionStatus(passwordValid.uppercase)} At least 1 uppercase letter</div>
+              <div>{renderConditionStatus(passwordValid.symbol)} At least 1 symbol</div>
+              </>
+              )}
             </div>
             <div className="form-group">
               <label>Confirm New Password</label>
               <input
-                type="text"
+                type={showPassword ? "text" : "password"}
                 placeholder="Confirm New Password"
                 value={passwordFields.confirmPassword}
-                onChange={(e) =>
-                  setPasswordFields({
-                    ...passwordFields,
-                    confirmPassword: e.target.value,
-                  })
-                }
+                onChange={(e) => {
+                  setPasswordFields({...passwordFields, confirmPassword: e.target.value});
+                  // Directly compare passwords here or in a dedicated handler
+                  setPasswordMatch(passwordFields.newPassword === e.target.value);
+                }}
               />
+              {!passwordMatch && <span style={{ color: "red" }}>Passwords do not match</span>}
             </div>
             <button type="submit">Change Password</button>
           </form>

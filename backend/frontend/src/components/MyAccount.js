@@ -41,10 +41,47 @@ const MyAccount = () => {
       });
     }
   }, []);
+
+
   //switch between Change Password and Edit Profile
   const handleInputChange = (e, field) => {
     setUserData({ ...userData, [field]: e.target.value });
   };
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    try {
+      const userDataString = localStorage.getItem("userData");
+      const userDataParsed = JSON.parse(userDataString);
+      const userId = userDataParsed.id;
+      console.log({ userId, first_name: userData.name, last_name: userData.lastName });
+      const response = await fetch("/api/update-user/", { 
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: userId,
+          first_name: userData.name,
+          last_name: userData.lastName,
+        }),
+      });
+  
+      if (!response.ok) throw new Error('Failed to update profile.');
+      const updatedUserData = await response.json();
+      setUserData({
+        ...userData,
+        name: updatedUserData.first_name || "",
+        lastName: updatedUserData.last_name || "",
+      });
+      localStorage.setItem("userData", JSON.stringify(updatedUserData));
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Error updating profile. Please try again.');
+    }
+  };
+  
 
   return (
     <div className="account-page">
@@ -70,7 +107,7 @@ const MyAccount = () => {
       {isEditingProfile ? (
         <div className="form-container">
             <h2>Edit Profile</h2>
-          <form className="edit-profile-form">
+          <form className="edit-profile-form" onSubmit={handleProfileSubmit}>
             <div className="form-row">
               <div className="form-group half-width">
                 <label>Name</label>
@@ -95,6 +132,7 @@ const MyAccount = () => {
               <label>Email</label>
               <input
                 type="email"
+                disabled
                 placeholder="Email"
                 value={userData.email}
                 onChange={(e) => handleInputChange(e, "email")}
@@ -144,7 +182,6 @@ const MyAccount = () => {
                     newPassword: e.target.value,
                   })
                 }
-                autocomplete="new-password"
               />
             </div>
             <div className="form-group">
@@ -159,7 +196,6 @@ const MyAccount = () => {
                     confirmPassword: e.target.value,
                   })
                 }
-                autocomplete="new-password"
               />
             </div>
             <button type="submit">Change Password</button>

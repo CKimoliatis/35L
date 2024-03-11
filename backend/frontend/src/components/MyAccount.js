@@ -79,8 +79,64 @@ const MyAccount = () => {
       alert('Error updating profile. Please try again.');
     }
   };
-  
 
+  const validatePassword = (inputPassword) => {
+    const hasMinLength = inputPassword.length >= 8;
+    const hasUppercase = /[A-Z]/.test(inputPassword);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(inputPassword);
+
+    return hasMinLength && hasUppercase && hasSymbol;
+  };
+
+  const handlePasswordChangeSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+  
+    // Validate the new password before submitting
+    if (!validatePassword(passwordFields.newPassword)) {
+      alert('New password does not meet the requirements.');
+      return;
+    }
+  
+    if (passwordFields.newPassword !== passwordFields.confirmPassword) {
+      alert('New password and confirm new password do not match.');
+      return;
+    }
+  
+    try {
+      const userDataString = localStorage.getItem("userData");
+      const userDataParsed = JSON.parse(userDataString);
+      const userId = userDataParsed.id; // Assuming the user's ID is stored in localStorage
+      const response = await fetch("/api/change-password/", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          old_password: passwordFields.currentPassword,
+          new_password: passwordFields.newPassword,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to change password.');
+      }
+  
+      alert('Password changed successfully!');
+      // Reset the password fields after successful change
+      setPasswordFields({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+      setIsEditingProfile(false);
+
+    } catch (error) {
+      console.error('Error changing password:', error);
+      alert(`Error changing password: ${error.message}`);
+    }
+  };
+  
   return (
     <div className="account-page">
       <NavigationBar />
@@ -152,7 +208,7 @@ const MyAccount = () => {
       ) : (
         <div className="form-container">
             <h2>Change Password</h2>
-          <form className="change-password-form">
+          <form className="change-password-form" onSubmit={handlePasswordChangeSubmit}>
             {/* Password change form can be implemented here */}
             <div className="form-group">
               <label>Current Password</label>

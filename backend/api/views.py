@@ -215,5 +215,15 @@ class UpdateItem(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
+class UpdateUserView(APIView):
+    def put(self, request, format=None):
+        user_id = request.data.get('id')  # Get user ID from the request data
+        try:
+            user = User.objects.get(pk=user_id)
+            serializer = UserSerializer(user, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

@@ -2,6 +2,7 @@
 /myvenv
 # dependencies
 /backend/frontend/node_modules
+node_modules
 /.pnp
 .pnp.js
 /backend/api/__pycache__

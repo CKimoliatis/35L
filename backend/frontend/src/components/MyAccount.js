@@ -42,19 +42,17 @@ const MyAccount = () => {
     }
   }, []);
 
-
   //switch between Change Password and Edit Profile
   const handleInputChange = (e, field) => {
     setUserData({ ...userData, [field]: e.target.value });
   };
-
+  //perform put request to update first name and last name
   const handleProfileSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     try {
       const userDataString = localStorage.getItem("userData");
       const userDataParsed = JSON.parse(userDataString);
       const userId = userDataParsed.id;
-      console.log({ userId, first_name: userData.name, last_name: userData.lastName });
       const response = await fetch("/api/update-user/", { 
         method: 'PUT',
         headers: {

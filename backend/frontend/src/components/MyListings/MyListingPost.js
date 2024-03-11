@@ -35,6 +35,7 @@ function MyListingPost({image, price, title, description, category, item_id, sol
                     </div>
                 </Col>
             </Row>
+            {!sold_flag && (
             <div className="d-flex justify-content-end">
                 <Button variant="outline-primary" 
                 style={{ marginRight: '20px', marginBottom:'5px' }} 
@@ -42,6 +43,7 @@ function MyListingPost({image, price, title, description, category, item_id, sol
                     Edit
                 </Button>
             </div>
+            )}
             </Container>
             )}
             {is_editing && (

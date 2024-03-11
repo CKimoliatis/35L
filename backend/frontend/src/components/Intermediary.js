@@ -1,28 +1,34 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import YooniLogo from "../objects/YooniLogo.png";// Import your company logo component
+import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 
-const IntermediaryPage = () => {
-  const navigate = useNavigate();
+function ConfimSignupModal({ show, onHide}) {
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleLogin = () => {
-    // Navigate to the login page
-    navigate("/");
-  };
+  const handleLogIn = () =>{
+    navigate('/');
+    onHide();
+  }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <img
-          src={YooniLogo}
-          alt="Yooni Logo"
-          className="img-fluid mb-3"
-          style={{ width: "200px", height: "auto" }}
-      />
-      <h2>Your account is ready to go!</h2>
-      <p>Log in to access your account.</p>
-      <button onClick={handleLogin}>Log in</button>
-    </div>
+    <Modal
+      centered
+      backdrop="static"
+      keyboard={false}
+      aria-labelledby="contained-modal-title-vcenter"
+      show={show}
+      onHide={onHide}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>You Have Succesfully Registered!</Modal.Title>
+      </Modal.Header>
+      <Modal.Footer>
+        <Button variant="primary" onClick={handleLogIn}>
+          Log In 
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
-};
+}
 
-export default IntermediaryPage;
+export default ConfimSignupModal;

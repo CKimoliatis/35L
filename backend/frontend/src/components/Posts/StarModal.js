@@ -31,6 +31,7 @@ function StarModal({
         }
         onHide(); // Close the modal
         updateInWatchlist(!inWatchlist);
+        window.location.reload();
     } catch (error) {
         console.error("Error performing watchlist action:", error);
     }

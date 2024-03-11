@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ItemPage from "./ItemPage/ItemPage";
 import IntermediaryPage from "./Intermediary.js";
 import Watchlist from "./Watchlist/Watchlist.js";
+import "./App.css"
+import MyAccount from "./MyAccount.js";
 
 function App() {
   return (
@@ -18,7 +20,6 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Login />}></Route>{" "}
-          {/* has to be changed later */}
           <Route path="signup" element={<Signup />} />
           <Route path="landing" element={<Landing />} />
           <Route path="postItem" element={<PostItem />} />
@@ -28,6 +29,7 @@ function App() {
           <Route path="/post/:id" element={<ItemPage/>} />
           <Route path="my-listings" element={<MyListing />} />
           <Route path="my-watchlist" element={<Watchlist />} />
+          <Route path="my-account" element={<MyAccount />} />
         </Route>
       </Routes>
     </Router>

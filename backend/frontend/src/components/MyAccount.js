@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavigationBar from "./NavigationBar";
 import "../CSS/MyAccount.css";
+import EditProfileModal from "./EditProfileModal";
 
 const MyAccount = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(true);
@@ -13,7 +14,6 @@ const MyAccount = () => {
     symbol: false,
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
-  
   // Initialize state with structure for user data
   const [userData, setUserData] = useState({
     name: "",
@@ -21,12 +21,14 @@ const MyAccount = () => {
     email: "",
     username: "",
   });
-
   const [passwordFields, setPasswordFields] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalBody, setModalBody] = useState('');
 
   useEffect(() => {
     // Fetch and parse user data from localStorage
@@ -73,10 +75,13 @@ const MyAccount = () => {
         lastName: updatedUserData.last_name || "",
       });
       localStorage.setItem("userData", JSON.stringify(updatedUserData));
-      alert('Profile updated successfully!');
+      setModalTitle('Profile Updated');
+      setModalBody('Your account\'s information was updated succesfully!');
+      setShowModal(true);
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Error updating profile. Please try again.');
+      setModalTitle('Error Updating Profile');
+      setModalBody('An Error accured when trying to update your account\'s information.');
+      setShowModal(true);
     }
   };
 
@@ -111,17 +116,23 @@ const MyAccount = () => {
   
     // Check if any of the password fields are empty
     if (!passwordFields.currentPassword || !passwordFields.newPassword || !passwordFields.confirmPassword) {
-      alert('Please fill in all password fields.');
+      setModalTitle('Password Fields Are Empty');
+      setModalBody('Please fill in all password fields.');
+      setShowModal(true);
       return; // Return early to avoid making the API call
     }
     // Validate the new password before submitting
     if (!validatePassword(passwordFields.newPassword)) {
-      alert('New password does not meet the requirements.');
+      setModalTitle('Password Is Too Weak');
+      setModalBody('Please make sure your new password contains at least 8 characters, a symbol, and an uppercase letter.')
+      setShowModal(true);
       return;
     }
   
     if (passwordFields.newPassword !== passwordFields.confirmPassword) {
-      alert('New password and confirm new password do not match.');
+      setModalTitle('Passwords Did Not Match');
+      setModalBody('Please make sure your New Password and confrim New Password match.')
+      setShowModal(true);
       return;
     }
   
@@ -145,7 +156,9 @@ const MyAccount = () => {
         throw new Error(errorData.error || 'Failed to change password.');
       }
   
-      alert('Password changed successfully!');
+      setModalTitle('Password Changed Succesfully!');
+      setModalBody('Your New Password has been updated.')
+      setShowModal(true);
       // Reset the password fields after successful change
       setPasswordFields({
         currentPassword: "",
@@ -155,8 +168,9 @@ const MyAccount = () => {
       setIsEditingProfile(false);
 
     } catch (error) {
-      console.error('Error changing password:', error);
-      alert(`Error changing password: ${error.message}`);
+      setModalTitle('Error Changing Password');
+      setModalBody('Your old password was entered incorrectly. Please enter it again.')
+      setShowModal(true);
     }
   };
   
@@ -290,6 +304,12 @@ const MyAccount = () => {
           </form>
         </div>
       )}
+      <EditProfileModal
+      show={showModal}
+      onHide={() => setShowModal(false)}
+      title={modalTitle}
+      body={modalBody}
+    />
     </div>
   );
 };

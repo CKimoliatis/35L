@@ -15,6 +15,7 @@
     width: 20px; /* Adjust width as needed */
     height: 20px; /* Adjust height as needed */
     border: 1px solid #000; /* Black border */
+    border-radius: 5px;
     background-color: transparent; /* Transparent background */
     cursor: pointer; /* Set cursor to pointer */
     margin-right: 6px;

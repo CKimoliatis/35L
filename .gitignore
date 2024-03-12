@@ -2,6 +2,7 @@
 /myvenv
 # dependencies
 /backend/frontend/node_modules
+node_modules
 /.pnp
 .pnp.js
 /backend/api/__pycache__
@@ -9,6 +10,7 @@
 /backend/frontend/__pycache__
 /backend/frontend/static/frontend/main.js
 /backend/frontend/static/frontend/main.js.LICENSE.txt
+/backend/api/migrations/__pycache__
 
 # testing
 /coverage

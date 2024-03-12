@@ -34,8 +34,8 @@ const ItemPage = () => {
                     <br></br>
                     <br></br>
                     <p>{description}</p>
+                    <p className='message-seller'>Message Seller</p>
                 </div>
-                <div className='message-seller-container'><p className='message-seller'>Message Seller</p></div>
             </div>
         </div>
     </div> 

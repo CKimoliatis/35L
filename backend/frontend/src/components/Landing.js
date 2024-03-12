@@ -18,21 +18,6 @@ const Landing = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState(null);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    // Retrieve userData from local storage
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      // Parse the storedUserData if it exists
-      setUserData(prevUserData => {
-        if (prevUserData === null) {
-          return JSON.parse(storedUserData);
-        }
-        return prevUserData;
-      });
-    }
-  }, []);
-=======
   // useEffect(() => {
   // // Retrieve userData from local storage
   // const storedUserData = localStorage.getItem("userData");
@@ -50,7 +35,6 @@ const Landing = () => {
   const updateCat = (val) => {
     setCat(val);
   };
->>>>>>> 7dd34c574624cfd33d1100329104237dbdbde455
 
   useEffect(() => {
     console.log(userData);

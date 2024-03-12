@@ -7,35 +7,38 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const getUser = async (username, password) => {
+    if (!username || !password) {
+      setErrorMessage("Please enter both username and password");
+      return;
+    }
+
     try {
-      if (!username || !password) {
-        throw new Error("Please enter both username and password");
-      }
       const response = await axios.post("http://127.0.0.1:8000/api/get-user/", {
         username,
         password,
       });
-      if (!response.data) {
-        throw new Error("Invalid credentials");
-      }
+
       return response.data;
     } catch (error) {
-      throw new Error("Failed to fetch user data");
+      console.error("Failed to fetch user data:", error);
+      setErrorMessage("Username or Password Incorrect.");
     }
   };
 
   const handleLogin = async () => {
     try {
       const userData = await getUser(username, password);
-      console.log(userData);
-      localStorage.setItem("userData", JSON.stringify(userData));
-      setLoggedIn(true);
-      navigate("/landing");
-    } catch (e) {
-      console.log(e);
+      if (userData !== null && userData !== undefined) {
+        localStorage.setItem("userData", JSON.stringify(userData));
+        setLoggedIn(true);
+        navigate("/landing");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -96,6 +99,9 @@ const Login = (props) => {
         <button className="btn btn-primary" onClick={handleLogin}>
           Login
         </button>
+        {errorMessage && (
+          <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>
+        )}
       </div>
     </div>
   );

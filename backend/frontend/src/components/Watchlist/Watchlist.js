@@ -8,12 +8,12 @@ import SearchBar from "../SearchBar/SearchBar.js";
 import "../CategorySelect/CategorySelect.css";
 import "../PriceSelect/PriceSelect.css";
 import "../Posts/Post.css";
-import "../Landing/Landing.css";
+import "./Watchlist.css";
 import "../Pagination/Pagination.css";
 import logo from "../../objects/YooniLogo.png";
 import axios from "axios";
 
-const Landing = () => {
+const Watchlist = () => {
   const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
 
@@ -30,7 +30,6 @@ const Landing = () => {
         if (userData) {
           // Check if userData is not null
           const result = await getWatchlist(userData);
-          console.log(result);
           setItems(result);
         }
       } catch (error) {
@@ -56,12 +55,19 @@ const Landing = () => {
   function printPosts(items) {
     const posts = [];
     items.forEach((item) => {
+
+      if(item.image != null) {
+        var itemImage = item.image;
+      }
+      else {
+        var itemImage = logo
+      }
       // Assuming 'logo' is defined somewhere else
       posts.push(
         <Post
           key={item.id}
           item_id={item.id}
-          image={logo}
+          image={itemImage}
           price={item.price}
           title={item.title}
           description={item.description}
@@ -76,28 +82,22 @@ const Landing = () => {
       <br></br>
       <br></br>
       <br></br>
-      <div id="main-container">
-        <div id="categories-container">
-          <div id="price-select-container">
+      <div id="watchlist-main-container">
+        {/* <div id="categories-container">
+           <div id="price-select-container">
             <PriceSelect></PriceSelect>
           </div>
           <div id="category-select-container">
             <CategorySelect></CategorySelect>
           </div>
+        </div> */}
+        <div id="watchlist-header-container">
+          <h2 id="watchlist-header">My Watchlist</h2>
         </div>
-        <div id="right-side-container">
-          <div id="posts-container">{printPosts(items)}</div>
-          <div id="pagination-container">
-            <Pagination pageNumber={1}></Pagination>
-            <Pagination pageNumber={2}></Pagination>
-            <Pagination pageNumber={3}></Pagination>
-            <Pagination pageNumber={4}></Pagination>
-            <Pagination pageNumber={5}></Pagination>
-          </div>
-        </div>
+        <div id="watchlist-posts-container">{printPosts(items)}</div>
       </div>
     </div>
   );
 };
 
-export default Landing;
+export default Watchlist;

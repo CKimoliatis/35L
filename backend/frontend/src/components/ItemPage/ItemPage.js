@@ -2,6 +2,7 @@ import React from 'react'
 import NavigationBar from '../NavigationBar'
 import { useState, useParams, useLocation } from 'react-router-dom';
 import './ItemPage.css'
+import '../Posts/Post.css'
 
 const ItemPage = () => {
     // {image, price, title, description}
@@ -26,20 +27,19 @@ const ItemPage = () => {
         <br></br>
         <div id='main-container'>
             <div id='item-page-image-container'><img id='item-page-image' src={image} alt={title}></img></div>
-                <div id='item-info-container'>
-                    <div id='item-description-container'>
+            <div id='item-info-container'>
+                <div id='item-description-container'>
                     <h2>{title}</h2>
                     <h3>${price}</h3>
                     <br></br>
                     <br></br>
                     <p>{description}</p>
                 </div>
+                <div className='message-seller-container'><p className='message-seller'>Message Seller</p></div>
             </div>
         </div>
     </div> 
-
-    
-    );
+ );
 }
 
 export default ItemPage;

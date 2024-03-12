@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ConfimSignupModal from "./Intermediary";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [passwordConditionsVisible, setPasswordConditionsVisible] =
     useState(false);
-
+  const [showModal, setShowModal] = useState(false);
   const validateEmail = (inputEmail) => {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputEmail);
     setEmailValid(isValid);
@@ -91,7 +92,7 @@ const Signup = () => {
     fetch("/api/create-user", requestOptions)
       .then((response) => {
         if (response.status === 201) {
-          navigate("/intermediary");
+          setShowModal(true);          
         } else if (response.status == 400) {
           return response.json().then((error) => {
             if (
@@ -274,6 +275,7 @@ const Signup = () => {
           <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>
         )}
       </div>
+      <ConfimSignupModal show={showModal} onHide={() => setShowModal(false)} />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import UserIcon from "../objects/user.png";
 import "../CSS/styles.css";
 import SearchBar from "./SearchBar/SearchBar";
 
-const NavigationBar = ({updateSearchQuery}) => {
+const NavigationBar = ({updateSearchQuery, showSearch}) => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
@@ -34,14 +34,14 @@ const NavigationBar = ({updateSearchQuery}) => {
       data-bs-theme="dark"
       fixed="top"
       expand="lg"
-      style={{ backgroundColor: "#0098dc", color: "white" }}
+      style={{ backgroundColor: "#0098dc", color: "white", boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)"}}
       className="navbar-custom"
     >
       <Container>
         <Navbar.Brand as={Link} to="/landing">
           <img src={YooniLogo} height={"100%"} alt="Yooni Logo" />
         </Navbar.Brand>
-        <SearchBar handleSearchQueryChange={handleSearchQueryChange}/>
+        {showSearch ? <SearchBar handleSearchQueryChange={handleSearchQueryChange}/> : null}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

@@ -13,10 +13,12 @@ import logo from "../../static/frontend/images/YooniLogo.png";
 import axios from "axios";
 
 const Landing = () => {
-  const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
+  const [cat, setCat] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState(null);
 
+<<<<<<< HEAD
   useEffect(() => {
     // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
@@ -30,6 +32,25 @@ const Landing = () => {
       });
     }
   }, []);
+=======
+  // useEffect(() => {
+  // // Retrieve userData from local storage
+  // const storedUserData = localStorage.getItem("userData");
+  // if (storedUserData) {
+  //   // Parse the storedUserData if it exists
+  //   setUserData(JSON.parse(storedUserData));
+  //   console.log(userData);
+  // }
+  // console.log(userData);
+  const userDataString = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
+  var userData_id = userData.id.toString();
+  // }, []);
+
+  const updateCat = (val) => {
+    setCat(val);
+  };
+>>>>>>> 7dd34c574624cfd33d1100329104237dbdbde455
 
   useEffect(() => {
     console.log(userData);
@@ -39,8 +60,15 @@ const Landing = () => {
     setSearchQuery(query);
   };
 
+  const handleFilter = (fil) => {
+    setFilter(fil);
+  };
+
+  const handleReset = () => {
+    setFilter(null);
+  };
+
   useEffect(() => {
-    console.log(searchQuery);
     const fetchData = async () => {
       try {
         // Make a GET request to your backend endpoint
@@ -60,44 +88,54 @@ const Landing = () => {
     const posts = [];
     items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
-      posts.push(
-        <Post
-          key={item.id}
-          item_id={item.id}
-          image={logo}
-          price={item.price}
-          title={item.title}
-          description={item.description}
-        />
-      );
+      if (item.image) {
+        var itemImage = item.image;
+      } else {
+        var itemImage = logo;
+      }
+      //item.user_id != userData_id &&
+      if (
+        (cat.length === 0 || cat.includes(item.category)) &&
+        (!filter ||
+          ((!filter.minPrice || item.price >= filter.minPrice) &&
+            (!filter.maxPrice || item.price <= filter.maxPrice)))
+      ) {
+        posts.push(
+          <Post
+            key={item.id}
+            item_id={item.id}
+            image={itemImage}
+            price={item.price}
+            title={item.title}
+            description={item.description}
+          />
+        );
+      }
     });
-    // onClick={() => handleClickPost(item.id, logo, item.price, item.title, item.description)}
     return posts.reverse();
   }
+
   return (
     <div>
-      <NavigationBar updateSearchQuery={updateSearchQuery} />
+      <NavigationBar updateSearchQuery={updateSearchQuery} showSearch={true}/>
       <br></br>
       <br></br>
       <br></br>
       <div id="main-container">
+        {/* {printFilters()} */}
         <div id="categories-container">
           <div id="price-select-container">
-            <PriceSelect></PriceSelect>
+            <PriceSelect
+              handleFilter={handleFilter}
+              handleReset={handleReset}
+            />
           </div>
           <div id="category-select-container">
-            <CategorySelect></CategorySelect>
+            <CategorySelect updateCat={updateCat} />
           </div>
         </div>
         <div id="right-side-container">
           <div id="posts-container">{printPosts(items)}</div>
-          <div id="pagination-container">
-            <Pagination pageNumber={1}></Pagination>
-            <Pagination pageNumber={2}></Pagination>
-            <Pagination pageNumber={3}></Pagination>
-            <Pagination pageNumber={4}></Pagination>
-            <Pagination pageNumber={5}></Pagination>
-          </div>
         </div>
       </div>
     </div>

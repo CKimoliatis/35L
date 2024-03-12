@@ -1,19 +1,37 @@
 .post {
-    border: 2px solid #61dafb;
-    margin: 10%;
+    /* border: 2px solid #61dafb; */
+    margin: 3%;
     align-items: center;
     justify-content: center;
     background-color: white;
-    text-align: center;
+    border-radius: 5px;
+    /* text-align: center; */
+
 }
 
+.post-text {
+    padding-left: 5px;
+    padding-top: 1px;
+}
+
+.post-container {
+    height: 300px;
+    width: 240px;
+}
+.post-images-container {
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+    border-radius: 5px 5px 0px 0px;
+}
 
 .post-images {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
-/* .float-on-hover {
+.float-on-hover {
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -24,8 +42,17 @@
     transition-property: transform;
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a slight shadow effect */
 }
-*/
+
 .float-on-hover:hover, .float-on-hover:focus, .float-on-hover:active {
-transform: scale(1.02);
-} 
+    transform: scale(1.02);
+}
+
+.post .star-modal {
+    display: none; /* Hide the star icon by default */
+  }
+  
+  .post:hover .star-modal {
+    display: block; /* Show the star icon when hovering over the post */
+  }

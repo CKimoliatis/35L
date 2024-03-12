@@ -4,73 +4,118 @@ import PriceSelect from "./PriceSelect/PriceSelect.js";
 import CategorySelect from "./CategorySelect/CategorySelect.js";
 import Post from "./Posts/Post.js";
 import Pagination from "./Pagination/Pagination.js";
-import SearchBar from "./SearchBar/SearchBar.js";
 import "./CategorySelect/CategorySelect.css";
 import "./PriceSelect/PriceSelect.css";
 import "./Posts/Post.css";
 import "./Landing/Landing.css";
 import "./Pagination/Pagination.css";
 import logo from "../../static/frontend/images/YooniLogo.png";
-import axios from 'axios'
+import axios from "axios";
 
 const Landing = () => {
-  const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
+  const [cat, setCat] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState(null);
+
+  // useEffect(() => {
+  // // Retrieve userData from local storage
+  // const storedUserData = localStorage.getItem("userData");
+  // if (storedUserData) {
+  //   // Parse the storedUserData if it exists
+  //   setUserData(JSON.parse(storedUserData));
+  //   console.log(userData);
+  // }
+  // console.log(userData);
+  const userDataString = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
+  var userData_id = userData.id.toString();
+  // }, []);
+
+  const updateCat = (val) => {
+    setCat(val);
+  };
+
+  const updateSearchQuery = (query) => {
+    setSearchQuery(query);
+  };
+
+  const handleFilter = (fil) => {
+    setFilter(fil);
+  };
+
+  const handleReset = () => {
+    setFilter(null);
+  };
 
   useEffect(() => {
-    // Retrieve userData from local storage
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      // Parse the storedUserData if it exists
-      setUserData(JSON.parse(storedUserData));
-    }
-    console.log(userData);
-  }, []);
-
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/item')
-        .then(response => {
-            setItems(response.data);
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
+    const fetchData = async () => {
+      try {
+        // Make a GET request to your backend endpoint
+        const response = await axios.get("/api/parse-item", {
+          params: { searchQuery }, // Optional: Pass search query as a parameter
         });
-}, []);
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
+    fetchData();
+  }, [searchQuery]);
 
   function printPosts(items) {
     const posts = [];
-    items.forEach(item => {
+    items.forEach((item) => {
       // Assuming 'logo' is defined somewhere else
-      posts.push(<Post key={item.id} id={item.id} image={logo} price={item.price} title={item.title} description={item.description} />);
+      if (item.image) {
+        var itemImage = item.image;
+      } else {
+        var itemImage = logo;
+      }
+      //item.user_id != userData_id &&
+      if (
+        (cat.length === 0 || cat.includes(item.category)) &&
+        (!filter ||
+          ((!filter.minPrice || item.price >= filter.minPrice) &&
+            (!filter.maxPrice || item.price <= filter.maxPrice)))
+      ) {
+        posts.push(
+          <Post
+            key={item.id}
+            item_id={item.id}
+            image={itemImage}
+            price={item.price}
+            title={item.title}
+            description={item.description}
+          />
+        );
+      }
     });
-    return posts;
+    return posts.reverse();
   }
+
   return (
     <div>
-      <NavigationBar />
+      <NavigationBar updateSearchQuery={updateSearchQuery} showSearch={true}/>
       <br></br>
       <br></br>
       <br></br>
       <div id="main-container">
+        {/* {printFilters()} */}
         <div id="categories-container">
           <div id="price-select-container">
-            <PriceSelect></PriceSelect>
+            <PriceSelect
+              handleFilter={handleFilter}
+              handleReset={handleReset}
+            />
           </div>
           <div id="category-select-container">
-            <CategorySelect></CategorySelect>
+            <CategorySelect updateCat={updateCat} />
           </div>
         </div>
         <div id="right-side-container">
           <div id="posts-container">{printPosts(items)}</div>
-          <div id="pagination-container">
-            <Pagination pageNumber={1}></Pagination>
-            <Pagination pageNumber={2}></Pagination>
-            <Pagination pageNumber={3}></Pagination>
-            <Pagination pageNumber={4}></Pagination>
-            <Pagination pageNumber={5}></Pagination>
-          </div>
         </div>
       </div>
     </div>

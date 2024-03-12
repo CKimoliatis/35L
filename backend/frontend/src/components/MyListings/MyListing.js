@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../../CSS/styles.css";
-import { Card, Button, Container, Col, Row} from "react-bootstrap";
+import { Button, Row} from "react-bootstrap";
 import NavigationBar from "../NavigationBar";
 import MyListingPost from "./MyListingPost";
-import EditMyListing from "./EditMyListing";
-import Login from "../Login";
 import "./MyListings.css"
-//import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import axios from 'axios'
 
 const IsEditing = ({showSold}) => {
@@ -55,6 +52,7 @@ const IsEditing = ({showSold}) => {
           description={item.description}
           category={item.category}
           item_id={item.id}
+          selling_price={item.selling_price}
           sold_flag={item.sold_flag}
           show_sold = {showSold}
           is_editing={editingItemId === item.id}

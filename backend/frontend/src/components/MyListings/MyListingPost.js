@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../../CSS/styles.css";
+import "./MyListings.css";
 import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import EditMyListing from "./EditMyListing";
 
 
 
-function MyListingPost({image, price, title, description, category, item_id, sold_flag, show_sold, is_editing, onEditClick}) {
+function MyListingPost({image, price, title, description, category, item_id, selling_price, sold_flag, show_sold, is_editing, onEditClick}) {
 
     
     return (
@@ -19,19 +20,19 @@ function MyListingPost({image, price, title, description, category, item_id, sol
                     </Card>
                 </Col>
                 <Col>
-                    <Row>
-                        <div className="form-group input" style={{width:'24rem'}}>
-                            <div id="title">{title}</div>
-                        </div>
-                        <div className="form-group input" style={{width:'24rem'}}>
-                            <div id="price" >${price}</div>
-                        </div>
-                    </Row>
-                    <div className="form-group select">
-                        <div id="selectedCategory">{category}</div>
-                    </div>
-                    <div className="form-group textarea">
-                        <div className="description">{description}</div>
+                    <div className="listing-details">
+                        <div className="listing-title">{title}</div>
+                        <div className="listing-category">Category: {category}</div>
+                        {!sold_flag && (
+                            <div className="listing-price">${price}</div>
+                        )}
+                        {sold_flag && (
+                            <>
+                            <div className="listing-price">Listed Price: ${price}</div>
+                            <div className="listing-price">Sold Price: ${selling_price}</div>
+                            </>
+                        )}
+                        <div className="listing-description">{description}</div>
                     </div>
                 </Col>
             </Row>

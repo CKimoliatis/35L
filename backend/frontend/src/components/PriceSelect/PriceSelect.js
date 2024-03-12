@@ -31,9 +31,9 @@ const PriceSelect = ({ handleFilter, handleReset }) => {
     <div className="price-select-container">
       <h4>Price Range</h4>
       <label>Min Price:</label>
-      <input type="number" value={minPrice} onChange={handleMinPriceChange} />
+      <input className='price-input' type="number" value={minPrice} onChange={handleMinPriceChange} />
       <label>Max Price:</label>
-      <input type="number" value={maxPrice} onChange={handleMaxPriceChange} />
+      <input className='price-input' type="number" value={maxPrice} onChange={handleMaxPriceChange} />
       <div className="button-container">
         <button onClick={handleFilterClick}>Apply Filter</button>
         <button onClick={handleResetClick}>Reset</button>

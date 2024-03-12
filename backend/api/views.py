@@ -215,5 +215,31 @@ class UpdateItem(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UpdateUserView(APIView):
+    def put(self, request, format=None):
+        user_id = request.data.get('id')  # Get user ID from the request data
+        try:
+            user = User.objects.get(pk=user_id)
+            serializer = UserSerializer(user, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
+class ChangePasswordView(APIView):
+    def post(self, request):
+        user = User.objects.get(pk=request.data.get('user_id'))
+        old_password = request.data.get('old_password')
+        new_password = request.data.get('new_password')
 
+        if not user.check_password(old_password):
+            return Response({'error': 'Incorrect current password.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if user.check_password(new_password):
+            return Response({'error': 'New password must be different from the old password.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        return Response({'success': 'Password updated successfully.'}, status=status.HTTP_200_OK)

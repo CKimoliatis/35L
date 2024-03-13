@@ -6,8 +6,7 @@
 * [Authors](#authors)
 * [Publish Date](#publish-date)
 ## General Info
-This project is to aid in the selection of countries for the Doctors Without Borders Program.
-While showing the probability of the selections. 
+Yooni is an innovative online platform tailored for college students, crafted by college students themselves. Much like OfferUp, Yooni serves as a dynamic marketplace where students can seamlessly buy, sell, and trade goods within their campus community. What sets Yooni apart is its unique focus on the specific needs and lifestyles of college students, offering a user-friendly interface and features designed to enhance the student-to-student shopping experience. Whether students are seeking textbooks, electronics, furniture, or even seeking to unload their own items, Yooni provides a convenient and trusted space to connect and transact. With its roots firmly planted in the collegiate world, Yooni fosters a sense of community and resourcefulness among students, making it more than just a marketplace—it's a vibrant hub where college life meets commerce.
 ## Setup
 * Clone the repo
 * Chmod +x start.sh

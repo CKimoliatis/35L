@@ -38,7 +38,7 @@ Yooni is an innovative online platform tailored for college students, crafted by
 * After migrating and running the server
     *  Open another instance of the terminal 
     ```shell
-        cd into /backend/frontend
+        cd /backend/frontend
         npm run dev
     ```
 * After doing all that, the setup is complete

@@ -37,11 +37,11 @@ While showing the probability of the selections.
 * [sqlite](https://www.sqlite.org/) for the database used 
 * [Django_Rest_Framework](https://www.django-rest-framework.org/) was used for the API calls and responses 
 * [Axios](https://www.npmjs.com/package/axios) for the API requests 
-* [Babel] (https://babeljs.io/) as the main compiler for the code
-* [Webpack] (https://webpack.js.org/) to bundle our modules for simpler running
-* [react-bootstrap] (https://react-bootstrap.netlify.app/) for easy navbar's, buttons, modals within our app
-* [react-helmet] (https://www.npmjs.com/package/react-helmet) used as the head element 
-* [react-router-dom] (https://www.npmjs.com/package/react-router-dom) to navigate pages within the webapp
+* [Babel](https://babeljs.io/) as the main compiler for the code
+* [Webpack](https://webpack.js.org/) to bundle our modules for simpler running
+* [react-bootstrap](https://react-bootstrap.netlify.app/) for easy navbar's, buttons, modals within our app
+* [react-helmet](https://www.npmjs.com/package/react-helmet) used as the head element 
+* [react-router-dom](https://www.npmjs.com/package/react-router-dom) to navigate pages within the webapp
 ## Authors
 * Christopher Kimoliatis (806281561)
 * Rony Vayner

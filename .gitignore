@@ -8,7 +8,7 @@ node_modules
 /backend/api/__pycache__
 /backend/backend/__pycache__
 /backend/frontend/__pycache__
-/backend/frontend/static/main.js
+/backend/frontend/static/frontend/main.js
 /backend/frontend/static/frontend/main.js.LICENSE.txt
 **/__pycache__/
 

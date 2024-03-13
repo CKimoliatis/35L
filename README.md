@@ -18,14 +18,22 @@ Yooni is an innovative online platform tailored for college students, crafted by
         cd frontend
         npm i
     ```
-    *  This is the initial startup where it installs all the dependencies
+    * This is the initial startup where it installs all the dependencies
 * After doing that do the following:
-    *  Activate your python virtual environment (not necessary but recommended)
+    * Activate your python virtual environment (not necessary but recommended)
+    * Windows
     ```shell
         cd backend
-        python (windows) or python3 (mac/linux) manage.py makemigrations
-        python (windows) or python3 (mac/linux) manage.py migrate
-        python (windows) or python3 (mac/linux) manage.py runserver
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver
+    ```
+    * Mac/Linux
+    ```shell
+        cd backend
+        python3 manage.py makemigrations
+        python3 manage.py migrate
+        python3 manage.py runserver
     ```
 * After migrating and running the server
     *  Open another instance of the terminal 

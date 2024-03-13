@@ -32,7 +32,7 @@ While showing the probability of the selections.
 * After doing all that, the setup is complete
 * Open your favourite browser and enter http://127.0.0.1:8000/ into the address bar and this will bring you to the login page.
 ## Languages, Frameworks, and Dependencies
-* [React] for the frontend (https://react.dev/)
+* [React](https://react.dev/) for the frontend 
 * [Django] for the backend (https://www.djangoproject.com/)
 * [sqlite] for the database used (https://www.sqlite.org/)
 * [Django_Rest_Framework] was used for the API calls and responses (https://www.django-rest-framework.org/)

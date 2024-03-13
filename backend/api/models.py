@@ -27,9 +27,24 @@ class Item(models.Model):
     image = models.ImageField(upload_to='item_images/', null=True, blank=True)
 
 class Watchlist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='watchlist')
     items = models.ManyToManyField(Item)
 
     def __str__(self):
         return f"{self.user.username}'s Watchlist"
+    
+class Chat(models.Model):
+    user_id = models.IntegerField()
+    recipient_id = models.IntegerField()
+
+
+class Message(models.Model):
+    sender_id = models.IntegerField()
+    message_content = models.CharField(max_length=1000,default='')
+    chat_id = models.IntegerField()
+
+
+class School(models.Model):
+    school_name = models.CharField(max_length =100)
+    school_image = models.ImageField(upload_to='item_images/', null=True, blank=True)
 

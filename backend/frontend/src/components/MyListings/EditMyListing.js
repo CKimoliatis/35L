@@ -3,6 +3,7 @@ import "../../CSS/styles.css";
 import { Card, Button, Container, Col, Row} from "react-bootstrap";
 import MyListingPost from "./MyListingPost";
 import UploadButton from "../UploadButton";
+import ConfirmationModalListings from "./ConfirmationModalListings";
 import axios from 'axios';
 
 
@@ -13,6 +14,8 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
     const [new_price, setPrice] = useState(price_old);
     const [new_category, setCategory]=useState(category_old);
     const [isEditing, setIsEditing] = useState(true);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
 
 
     const userDataString = localStorage.getItem("userData"); 
@@ -50,6 +53,12 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         setDescription(e.target.value);    //set the description to the target value when typed in
     };
 
+    const handleSold = () => {
+        setShowConfirmation(true);
+
+    }
+
+    //handle the delete stuff
     const handleDelete = async () => {
         try {
             await axios.delete(`/api/delete-item/${item_id}`);
@@ -61,6 +70,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
 
     }
 
+    //handle the submit stuff
     const handleSubmit = async () => {
 
         setIsEditing(false);
@@ -135,6 +145,21 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                     </div>
                 </Col>
                 <div className="d-flex justify-content-end">
+                    <Button variant="outline-warning" 
+                    style={{ marginRight: '20px', marginBottom:'5px' }}
+                    onClick={handleSold}>
+                        Sold
+                    </Button>
+                    <ConfirmationModalListings
+                        show={showConfirmation}
+                        onHide={() => setShowConfirmation(false)}
+                        item_id={item_id}
+                        new_title={new_title}
+                        new_category={new_category}
+                        new_price={new_price}
+                        new_description={new_description}
+                        userID={userID}
+                    />
                     <Button variant="outline-danger" 
                     style={{ marginRight: '20px', marginBottom:'5px' }}
                     onClick={handleDelete}>
@@ -149,6 +174,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
             </Row>
             </Container>
          ) : (
+            <>
             <MyListingPost image={newImage}
                 price={new_price}
                 title={new_title}
@@ -156,6 +182,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
                 category={new_category}
                 is_editing={isEditing}
                 onEditClick={() => setIsEditing(true)}/>
+            </>
         )} 
     </>
 

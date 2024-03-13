@@ -13,12 +13,20 @@ function StarModal({
 }) {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate(); // Initialize useNavigate hook
+
   useEffect(() => {
+    // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
-    if (storedUserData && !userData) {
-      setUserData(JSON.parse(storedUserData));
+    if (storedUserData) {
+      // Parse the storedUserData if it exists
+      setUserData(prevUserData => {
+        if (prevUserData === null) {
+          return JSON.parse(storedUserData);
+        }
+        return prevUserData;
+      });
     }
-  }, []); 
+  }, []);
 
   const handleWatchlist = async () => {
     try {

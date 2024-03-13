@@ -11,24 +11,30 @@ While showing the probability of the selections.
 ## Setup
 * Clone the repo
 * Chmod +x start.sh
-    * Sub start.sh does the following:
-    * Sub git pull origin main
-    * Sub git pull origin main;
-    * Sub pip3 install -r requirements.txt;
-    * Sub cd backend;
-    * Sub cd frontend;
-    * Sub npm i;
-    * Sub This is the initial startup where it installs all the dependencies
+    * start.sh does the following:
+    `   git pull origin main;
+        pip3 install -r requirements.txt;
+        cd backend;
+        cd frontend;
+        npm i;
+    `
+    *  git pull origin main
+    *  git pull origin main;
+    *  pip3 install -r requirements.txt;
+    *  cd backend;
+    *  cd frontend;
+    *  npm i;
+    *  This is the initial startup where it installs all the dependencies
 * After doing that do the following:
-    * Sub Activate your python virtual environment (not necessary but recommended)
-    * Sub cd backend
-    * Sub python (windows) or python3 (mac/linux) manage.py makemigrations
-    * Sub python (windows) or python3 (mac/linux) manage.py migrate
-    * Sub python (windows) or python3 (mac/linux) manage.py runserver
+    *  Activate your python virtual environment (not necessary but recommended)
+    *  cd backend
+    *  python (windows) or python3 (mac/linux) manage.py makemigrations
+    *  python (windows) or python3 (mac/linux) manage.py migrate
+    *  python (windows) or python3 (mac/linux) manage.py runserver
 * After migrating and running the server
-    * Sub Open another instance of the terminal 
-    * Sub cd into /backend/frontend
-    * Sub npm run dev
+    *  Open another instance of the terminal 
+    *  cd into /backend/frontend
+    *  npm run dev
 * After doing all that, the setup is complete
 * Open your favourite browser and enter http://127.0.0.1:8000/ into the address bar and this will bring you to the login page.
 ## Languages, Frameworks, and Dependencies

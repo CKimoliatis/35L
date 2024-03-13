@@ -1,7 +1,7 @@
 # Yooni
 ## Table of Contents
 * [General Info](#general-info)
-* [Setup](#usage)
+* [Setup](#setup)
 * [Languages, Frameworks, and Dependencies](#languages-frameworks-and-dependencies)
 * [Authors](#authors)
 * [Publish Date](#publish-date)
@@ -33,10 +33,10 @@ While showing the probability of the selections.
 * Open your favourite browser and enter http://127.0.0.1:8000/ into the address bar and this will bring you to the login page.
 ## Languages, Frameworks, and Dependencies
 * [React](https://react.dev/) for the frontend 
-* [Django] for the backend (https://www.djangoproject.com/)
-* [sqlite] for the database used (https://www.sqlite.org/)
-* [Django_Rest_Framework] was used for the API calls and responses (https://www.django-rest-framework.org/)
-* [Axios] for the API requests (https://www.npmjs.com/package/axios)
+* [Django](https://www.djangoproject.com/) for the backend 
+* [sqlite](https://www.sqlite.org/) for the database used 
+* [Django_Rest_Framework](https://www.django-rest-framework.org/) was used for the API calls and responses 
+* [Axios](https://www.npmjs.com/package/axios) for the API requests 
 ## Authors
 * Christopher Kimoliatis (806281561)
 * Rony Vayner

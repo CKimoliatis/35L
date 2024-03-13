@@ -5,9 +5,9 @@
 node_modules
 /.pnp
 .pnp.js
-# /backend/api/__pycache__
-# /backend/backend/__pycache__
-# # /backend/frontend/__pycache__
+/backend/api/__pycache__
+/backend/backend/__pycache__
+/backend/frontend/__pycache__
 /backend/frontend/static/main.js
 /backend/frontend/static/main.js.LICENSE.txt
 **/__pycache__/

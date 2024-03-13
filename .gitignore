@@ -9,7 +9,7 @@ node_modules
 /backend/backend/__pycache__
 /backend/frontend/__pycache__
 /backend/frontend/static/main.js
-/backend/frontend/static/main.js.LICENSE.txt
+/backend/frontend/static/frontend/main.js.LICENSE.txt
 **/__pycache__/
 
 # testing

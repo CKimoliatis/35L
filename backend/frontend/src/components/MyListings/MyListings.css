@@ -58,7 +58,7 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(174, 174, 174);
 }
 #sold-items:hover {
     cursor: pointer;
@@ -71,7 +71,7 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(174, 174, 174);
 }
 #current-listings:hover {
     cursor: pointer;

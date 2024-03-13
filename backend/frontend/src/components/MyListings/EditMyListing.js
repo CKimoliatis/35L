@@ -98,7 +98,7 @@ function EditMyListing({ image_old, price_old, title_old, description_old, categ
         <>    
         
         {isEditing ? (
-            <Container className="listing-container" style={{maxWidth: '66rem', marginInlineEnd: '25rem', marginLeft:'2 0%'}}>
+            <Container className="listing-container">
             <Row>
                 <Col style={{maxWidth:'16rem'}}>   
                     <Card style={{ width: '15rem', padding: '10px'}}>

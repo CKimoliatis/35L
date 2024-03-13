@@ -15,5 +15,8 @@ urlpatterns = [
     re_path(r'^post/.*$', index),
     path('path/:id', index),
     path('my-watchlist', index),
-    path('my-account', index)
+    path('my-account', index),
+    path('chat',index),
+    path("chat/:chatId/:otherPersonName",index),
+    re_path(r'^chat/.*$', index),
 ]

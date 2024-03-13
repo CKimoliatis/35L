@@ -17,5 +17,11 @@ urlpatterns = [
     path('remove-from-watchlist', RemoveItemFromWatchlist.as_view(), name='remove-from-watchlist'),
     path('update-item/<int:pk>', UpdateItem.as_view(), name='update-item'),
     path('update-user/', UpdateUserView.as_view(), name='update-user'),
-    path('change-password/', ChangePasswordView.as_view(), name='change-password')
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('chats/messages/', ChatMessages.as_view(), name='chat-messages'),
+    path('get-chats',UserChats.as_view()),
+    path('create-chat',CreateChatView.as_view()),
+    path('create-message',CreateMessageView.as_view()),
+    path('get-specific-user',SpecificUserView.as_view()),
+    path('get-new-chat-id',GetMaxChatID.as_view()),
 ]

@@ -18,19 +18,10 @@ const Landing = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState(null);
 
-  // useEffect(() => {
-  // // Retrieve userData from local storage
-  // const storedUserData = localStorage.getItem("userData");
-  // if (storedUserData) {
-  //   // Parse the storedUserData if it exists
-  //   setUserData(JSON.parse(storedUserData));
-  //   console.log(userData);
-  // }
-  // console.log(userData);
+
   const userDataString = localStorage.getItem("userData");
   const userData = JSON.parse(userDataString); // Parse the string into a JavaScript object
   var userData_id = userData.id.toString();
-  // }, []);
 
   const updateCat = (val) => {
     setCat(val);
@@ -78,7 +69,7 @@ const Landing = () => {
         var itemImage = logo;
       }
       //item.user_id != userData_id &&
-      if (
+      if (!item.sold_flag &&
         (cat.length === 0 || cat.includes(item.category)) &&
         (!filter ||
           ((!filter.minPrice || item.price >= filter.minPrice) &&
@@ -88,6 +79,7 @@ const Landing = () => {
           <Post
             key={item.id}
             item_id={item.id}
+            user_id = {item.user_id}
             image={itemImage}
             price={item.price}
             title={item.title}

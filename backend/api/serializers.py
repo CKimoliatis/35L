@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Item, Watchlist
+from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,4 +36,14 @@ class WatchlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Watchlist
         fields = ('user', 'items')
+        
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ('user_id','recipient_id')
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ('sender_id','message_content','chat_id')
         

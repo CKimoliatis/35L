@@ -19,23 +19,21 @@ While showing the probability of the selections.
         cd frontend;
         npm i;
     ```
-    *  git pull origin main
-    *  git pull origin main;
-    *  pip3 install -r requirements.txt;
-    *  cd backend;
-    *  cd frontend;
-    *  npm i;
     *  This is the initial startup where it installs all the dependencies
 * After doing that do the following:
     *  Activate your python virtual environment (not necessary but recommended)
-    *  cd backend
-    *  python (windows) or python3 (mac/linux) manage.py makemigrations
-    *  python (windows) or python3 (mac/linux) manage.py migrate
-    *  python (windows) or python3 (mac/linux) manage.py runserver
+    ```shell
+        cd backend
+        python (windows) or python3 (mac/linux) manage.py makemigrations
+        python (windows) or python3 (mac/linux) manage.py migrate
+        python (windows) or python3 (mac/linux) manage.py runserver
+    ```
 * After migrating and running the server
     *  Open another instance of the terminal 
-    *  cd into /backend/frontend
-    *  npm run dev
+    ```shell
+        cd into /backend/frontend
+        npm run dev
+    ```
 * After doing all that, the setup is complete
 * Open your favourite browser and enter http://127.0.0.1:8000/ into the address bar and this will bring you to the login page.
 ## Languages, Frameworks, and Dependencies

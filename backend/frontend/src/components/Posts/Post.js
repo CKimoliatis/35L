@@ -5,17 +5,27 @@ import starUnfilled from "../../objects/starUnfilled.png";
 import StarModal from "./StarModal";
 import axios from "axios";
 
-const Post = ({ item_id, image, price, title, description }) => {
+const Post = ({ item_id, user_id, image, price, title, description }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [inWatchlist, setInWatchlist] = useState(false);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    // Retrieve userData from local storage
     const storedUserData = localStorage.getItem("userData");
-    if (storedUserData && !userData) {
-      setUserData(JSON.parse(storedUserData));
+    if (storedUserData) {
+      // Parse the storedUserData if it exists
+      setUserData(prevUserData => {
+        if (prevUserData === null) {
+          return JSON.parse(storedUserData);
+        }
+        return prevUserData;
+      });
     }
+  }, []);
+  
+  useEffect(() => {
     const fetchData = async () => {
       try {
         if (userData) {
@@ -47,6 +57,8 @@ const Post = ({ item_id, image, price, title, description }) => {
 
   const handleClick = () => {
     const data = {
+      user_id: userData.id,
+      seller_id: user_id,
       itemId: item_id,
       itemImage: image,
       itemPrice: price,

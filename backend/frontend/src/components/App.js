@@ -13,6 +13,8 @@ import IntermediaryPage from "./Intermediary.js";
 import Watchlist from "./Watchlist/Watchlist.js";
 import "./App.css"
 import MyAccount from "./MyAccount.js";
+import Chat from './Chat/Chat.js';
+import ChatList from './ChatList.js';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="my-listings" element={<MyListing />} />
           <Route path="my-watchlist" element={<Watchlist />} />
           <Route path="my-account" element={<MyAccount />} />
+          <Route path="chat/:chatId/:otherPersonName" element={<Chat />} />
+          <Route path="chat" element={<ChatList />} />
         </Route>
       </Routes>
     </Router>

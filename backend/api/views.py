@@ -5,6 +5,8 @@ from .models import User, Item, Watchlist
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .auth import authenticate
+from django.db.models import Min, Max
+
 
 
 class UserView(APIView):
@@ -165,16 +167,15 @@ class FetchInWatchlist(APIView):
 
         try:
             user = User.objects.get(id=user_id)
+            watchlist, _ = Watchlist.objects.get_or_create(user=user)  # Ensure watchlist is created if not exist
             item = Item.objects.get(id=item_id)
-            watchlist, created = Watchlist.objects.get_or_create(user=user)
             in_watchlist = watchlist.items.filter(id=item_id).exists()
             return Response({'in_watchlist': in_watchlist})
         except User.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         except Item.DoesNotExist:
             return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
-        except Watchlist.DoesNotExist:
-            return Response({'error': 'Watchlist not found for the user'}, status=status.HTTP_404_NOT_FOUND)
+
         
 class RemoveItemFromWatchlist(APIView):
     def post(self, request):
@@ -243,3 +244,109 @@ class ChangePasswordView(APIView):
         user.set_password(new_password)
         user.save()
         return Response({'success': 'Password updated successfully.'}, status=status.HTTP_200_OK)
+    
+class SpecificUserView(APIView):
+    serializer_class = UserSerializer
+
+    def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')
+        user = User.objects.filter(id=user_id).first()
+
+        if not user:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.serializer_class(user)
+        return Response(serializer.data)
+
+    
+class ChatMessages(APIView):
+    def get(self, request):
+        chat_id = request.query_params.get('chat_id')
+        messages = Message.objects.filter(chat_id=chat_id)
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
+    
+class UserChats(APIView):
+    def get(self, request, format=None):
+        user_id = request.query_params.get('user_id')  # Assuming you have user authentication set up
+        
+        chats = []
+        # Retrieve all unique chat IDs for the user
+        chat_ids = Chat.objects.filter(user_id=user_id)
+        recipient_ids = Chat.objects.filter(recipient_id=user_id)
+        # Fetch chat details for each unique chat ID
+        for chat in chat_ids:
+            other_person = User.objects.get(id=chat.recipient_id)
+            chat_data = {
+                'chat_id': chat.id,
+                'other_person_id':chat.recipient_id,
+                'other_person_username': other_person.username
+                # Add more fields if needed
+            }
+            chats.append(chat_data)
+
+        for chat in recipient_ids:
+            other_person = User.objects.get(id=chat.user_id)
+            chat_data = {
+                'chat_id': chat.id,
+                'other_person_id':chat.recipient_id,
+                'other_person_username': other_person.username
+                # Add more fields if needed
+            }
+            chats.append(chat_data)
+
+        return Response(chats, status=status.HTTP_200_OK)
+    
+
+class CreateChatView(APIView):
+    serializer_class = ChatSerializer
+
+    def post(self, request, format=None):
+        try:
+            serializer = self.serializer_class(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class CreateMessageView(APIView):
+    serializer_class = MessageSerializer
+
+    def post(self, request, format=None):
+        try:
+            serializer = self.serializer_class(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
+class GetMaxChatID(APIView):
+    def get(self, request, format=None):
+        max_chat_id = Chat.objects.aggregate(Max('id'))['id__max']
+        chat_id = max_chat_id + 1 if max_chat_id is not None else 1
+        return Response({"chat_id": chat_id})
+
+
+
+class AddSchool(APIView):
+    serializer_class = AddSchoolSerialier
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class GetSchools(APIView):
+    serializer_class = SchoolSerializer
+    def get(self, request, format=None):
+        queryset= School.objects.all()
+        serializer=self.serializer_class(queryset, many=True)
+        return Response(serializer.data)

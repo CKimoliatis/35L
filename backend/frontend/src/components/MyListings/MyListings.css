@@ -13,7 +13,9 @@
 
 .listing-img {
     width: 100%;
-    border-radius: 10px;
+    max-height: 90%;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 .listing-details {
@@ -43,3 +45,35 @@
     font-size: 17px;
     color: #777;
 }
+
+#my-listings-header {
+    text-align: center;
+    margin-top: 10px;
+    
+}
+#sold-items {
+    display: flex;
+    width: 25%;
+    margin-left:25%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+}
+#sold-items:hover {
+    cursor: pointer;
+}
+
+#current-listings{
+    display: flex;
+    width: 25%;
+    margin-right:25%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+}
+#current-listings:hover {
+    cursor: pointer;
+}
+  

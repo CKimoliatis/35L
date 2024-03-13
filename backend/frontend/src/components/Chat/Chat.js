@@ -67,14 +67,17 @@ const Chat = () => {
 
   return (
     <div>
-      <div className="header-bar d-flex align-items-center bg-primary p-3">
+      <div style={{ backgroundColor: "#0098dc", color: "white", padding: '10px' }} className="header-bar d-flex align-items-center ">
         <button
           className="back-button btn btn-light mr-3"
           onClick={navigateToChatList}
         >
           &larr; Back
         </button>
-        <div className="text-center">
+        <div
+          className="text-center"
+          style={{ paddingLeft: "25px", paddingTop: "5px" }}
+        >
           <h2 className="person-name text-light ml-2">{otherPersonName}</h2>
         </div>
       </div>
@@ -93,7 +96,7 @@ const Chat = () => {
                   message.isUser ? "user-message" : "other-message"
                 }`}
                 style={{
-                  backgroundColor: message.isUser ? "blue" : "gray",
+                  backgroundColor: message.isUser ? "light-blue" : "light-gray",
                   maxWidth: message.isUser
                     ? "calc(100% - 20px)"
                     : "calc(70% - 20px)",

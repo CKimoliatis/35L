@@ -326,7 +326,27 @@ class CreateMessageView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+
 class GetMaxChatID(APIView):
-    def get(self,request,format=None):
-        chat_id = Chat.objects.all().aaggregate(Max('id'))['id'] + 1
-        return Response({"chat_id":chat_id})
+    def get(self, request, format=None):
+        max_chat_id = Chat.objects.aggregate(Max('id'))['id__max']
+        chat_id = max_chat_id + 1 if max_chat_id is not None else 1
+        return Response({"chat_id": chat_id})
+
+
+
+class AddSchool(APIView):
+    serializer_class = AddSchoolSerialier
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class GetSchools(APIView):
+    serializer_class = SchoolSerializer
+    def get(self, request, format=None):
+        queryset= School.objects.all()
+        serializer=self.serializer_class(queryset, many=True)
+        return Response(serializer.data)

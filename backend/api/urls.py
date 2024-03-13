@@ -24,4 +24,6 @@ urlpatterns = [
     path('create-message',CreateMessageView.as_view()),
     path('get-specific-user',SpecificUserView.as_view()),
     path('get-new-chat-id',GetMaxChatID.as_view()),
+    path('get-schools',GetSchools.as_view()),
+    path('upload-school',AddSchool.as_view())
 ]

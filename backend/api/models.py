@@ -43,3 +43,8 @@ class Message(models.Model):
     message_content = models.CharField(max_length=1000,default='')
     chat_id = models.IntegerField()
 
+
+class School(models.Model):
+    school_name = models.CharField(max_length =100)
+    school_image = models.ImageField(upload_to='item_images/', null=True, blank=True)
+

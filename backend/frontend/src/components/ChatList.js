@@ -25,7 +25,7 @@ const ChatList = () => {
     fetchChats();
   }, [userId]);
 
-  const handleChatClick = (chatId,other_person_username) => {
+  const handleChatClick = (chatId, other_person_username) => {
     navigate(`${chatId}/${other_person_username}`); // Remove colon from the path
   };
 
@@ -39,6 +39,9 @@ const ChatList = () => {
           position: "fixed",
           width: "100%",
           zIndex: "1000",
+          backgroundColor: "#0098dc",
+          color: "white",
+          padding: "10px",
         }}
       >
         <div
@@ -49,7 +52,7 @@ const ChatList = () => {
             justifyContent: "space-between",
           }}
         >
-          <h1 style={{ color: "white" }}>Chat List</h1>
+          <h1 style={{ color: "white", paddingTop: '5px' }}>Chat List</h1>
           <button
             className="btn btn-light"
             onClick={() => navigate("/landing")}
@@ -74,7 +77,9 @@ const ChatList = () => {
                 marginBottom: "15px", // Reduce margin for smaller size
                 fontSize: "24px", // Reduce font size
               }}
-              onClick={() => handleChatClick(chat.chat_id,chat.other_person_username)}
+              onClick={() =>
+                handleChatClick(chat.chat_id, chat.other_person_username)
+              }
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "#c3d8f0"; // Change background color to blue on hover
               }}

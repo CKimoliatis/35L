@@ -48,7 +48,7 @@ const ItemPage = () => {
   }, []);
 
   const handleClick = () => {
-    if (otherPersonUsername && chatId) {
+    if (sellerData.first_name && chatId) {
       // Create a new chat
       const newChatResponse = axios.post("/api/create-chat", {
         user_id: decodedData.user_id,
@@ -56,7 +56,7 @@ const ItemPage = () => {
       });
 
       // Navigate to the chat using the retrieved data
-      navigate(`/chat/${chatId}/${otherPersonUsername}`);
+      navigate(`/chat/${chatId}/${sellerData.first_name}`);
     } else {
       console.log("Unable to create chat: Missing data");
     }

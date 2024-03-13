@@ -46,4 +46,14 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('sender_id','message_content','chat_id')
+
+class SchoolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = School
+        fields = '__all__'
+
+class AddSchoolSerialier(serializers.ModelSerializer):
+    class Meta:
+        model = School
+        fields = ('school_name','school_image')
         

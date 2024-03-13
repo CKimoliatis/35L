@@ -12,11 +12,11 @@ Yooni is an innovative online platform tailored for college students, crafted by
 * Chmod +x start.sh
     * start.sh does the following:
     ```shell   
-        git pull origin main;
-        pip3 install -r requirements.txt;
-        cd backend;
-        cd frontend;
-        npm i;
+        git pull origin main
+        pip3 install -r requirements.txt
+        cd backend
+        cd frontend
+        npm i
     ```
     *  This is the initial startup where it installs all the dependencies
 * After doing that do the following:

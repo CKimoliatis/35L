@@ -48,9 +48,9 @@ Yooni is an innovative online platform tailored for college students, crafted by
 * [react-router-dom](https://www.npmjs.com/package/react-router-dom) to navigate pages within the webapp
 ## Authors
 * Christopher Kimoliatis (806281561)
-* Rony Vayner
-* Ryan Carney
-* Christian Escobar
-* Narek Khachikyan
+* Rony Vayner (906179252)
+* Ryan Carney (806284003)
+* Christian Escobar (206231362)
+* Narek Khachikyan (706229984)
 ## Publish Date
 * 3/12/2024

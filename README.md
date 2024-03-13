@@ -12,12 +12,13 @@ While showing the probability of the selections.
 * Clone the repo
 * Chmod +x start.sh
     * start.sh does the following:
-    `   git pull origin main;
+    ```shell   
+        git pull origin main;
         pip3 install -r requirements.txt;
         cd backend;
         cd frontend;
         npm i;
-    `
+    ```
     *  git pull origin main
     *  git pull origin main;
     *  pip3 install -r requirements.txt;

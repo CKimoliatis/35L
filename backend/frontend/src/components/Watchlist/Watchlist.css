@@ -25,7 +25,7 @@ body {
     height: 45px;
     text-align: center;
     padding-bottom: 5px;
-    border-bottom: 1px solid gainsboro;
+    border-bottom: 1px solid rgb(174, 174, 174);
   }
   /* #watchlist-header {
     justify-content: center;

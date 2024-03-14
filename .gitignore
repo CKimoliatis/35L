@@ -10,7 +10,7 @@ node_modules
 /backend/frontend/__pycache__
 /backend/frontend/static/frontend/main.js
 /backend/frontend/static/frontend/main.js.LICENSE.txt
-/backend/api/migrations/__pycache__
+**/__pycache__/
 
 # testing
 /coverage

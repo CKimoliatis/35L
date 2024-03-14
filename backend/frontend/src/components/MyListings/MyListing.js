@@ -81,17 +81,32 @@ const MyListing = () => {
       <br />
       <br />
       <br />
-      <Row>
-      <Button variant="outline-warning" 
-        style={{marginLeft:'5rem', marginTop: '5rem', display:'flex', width: '10rem' }} 
+      <br />
+      <Row id='my-listings-header'>
+      {/* <Button variant="outline-warning" 
+        style={{marginLeft:'5rem', marginTop: '20px', display:'flex', width: '5rem' }} 
         onClick={() => handleSoldButtonClick()}>
             Sold Items
       </Button>
       <Button variant="outline-primary" 
-        style={{marginLeft:'5rem', marginTop: '5rem', display:'flex', width: '10rem' }} 
+        style={{marginLeft:'10px', marginTop: '20px', display:'flex', width: '5rem' }}
         onClick={() => handleListingsButtonClick()}>
             Current Listings
-      </Button>
+      </Button> */}
+      { showSold && (
+        <>
+        <h2 id='sold-items' onClick={() => handleSoldButtonClick()} style={{borderBottom: '3px solid black'}}>Sold Items</h2>
+        <h2 id='current-listings'onClick={() => handleListingsButtonClick()}>Current Listings</h2>
+        </>
+      )
+      }
+        
+      { !showSold && (
+        <>
+        <h2 id='sold-items' onClick={() => handleSoldButtonClick()} >Sold Items</h2>
+        <h2 id='current-listings'onClick={() => handleListingsButtonClick()} style={{borderBottom: '3px solid black'}}>Current Listings</h2>
+        </>
+      )}
       </Row>
       <br />
       <IsEditing showSold={showSold}/>

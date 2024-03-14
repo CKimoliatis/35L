@@ -79,7 +79,7 @@ const PostItem = () => {
   return (
     <>
       <NavigationBar />
-      <br /><br /><br />
+      <br /><br /><br /><br /><br />
       <div className="form-container">
         <h2>Post a New Item</h2>
         <form onSubmit={handleSubmit}>
